@@ -1,0 +1,7 @@
+%h1
+  New project
+  = "for #{@project.client.name}" if @project.client
+
+= render :partial => 'form', :locals => {:project => @project }
+
+= link_to 'Back', projects_path

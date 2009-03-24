@@ -1,0 +1,16 @@
+%h1 Listing tasks
+
+= link_to_function 'New task', :href => new_task_path, :id => 'new_task_link' do |page|
+  - page[:create_task].visual_effect :blind_down, :duration => 0.5
+  - page[:new_task_link].hide
+  - page[:cancel_new_task_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_task_path, :id => 'cancel_new_task_link', :style => "display:none;" do |page|
+  - page[:create_task].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_task_link].hide
+  - page[:new_task_link].visual_effect :appear
+
+#create_task{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:task => Task.new }
+
+= render :partial => 'tasks/list', :locals => {:tasks => @tasks}

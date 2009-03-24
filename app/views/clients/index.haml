@@ -1,0 +1,25 @@
+%h1 WunderTask 2000
+
+= link_to_function 'New client', :href => new_client_path, :id => 'new_client_link' do |page|
+  - page[:create_client].visual_effect :blind_down, :duration => 0.5
+  - page[:new_client_link].hide
+  - page[:cancel_new_client_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_client_path, :id => 'cancel_new_client_link', :style => "display:none;" do |page|
+  - page[:create_client].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_client_link].hide
+  - page[:new_client_link].visual_effect :appear
+
+#create_client{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:client => Client.new }
+
+%table{:width => "100%"}
+  %tr
+    %th Client
+    %th Number of Projects
+
+  -for client in @clients
+    %tr
+      %td= link_to h(client.name), client
+      %td= client.projects.count
+      %td= link_to 'Destroy', client_path(client), :method => :delete

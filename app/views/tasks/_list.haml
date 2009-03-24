@@ -1,0 +1,27 @@
+%script{:type=>"text/javascript"} $(function() {$(".accordion").accordion()});
+
+.accordion
+  - tasks.each do |task|
+    %h3{:style=>"font-size: 1.2em;"}
+      - style = task.completed? ? "line-through" : "none"
+      %a{:style => "text-decoration:#{style};",:href=>"#"}=h task.name
+    %div
+      %div{:style=>"float:right;"}
+        = link_to 'show', project_task_path(task.project, task)
+        %br
+        - if task.completed?
+          = link_to 'reopen', mark_open_task_path(task)
+        - else
+          = link_to 'mark completed', mark_completed_task_path(task)
+
+      %div{:style=>"float:left;"}
+        .attribute
+          .name Date due:
+          .value= task.end_date
+        .attribute
+          .name Days remaining:
+          .value= task.days_remaining
+        - if task.description
+          .attribute
+            .name Description:
+            .value= task.description

@@ -1,0 +1,16 @@
+%h1 All Projects
+
+= link_to_function 'New project', :href => new_project_path, :id => 'new_project_link' do |page|
+  - page[:create_project].visual_effect :blind_down, :duration => 0.5
+  - page[:new_project_link].hide
+  - page[:cancel_new_project_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_project_path, :id => 'cancel_new_project_link', :style => "display:none;" do |page|
+  - page[:create_project].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_project_link].hide
+  - page[:new_project_link].visual_effect :appear
+
+#create_project{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:project => Project.new }
+
+= render :partial => 'projects/list', :locals => {:projects => @projects}

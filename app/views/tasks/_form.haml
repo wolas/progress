@@ -1,0 +1,30 @@
+%script{:type => "text/javascript"}== $(function() {$("#task_end_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
+
+.ui-widget-content.widget
+  -form_for task do |f|
+    .two_col
+      = f.error_messages
+
+      .attribute
+        .name= f.label :name
+        .value= f.text_field :name
+
+      .attribute
+        .name= f.label :end_date
+        .value= f.text_field :end_date
+
+      .attribute
+        .name= f.label :description
+        .value.middle= f.text_area :description, :rows => 8
+
+    .two_col
+      %h4 Assigned to
+
+      - for user in User.all
+        .attribute
+          .name= check_box_tag 'task[user_ids][]', user.id, project.users.include?(user)
+          .value= render :partial => "users/widget", :locals => {:user => user}
+
+
+    = f.hidden_field :project_id
+    .task_submit_button= f.submit "Save"

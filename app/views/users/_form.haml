@@ -1,0 +1,10 @@
+.attribute
+  .name= form.label :login
+  .value= form.text_field :login
+
+.attribute
+  .name= form.label :password, form.object.new_record? ? nil : "Change password"
+  .value= form.password_field :password
+.attribute
+  .name= form.label :password_confirmation, "Confirm password"
+  .value= form.password_field :password_confirmation

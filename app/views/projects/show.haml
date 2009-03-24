@@ -1,0 +1,71 @@
+%h1
+  - if @client
+    = link_to h(@client.name), @client
+    >
+  =h @project.name
+
+#project_show
+  .two_col
+    .attribute
+      .name Date due:
+      .value= @project.end_date
+    .attribute
+      .name Days remaining:
+      .value= @project.days_remaining
+    .attribute
+      .name Tasks remaining:
+      .value= @project.tasks_remaining
+    - if @project.description?
+      .attribute
+        .name Description:
+        .value= @project.description
+
+  .two_col.ui-widget-content.widget
+    %h3 Project Managers
+    - for user in @project.users
+      = render :partial => "users/widget", :locals => {:user => user}
+
+
+  .clear
+
+
+#update_project{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:project => @project }
+
+%p
+  = link_to_function 'Edit', :href => edit_project_path(@project), :id => "edit_project_link" do |page|
+    - page[:project_show].visual_effect :blind_up, :duration => 0.5
+    - page[:update_project].visual_effect :blind_down, :duration => 0.5
+    - page[:edit_project_link].hide
+    - page[:cancel_edit_project_link].visual_effect :appear
+
+  = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_project_link', :style => "display:none;" do |page|
+    - page[:project_show].visual_effect :blind_down, :duration => 0.5
+    - page[:update_project].visual_effect :blind_up, :duration => 0.5
+    - page[:cancel_edit_project_link].hide
+    - page[:edit_project_link].visual_effect :appear
+
+  |
+
+  = link_to_function 'New Task', :href => new_project_task_path(@project), :id => "new_task_link" do |page|
+    - page[:new_task].visual_effect :blind_down, :duration => 0.5
+    - page[:new_task_link].hide
+    - page[:cancel_new_task_link].visual_effect :appear
+
+  = link_to_function 'Cancel', :href => nil, :id => 'cancel_new_task_link', :style => "display:none;" do |page|
+    - page[:new_task].visual_effect :blind_up, :duration => 0.5
+    - page[:cancel_new_task_link].hide
+    - page[:new_task_link].visual_effect :appear
+
+#new_task{:style => 'display:none;'}
+  = render :partial => 'tasks/form', :locals => {:task => Task.new(:project => @project) }
+
+- completed, in_progress = @project.tasks.partition{|task| task.completed?}
+
+- unless in_progress.empty?
+  %h3 In progress
+  = render :partial => 'tasks/list', :locals => {:tasks => in_progress}
+
+- unless completed.empty?
+  %h3 Completed
+  = render :partial => 'tasks/list', :locals => {:tasks => completed}

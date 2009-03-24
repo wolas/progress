@@ -1,0 +1,33 @@
+%script{:type => "text/javascript"}
+  $(function() {$("#project_end_date").datepicker({minDate: 0, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
+
+.ui-widget-content.widget
+  -form_for project do |f|
+    .two_col
+      = f.error_messages
+
+      .attribute
+        .name= f.label :client
+        .value= f.collection_select :client_id, Client.all, :id, :name, {:include_blank => "None"}
+
+      .attribute
+        .name= f.label :name
+        .value= f.text_field :name
+      .attribute
+        .name= f.label :end_date
+        .value= f.text_field :end_date
+
+      .attribute
+        .name= f.label :description
+        .middle.value= f.text_area :description, :rows => 8
+
+    .two_col
+      %h4 Project Managers
+
+      - for user in User.all
+        .attribute
+          .name= check_box_tag 'project[user_ids][]', user.id, project.users.include?(user)
+          .value= render :partial => "users/widget", :locals => {:user => user}
+
+    .clear
+    .project_submit_button= f.submit "Save"
