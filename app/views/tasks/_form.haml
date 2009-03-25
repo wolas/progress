@@ -22,7 +22,7 @@
 
       - for user in User.all
         .attribute
-          .name= check_box_tag 'task[user_ids][]', user.id, project.users.include?(user)
+          .name= check_box_tag 'task[user_ids][]', user.id, @project.users.include?(user)
           .value= render :partial => "users/widget", :locals => {:user => user}
 
 
