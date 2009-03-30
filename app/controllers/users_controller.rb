@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_filter :require_user, :only => [:show, :edit, :update]
 
   def index
     @users = User.all
@@ -21,6 +20,8 @@ class UsersController < ApplicationController
 
   def show
     @user = @current_user
+    @projects = @user.projects.all :conditions => {:closed => false}
+    @tasks = @user.tasks.all :conditions => {:completed => false}
   end
 
   def edit

@@ -1,9 +1,43 @@
-%h1 My Account
+%h1
+  = @user.login.capitalize
+  account.
 
-.attribute
-  .name Login:
-  .value=h @user.login
+#user_show
+  .attribute
+    .name Name
+    .value= @user.login
+  .attribute
+    .name Email
+    .value= @user.email
+  .attribute
+    .name Password
+    .value= "*" * 8
+
+#update_user{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:user => @user }
+
+%p
+  = link_to_function 'Edit', :href => edit_user_path(@user), :id => "edit_user_link" do |page|
+    - page[:user_show].visual_effect :blind_up, :duration => 0.5
+    - page[:update_user].visual_effect :blind_down, :duration => 0.5
+    - page[:edit_user_link].hide
+    - page[:cancel_edit_user_link].visual_effect :appear
+
+  = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_user_link', :style => "display:none;" do |page|
+    - page[:user_show].visual_effect :blind_down, :duration => 0.5
+    - page[:update_user].visual_effect :blind_up, :duration => 0.5
+    - page[:cancel_edit_user_link].hide
+    - page[:edit_user_link].visual_effect :appear
 
 
+- if @tasks.empty?
+  %p You lucky person, you have no work assigned yet.
 
-= link_to 'Edit', edit_account_path
+- else
+  %h3= link_to 'Tasks', user_tasks_path(@user)
+  = render :partial => 'tasks/list', :locals => {:tasks => @tasks}
+
+
+- unless @projects.empty?
+  %h3= link_to 'Projects', user_projects_path(@user)
+  = render :partial => 'projects/list', :locals => {:projects => @projects}

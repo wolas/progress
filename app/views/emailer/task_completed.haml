@@ -1,0 +1,11 @@
+Task
+%b= link_to @task.name, @task
+in project
+%b= link_to @task.project.name, @task.project
+has been closed by
+%b= @user.login
+on
+%b= Date.today
+\.
+
+%p Progress Team

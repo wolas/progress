@@ -1,6 +1,13 @@
-%h1 Editing task
+%h1
+  - if @client
+    = link_to h(@client.name), @client
+    >
+  = link_to h(@project.name), @project, :style => @project.style
+  >
+  %span{:style => @task.style}
+    Edit Task:
+    =h @task.name
 
 = render :partial => 'form', :locals => {:task => @task }
-  
-= link_to 'Back', tasks_path
 
+= link_to 'Back', @task

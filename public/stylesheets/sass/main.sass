@@ -1,6 +1,15 @@
 !light_blue = #bde3fe
 !dark_blue = #23567a
 
+=round_borders
+  :-moz-border-radius 6px
+  :-webkit-border-radius 6px
+
+
+=error
+  :border 1px solid #cd0a0a
+  :background #b81900 url(/images/ui-bg_diagonals-thick_40_b81900_40x40.png) 50% 50% repeat
+  :color #ffffff
 
 body
   :font
@@ -28,23 +37,32 @@ th
   :clear both
 
 .two_col
-  :width 40%
-  :padding 2%
+  :width 45%
   :float left
 
-#menu
+#user_badge
   :float right
+  :width 320px
 
+
+#menu
+  :float left
+  :display inline
+  :font
+    :size 1.5em
+    :color #333333
+  :padding
+    :top 15px
 
 .widget
   :padding
     :left 10px
+    :right 10px
     :top 5px
     :bottom 5px
 
   :margin-bottom 10px
-  :-moz-border-radius 6px
-  :-webkit-border-radius 6px
+  +round_borders
 
 .middle
   :vertical-align middle
@@ -65,16 +83,17 @@ th
 .fieldWithErrors
   :color red
 
+
 #errorExplanation
-  :width 400px
-  :border 2px solid red
+  :font-weight bold
   :padding 7px
   :padding-bottom 12px
   :margin-bottom 20px
-  :background-color #f0f0f0
-
+  +error
+  +round_borders
 
   h2
+    :display none
     :text-align left
     :font-weight bold
     :padding 5px 5px 5px 15px

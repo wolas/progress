@@ -1,4 +1,9 @@
-%h1 All Projects
+%h1
+  - if @user
+    Projects for
+    = link_to @user.login, @user
+  - else
+    All Projects
 
 = link_to_function 'New project', :href => new_project_path, :id => 'new_project_link' do |page|
   - page[:create_project].visual_effect :blind_down, :duration => 0.5
@@ -13,4 +18,12 @@
 #create_project{:style => 'display:none;'}
   = render :partial => 'form', :locals => {:project => Project.new }
 
-= render :partial => 'projects/list', :locals => {:projects => @projects}
+- completed, in_progress = @projects.partition{|project| project.closed?}
+
+- unless in_progress.empty?
+  %h3 In progress
+  = render :partial => 'list', :locals => {:projects => in_progress}
+
+- unless completed.empty?
+  %h3 Completed
+  = render :partial => 'list', :locals => {:projects => completed}

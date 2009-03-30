@@ -1,0 +1,11 @@
+- groups ||= 3
+- object ||= nil
+
+%table
+  - users.in_groups_of(groups, false).each do |people|
+    %tr
+      - people.each do |user|
+        %td
+          %span
+            = check_box_tag "#{object.class.to_s.downcase}[user_ids][]", user.id, object.users.include?(user) if object
+            = render :partial => "users/widget", :locals => {:user => user}

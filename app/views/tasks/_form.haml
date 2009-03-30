@@ -20,12 +20,9 @@
     .two_col
       %h4 Assigned to
 
-      - for user in User.all
-        .attribute
-          .name= check_box_tag 'task[user_ids][]', user.id, @project.users.include?(user)
-          .value= render :partial => "users/widget", :locals => {:user => user}
+      = render :partial => 'users/list', :locals => {:users => User.all, :object => task}
 
 
     = f.hidden_field :project_id
-    .task_submit_button= f.submit "Save"
     .clear
+    .task_submit_button= f.submit "Save"

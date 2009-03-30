@@ -1,28 +1,50 @@
-%script{:type=>"text/javascript"} $(function() {$("#accordion").accordion()});
+%script{:type=>"text/javascript"} $(function() {$(".accordion").accordion()});
 
-#accordion
+.accordion
   - projects.each do |project|
     %h3{:style=>"font-size: 1.2em;"}
-      %a{:href=>"#"}=h project.name
+      %a{:href=>"#", :style => project.style}
+        =h project.name
+
     %div
-      %div{:style=>"float:left;"}
-        - unless @client
-          .attribute
-            .name Client:
-            .value= project.client ? project.client.name : "none"
+      %div{:style=>"float:right; width:10%;"}
+        = link_to 'show', project
+        %br
+        = link_to 'edit', edit_project_path(project)
+        %br
+        = link_to 'new task', new_project_task_path(project)
+        %br
+        = link_to 'destroy', project, :method => :delete, :confirm => "Are you sure?"
+        %br
+        - if project.closed?
+          = link_to 'reopen', reopen_project_path(project)
+        - else
+          = link_to 'close', close_project_path(project)
 
-        .attribute
-          .name Date due:
-          .value= project.end_date
-        .attribute
-          .name Days remaining:
-          .value= project.days_remaining
-        .attribute
-          .name= link_to 'Tasks remaining:', project_tasks_path(project)
-          .value= project.tasks_remaining
-        -if project.description
-          .attribute
-            .name Description:
-            .value= project.description
 
-      %div{:style=>"float:right;"}= link_to 'show', project
+      %div{:style=>"float:left; width:90%;"}
+
+        .two_col{:style=>"padding-right:20px; width:20%;"}
+          = collection_widget_for project.users, nil, 2
+
+        .two_col{:style=>"width:70%;"}
+          - unless @client
+            - if project.client
+              .attribute
+                .name Client:
+                .value= project.client.name
+
+          .attribute
+            .name Date due:
+            .value= project.end_date
+          .attribute
+            .name Days remaining:
+            .value= project.days_remaining
+          .attribute
+            .name Tasks remaining
+            .value= project.tasks_remaining
+
+          - if project.description
+            .attribute
+              .name Description:
+              .value= project.description

@@ -1,6 +1,8 @@
 %script{:type => "text/javascript"}
   $(function() {$("#project_end_date").datepicker({minDate: 0, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
 
+.clear
+
 .ui-widget-content.widget
   -form_for project do |f|
     .two_col
@@ -24,10 +26,7 @@
     .two_col
       %h4 Project Managers
 
-      - for user in User.all
-        .attribute
-          .name= check_box_tag 'project[user_ids][]', user.id, project.users.include?(user)
-          .value= render :partial => "users/widget", :locals => {:user => user}
+      = collection_widget_for User.all, project
 
     .clear
     .project_submit_button= f.submit "Save"

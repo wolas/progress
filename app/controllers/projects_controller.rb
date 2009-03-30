@@ -2,7 +2,12 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = Project.find(:all)
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @projects = @user.projects
+    else
+      @projects = Project.all(:order => 'end_date ASC')
+    end
   end
 
   # GET /projects/1
@@ -20,6 +25,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    @client = @project.client
   end
 
   # POST /projects
@@ -44,13 +50,27 @@ class ProjectsController < ApplicationController
       flash[:notice] = 'Project was successfully updated.'
       redirect_to(@project)
     else
+      @client = @project.client
       render :action => "edit"
     end
   end
 
+  def close
+    project = Project.find(params[:id])
+    project.update_attributes(:closed => true)
+    redirect_to :back
+  end
+
+  def reopen
+    project = Project.find(params[:id])
+    project.update_attributes(:closed => false)
+    redirect_to :back
+  end
+
   # DELETE /projects/1
   def destroy
-    Project.find(params[:id]).destroy
-    redirect_to(projects_url)
+    project = Project.find(params[:id])
+    project.destroy
+    redirect_to(project.client ? project.client : projects_path)
   end
 end

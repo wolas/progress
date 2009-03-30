@@ -1,6 +1,29 @@
+%h1 All users
+
+= link_to_function 'New user', :href => new_user_path, :id => 'new_user_link' do |page|
+  - page[:create_user].visual_effect :blind_down, :duration => 0.5
+  - page[:new_user_link].hide
+  - page[:cancel_new_user_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => nil, :id => 'cancel_new_user_link', :style => "display:none;" do |page|
+  - page[:create_user].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_user_link].hide
+  - page[:new_user_link].visual_effect :appear
+
+#create_user{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:user => User.new }
+
 %table
   %tr
-    %th Login
+    %th User
+    %th Number of Projects
+    %th Number of Tasks
+
+
   - @users.each do |user|
     %tr
-      %td= link_to h(user.login), user
+      %td{:width => "200px"}
+        = image_tag gravatar_url(user.email), :style => "vertical-align:middle;"
+        = link_to h(user.login), user
+      %td= user.projects.count
+      %td= user.tasks.count

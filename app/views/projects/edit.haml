@@ -1,4 +1,9 @@
-%h1 Editing project
+%h1
+  - if @client
+    = link_to h(@client.name), @client
+    >
+  %span{:style => @project.style}
+    =h @project.name
 
 = render :partial => 'form', :locals => {:project => @project }
 

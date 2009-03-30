@@ -2,26 +2,34 @@
   - if @client
     = link_to h(@client.name), @client
     >
-  = link_to h(@project.name), @project
+  = link_to h(@project.name), @project, :style => @project.style
   >
-  =h @task.name
+  %span{:style => @task.style}
+    =h @task.name
 
 
 #task_show
-  .attribute
-    .name End date:
-    .value=h @task.end_date
-  .attribute
-    .name Project:
-    .value=h @task.project.name
-  .attribute
-    .name Completed:
-    .value= @task.completed? ? "yes" : "no"
-
-  - if @task.description
+  .two_col
     .attribute
-      .name Description:
-      .value= @task.description
+      .name End date:
+      .value=h @task.end_date
+    .attribute
+      .name Project:
+      .value=h @task.project.name
+    .attribute
+      .name Completed:
+      .value= @task.completed? ? "yes" : "no"
+
+    - if @task.description
+      .attribute
+        .name Description:
+        .value= @task.description
+
+  .two_col
+    %h3 Assigned to
+    = collection_widget_for @task.users
+
+  .clear
 
 #update_task{:style => 'display:none;'}
   = render :partial => 'form', :locals => {:task => @task }

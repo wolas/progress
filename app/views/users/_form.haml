@@ -1,10 +1,19 @@
-.attribute
-  .name= form.label :login
-  .value= form.text_field :login
+.ui-widget-content.widget
 
-.attribute
-  .name= form.label :password, form.object.new_record? ? nil : "Change password"
-  .value= form.password_field :password
-.attribute
-  .name= form.label :password_confirmation, "Confirm password"
-  .value= form.password_field :password_confirmation
+  - form_for user, :url => account_path do |f|
+
+    = error_messages_for :user
+    .attribute
+      .name= f.label :login
+      .value= f.text_field :login
+    .attribute
+      .name= f.label :email
+      .value= f.text_field :email
+
+    .attribute
+      .name= f.label :password, user.new_record? ? nil : "Change password"
+      .value= f.password_field :password
+    .attribute
+      .name= f.label :password_confirmation, "Confirm password"
+      .value= f.password_field :password_confirmation
+    = f.submit user.new_record? ? "Register" : "Save"

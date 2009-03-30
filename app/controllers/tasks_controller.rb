@@ -2,25 +2,29 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.find(:all)
+    @user = User.find(params[:user_id])
+    @tasks = @user.tasks
   end
 
   # GET /tasks/1
   def show
-    @project = Project.find(params[:project_id])
-    @task = @project.tasks.find(params[:id])
+    @task = Task.find(params[:id])
+    @project = @task.project
     @client = @project.client
   end
 
   # GET /tasks/new
   def new
-    project = project.find(params[:project_id]) if params[:project_id]
+    @project = Project.find(params[:project_id]) if params[:project_id]
     @task = Task.new :project => project
+    @client = @project.client
   end
 
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
+    @project = @task.project
+    @client = @project.client
   end
 
   # POST /tasks
@@ -31,6 +35,8 @@ class TasksController < ApplicationController
       flash[:notice] = 'Task was successfully created.'
       redirect_to @task.project
     else
+      @project = @task.project
+      @client = @project.client
       render :action => "new"
     end
   end
@@ -43,6 +49,8 @@ class TasksController < ApplicationController
       flash[:notice] = 'Task was successfully updated.'
       redirect_to(@task)
     else
+      @project = @task.project
+      @client = @project.client
       render :action => "edit"
     end
   end
@@ -50,6 +58,7 @@ class TasksController < ApplicationController
   def mark_completed
     @task = Task.find(params[:id])
     @task.update_attributes :completed => true
+    flash[:notice] = 'Task has been marked completed.'
     redirect_to :back
   end
 

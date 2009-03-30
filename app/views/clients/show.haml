@@ -32,4 +32,12 @@
 #new_project{:style => 'display:none;'}
   = render :partial => 'projects/form', :locals => {:project => Project.new(:client=>@client) }
 
-= render :partial => 'projects/list', :locals => {:projects => @client.projects}
+- completed, in_progress = @client.projects.partition{|project| project.closed?}
+
+- unless in_progress.empty?
+  %h3 In progress
+  = render :partial => 'projects/list', :locals => {:projects => in_progress}
+
+- unless completed.empty?
+  %h3 Completed
+  = render :partial => 'projects/list', :locals => {:projects => completed}

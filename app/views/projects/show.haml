@@ -2,7 +2,8 @@
   - if @client
     = link_to h(@client.name), @client
     >
-  =h @project.name
+  %span{:style => @project.style}
+    =h @project.name
 
 #project_show
   .two_col
@@ -20,10 +21,10 @@
         .name Description:
         .value= @project.description
 
-  .two_col.ui-widget-content.widget
+
+  .two_col
     %h3 Project Managers
-    - for user in @project.users
-      = render :partial => "users/widget", :locals => {:user => user}
+    = collection_widget_for @project.users
 
 
   .clear
@@ -56,6 +57,13 @@
     - page[:new_task].visual_effect :blind_up, :duration => 0.5
     - page[:cancel_new_task_link].hide
     - page[:new_task_link].visual_effect :appear
+  |
+  = link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
+  |
+  - if @project.closed?
+    = link_to 'Reopen', reopen_project_path(@project)
+  - else
+    = link_to 'Close', close_project_path(@project)
 
 #new_task{:style => 'display:none;'}
   = render :partial => 'tasks/form', :locals => {:task => Task.new(:project => @project) }
