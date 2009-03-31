@@ -1,0 +1,8 @@
+= render :partial => 'comments/form', :locals => {:comment => Comment.new(:owner => owner) }
+
+.wall
+  - for comment in comments
+    .attribute.comment
+      .name= widget_for comment.user
+      .value= h comment.body
+      .value= comment.created_at

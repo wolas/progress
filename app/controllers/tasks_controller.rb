@@ -16,7 +16,7 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @project = Project.find(params[:project_id]) if params[:project_id]
-    @task = Task.new :project => project
+    @task = Task.new :project => @project
     @client = @project.client
   end
 

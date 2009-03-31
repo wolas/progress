@@ -1,5 +1,6 @@
 module UsersHelper
-  def widget_for users
+  def widget_for user
+    return unless user
     render :partial => 'users/widget', :locals => {:user => user }
   end
 

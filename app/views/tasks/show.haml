@@ -51,3 +51,7 @@
   = link_to 'reopen', mark_open_task_path(@task)
 - else
   = link_to 'mark completed', mark_completed_task_path(@task)
+
+
+%h2 Wall
+= render :partial => 'comments/list', :locals => {:comments => @task.comments, :owner => @task}

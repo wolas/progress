@@ -44,7 +44,7 @@
             .name Tasks remaining
             .value= project.tasks_remaining
 
-          - if project.description
+          - if project.description?
             .attribute
               .name Description:
               .value= project.description
