@@ -25,6 +25,9 @@ th {
   width: 45%;
   float: left; }
 
+.small {
+  font-size: 0.7em; }
+
 #user_badge {
   float: right;
   width: 320px; }
@@ -60,15 +63,28 @@ th {
     display: table-cell; }
 
 .wall {
-  width: 450px; }
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  background-color: #e4f9ea;
+  border: 1px solid #86ae91;
+  padding-left: 10px;
+  padding-right: 10px; }
   .wall .comment {
-    display: block; }
-    .wall .comment .name {
-      border-right: 1px solid #333333; }
-    .wall .comment .value {
-      width: 100%;
-      border-bottom: 1px solid #333333;
-      padding-left: 10px; }
+    display: table-row;
+    margin-bottom: 20px; }
+    .wall .comment div {
+      margin-bottom: 15px;
+      vertical-align: middle; }
+    .wall .comment .face {
+      padding-right: 5px;
+      display: table-cell; }
+    .wall .comment .comment_body {
+      padding-left: 5px;
+      display: table-cell;
+      width: 100%; }
+    .wall .comment .date {
+      padding-left: 5px;
+      display: table-cell; }
 
 .fieldWithErrors {
   color: red; }

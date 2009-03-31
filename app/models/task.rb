@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
   has_and_belongs_to_many :users
-  has_many :comments, :as => :owner
+  has_many :comments, :as => :owner, :order => 'created_at DESC'
 
   validates_presence_of :end_date, :name, :project
   validate_on_create :date_in_future

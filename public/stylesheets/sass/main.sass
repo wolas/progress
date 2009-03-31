@@ -40,6 +40,9 @@ th
   :width 45%
   :float left
 
+.small
+  :font-size 0.7em
+
 #user_badge
   :float right
   :width 320px
@@ -81,18 +84,33 @@ th
     :display table-cell
 
 .wall
-  :width 450px
+  +round_borders
+  :background-color #e4f9ea
+  :border 1px solid #86ae91
+  :padding
+    :left 10px
+    :right 10px
 
   .comment
-    :display block
+    :display table-row
+    :margin-bottom 20px
 
-    .name
-      :border-right 1px solid #333333
+    div
+      :margin-bottom 15px
+      :vertical-align middle
 
-    .value
+    .face
+      :padding-right 5px
+      :display table-cell
+
+    .comment_body
+      :padding-left 5px
+      :display table-cell
       :width 100%
-      :border-bottom 1px solid #333333
-      :padding-left 10px
+
+    .date
+      :padding-left 5px
+      :display table-cell
 
 .fieldWithErrors
   :color red
