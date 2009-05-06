@@ -1,6 +1,6 @@
-%h1 New comment
+.wall
+  %h1 New comment
+  = render :partial => 'form', :locals => {:comment => @comment }
 
-= render :partial => 'form', :locals => {:comment => @comment }
-  
-= link_to 'Back', comments_path
-
+%br
+= link_to 'Back', @comment.owner

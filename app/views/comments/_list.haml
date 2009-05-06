@@ -1,6 +1,4 @@
 .wall
-  %h2 Wall
-
   = render :partial => 'comments/form', :locals => {:comment => Comment.new(:owner => owner) }
   %br
   - for comment in comments
@@ -10,4 +8,5 @@
         .comment_body= h comment.body
         .date
           = comment.created_at.strftime "%D"
+          \-
           = comment.created_at.strftime "%H:%M"

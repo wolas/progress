@@ -12,23 +12,24 @@
 
   %body
     - if logged_in?
-      #menu
-        = link_to_unless_current 'Users', users_url
-        |
-        = link_to_unless_current 'Clients', clients_url
-        |
-        = link_to_unless_current 'Projects', projects_url
-
       #user_badge.ui-widget-content.widget
         .two_col
           %span
             = image_tag gravatar_url(current_user.email), :style => "vertical-align:middle;"
             = link_to h(current_user.login), current_user
         .two_col
-          = link_to 'Logout', logout_url
-          |
-          = link_to 'My Account', account_url
-    .clear
+          #user_menu
+            = link_to 'Logout', logout_url
+            |
+            = link_to 'Account', account_url
+            %br
+            = link_to_unless_current 'Users', users_url
+            |
+            = link_to_unless_current 'Clients', clients_url
+            %br
+            = link_to_unless_current 'Projects', projects_url
+            |
+            = link_to_unless_current 'Calendar', calendar_url
 
     .flash
       - if notice = flash[:notice]

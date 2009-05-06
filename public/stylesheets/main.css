@@ -32,6 +32,9 @@ th {
   float: right;
   width: 320px; }
 
+#user_menu {
+  text-align: center; }
+
 #menu {
   float: left;
   display: inline;
@@ -65,26 +68,63 @@ th {
 .wall {
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
+  width: 550px;
   background-color: #e4f9ea;
   border: 1px solid #86ae91;
-  padding-left: 10px;
-  padding-right: 10px; }
+  padding: 10px; }
   .wall .comment {
     display: table-row;
     margin-bottom: 20px; }
     .wall .comment div {
       margin-bottom: 15px;
       vertical-align: middle; }
-    .wall .comment .face {
-      padding-right: 5px;
-      display: table-cell; }
-    .wall .comment .comment_body {
-      padding-left: 5px;
-      display: table-cell;
-      width: 100%; }
-    .wall .comment .date {
-      padding-left: 5px;
-      display: table-cell; }
+      .wall .comment div .face {
+        width: 150px;
+        display: table-cell; }
+      .wall .comment div .comment_body {
+        display: table-cell;
+        width: 400px;
+        border-bottom: 1px solid #333; }
+      .wall .comment div .date {
+        border: 1px solid #333;
+        padding: 1px;
+        float: right;
+        text-align: center;
+        font-size: 0.7em;
+        font-weight: bold; }
+
+.progressbar {
+  width: 300px; }
+
+#task {
+  position: absolute;
+  top: 200px;
+  left: 200px; }
+
+#task_body {
+  padding: 10px; }
+  #task_body #task_controls {
+    float: right; }
+
+.normal_day {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  height: 100px;
+  width: 14%;
+  vertical-align: top;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #86ae91; }
+
+.today {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  height: 100px;
+  width: 14%;
+  vertical-align: top;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #23567a; }
 
 .fieldWithErrors {
   color: red; }

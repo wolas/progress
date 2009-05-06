@@ -2,10 +2,12 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
   has_and_belongs_to_many :users
-  has_many :comments, :as => :owner, :order => 'created_at DESC'
+  has_many :comments, :as => :owner, :order => 'created_at DESC', :dependent => :destroy
 
-  validates_presence_of :end_date, :name, :project
+  validates_presence_of :end_date, :start_date, :name, :project
   validate_on_create :date_in_future
+
+  named_scope :open, :conditions => {:completed => false}
 
   def late?
     return unless end_date
@@ -31,6 +33,10 @@ class Task < ActiveRecord::Base
     result = 'text-decoration: line-through;' if completed?
     result = '' if project.closed?
     result or ''
+  end
+
+  def happens_in day
+    (start_date.to_date..end_date.to_date).to_a.include? day.to_date
   end
 
 end

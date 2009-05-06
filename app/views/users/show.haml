@@ -41,3 +41,7 @@
 - unless @projects.empty?
   %h3= link_to 'Projects', user_projects_path(@user)
   = render :partial => 'projects/list', :locals => {:projects => @projects}
+
+%hr
+
+= render :partial => 'calendars/calendar', :locals => {:tasks => @user.tasks.open}

@@ -1,5 +1,6 @@
 !light_blue = #bde3fe
 !dark_blue = #23567a
+!light_green = #86ae91
 
 =round_borders
   :-moz-border-radius 6px
@@ -47,6 +48,8 @@ th
   :float right
   :width 320px
 
+#user_menu
+  :text-align center
 
 #menu
   :float left
@@ -85,11 +88,10 @@ th
 
 .wall
   +round_borders
+  :width 550px
   :background-color #e4f9ea
   :border 1px solid #86ae91
-  :padding
-    :left 10px
-    :right 10px
+  :padding 10px
 
   .comment
     :display table-row
@@ -99,18 +101,61 @@ th
       :margin-bottom 15px
       :vertical-align middle
 
-    .face
-      :padding-right 5px
-      :display table-cell
+      .face
+        :width 150px
+        :display table-cell
 
-    .comment_body
-      :padding-left 5px
-      :display table-cell
-      :width 100%
+      .comment_body
+        :display table-cell
+        :width 400px
+        :border-bottom 1px solid #333
 
-    .date
-      :padding-left 5px
-      :display table-cell
+      .date
+        :border 1px solid #333
+        :padding 1px
+        :float right
+        :text-align center
+        :font
+          :size 0.7em
+          :weight bold
+
+
+.progressbar
+  :width 300px
+
+
+#task
+  :position absolute
+  :top 200px
+  :left 200px
+
+#task_body
+  :padding 10px
+
+  #task_controls
+    :float right
+
+
+=calendar_day
+  +round_borders
+  :height 100px
+  :width 14%
+  :vertical-align top
+
+.normal_day
+  +calendar_day
+  :border-width 1px
+  :border-style solid
+  :border-color = !light_green
+
+.today
+  +calendar_day
+  :border-width 1px
+  :border-style solid
+  :border-color = !dark_blue
+
+
+
 
 .fieldWithErrors
   :color red

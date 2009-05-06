@@ -1,3 +1,6 @@
+%script{:type=>"text/javascript"}
+  == $(function() {$("#progressbar").progressbar({value: #{@project.percentage_complete}});});
+
 %h1
   - if @client
     = link_to h(@client.name), @client
@@ -8,6 +11,12 @@
 #project_show
   .two_col
     .attribute
+      .name
+        = @project.percentage_complete
+        \%
+      .value
+        .progressbar{:id=>"progressbar"}
+    .attribute
       .name Date due:
       .value= @project.end_date
     .attribute
@@ -15,7 +24,7 @@
       .value= @project.days_remaining
     .attribute
       .name Tasks remaining:
-      .value= @project.tasks_remaining
+      .value= @project.tasks_remaining.count
     - if @project.description?
       .attribute
         .name Description:

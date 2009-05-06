@@ -1,10 +1,10 @@
-%script{:type=>"text/javascript"} $(function() {$(".accordion").accordion()});
+%script{:type=>"text/javascript"}
+  $(function() {$(".accordion").accordion()});
 
 .accordion
   - projects.each do |project|
     %h3{:style=>"font-size: 1.2em;"}
-      %a{:href=>"#", :style => project.style}
-        =h project.name
+      %a{:href=>"#", :style => project.style}=h project.name
 
     %div
       %div{:style=>"float:right; width:10%;"}
@@ -28,6 +28,17 @@
           = collection_widget_for project.users, nil, 2
 
         .two_col{:style=>"width:70%;"}
+          %script{:type=>"text/javascript"}
+            == $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
+
+          .progressbar{:id=>"progressbar#{project.id}"}
+
+          .attribute
+            .name Percentage:
+            .value
+              = project.percentage_complete
+              \%
+
           - unless @client
             - if project.client
               .attribute
@@ -41,8 +52,11 @@
             .name Days remaining:
             .value= project.days_remaining
           .attribute
-            .name Tasks remaining
-            .value= project.tasks_remaining
+            .name Tasks:
+            .value
+              = project.tasks_remaining.count
+              \/
+              = project.tasks.count
 
           - if project.description?
             .attribute

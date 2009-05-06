@@ -24,7 +24,16 @@ class Project < ActiveRecord::Base
   end
 
   def tasks_remaining
-    tasks.count(:conditions => {:completed => false})
+    tasks.all(:conditions => {:completed => false})
+  end
+
+  def percentage_complete
+    task = tasks.count
+    remaining = tasks_remaining.count
+    completed = task - remaining
+
+    return 100 if remaining == 0
+    ((completed.to_f / remaining.to_f) * 100.00).to_i
   end
 
   def style

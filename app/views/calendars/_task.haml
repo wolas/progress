@@ -1,0 +1,32 @@
+- project = @task.project
+
+#task_body
+  #task_controls
+    = link_to_function 'X' do |page|
+      - page[:task].hide
+  .clear
+
+
+  %h3
+    = link_to project.name, project
+    - if client = project.client
+      == (#{link_to client.name, client})
+    \-
+    = link_to task.name, task
+
+
+
+  .attribute
+    .name Start
+    .value= task.start_date
+
+  .attribute
+    .name End
+    .value= task.end_date
+
+  .attribute
+    .name Description
+    .value= task.description
+
+
+  %p= render :partial => 'users/list', :locals => {:users => task.users}

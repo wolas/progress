@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :has_many => [:tasks, :projects]
 
   map.resource :user_session
+  map.resource :calendar
   map.resource :account, :controller => "users"
 
   # named routes

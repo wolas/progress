@@ -1,7 +1,7 @@
 .comment_form
   -form_for comment do |f|
     = f.error_messages
-    = f.text_area :body, :cols => 61, :rows => 3
+    = f.text_area :body, :cols => 70, :rows => 3
     = f.hidden_field :owner_id
     = f.hidden_field :owner_type
     .comment_submit_button= f.submit "Save"
