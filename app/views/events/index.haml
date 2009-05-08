@@ -1,0 +1,7 @@
+%h1
+  Events for
+  = link_to @user.login, @user
+%br
+%br
+
+= render :partial => 'events/list', :locals => {:events => @events, :show_project => true}

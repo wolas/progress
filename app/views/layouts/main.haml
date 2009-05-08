@@ -7,10 +7,18 @@
         \-
         = current_user.login
 
-    = stylesheet_link_tag 'jquery', 'main'
+    = stylesheet_link_tag 'jquery', 'main', 'colorpicker'
     = javascript_include_tag :defaults
+    = javascript_include_tag 'colorpicker'
 
-  %body
+    - if @show_timeline
+      = javascript_include_tag "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true"
+      = javascript_include_tag 'timeline'
+
+
+
+
+  %body{:onload=> 'onLoad();', :onresize=> 'onResize();'}
     - if logged_in?
       #user_badge.ui-widget-content.widget
         .two_col
@@ -30,6 +38,8 @@
             = link_to_unless_current 'Projects', projects_url
             |
             = link_to_unless_current 'Calendar', calendar_url
+            %br
+            = link_to_unless_current 'Timeline', timeline_url
 
     .flash
       - if notice = flash[:notice]

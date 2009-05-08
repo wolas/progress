@@ -17,6 +17,22 @@ a:hover {
 th {
   text-align: left; }
 
+h1 {
+  font-size: 1.9em;
+  color: #333; }
+
+h2 {
+  font-size: 1.4em;
+  color: #666; }
+
+h3 {
+  color: #999;
+  font-size: 1.1em; }
+
+h4 {
+  color: #999;
+  font-size: 1em; }
+
 .clear {
   height: 1px;
   clear: both; }
@@ -60,7 +76,7 @@ th {
     display: table-cell;
     font-weight: bold;
     padding-right: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 2px;
     padding-top: 5px; }
   .attribute .value {
     display: table-cell; }
@@ -96,14 +112,15 @@ th {
 .progressbar {
   width: 300px; }
 
-#task {
+#task, #event {
   position: absolute;
   top: 200px;
   left: 200px; }
 
-#task_body {
-  padding: 10px; }
-  #task_body #task_controls {
+#task_body, #event_body {
+  padding: 10px;
+  max-width: 500px; }
+  #task_body #controls,   #event_body #controls {
     float: right; }
 
 .normal_day {

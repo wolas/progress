@@ -9,8 +9,9 @@
     %div
       %div{:style=>"float:right; width:10%;"}
         = link_to 'show', project_task_path(task.project, task)
-        %br
-        = link_to 'edit', edit_project_task_path(task.project, task)
+        - unless task.completed?
+          %br
+          = link_to 'edit', edit_project_task_path(task.project, task)
         %br
         - if task.completed?
           = link_to 'reopen', mark_open_task_path(task)
@@ -28,6 +29,9 @@
               .name Project:
               .value= link_to h(task.project.name), task.project
 
+          .attribute
+            .name Start date:
+            .value= task.start_date
           .attribute
             .name Date due:
             .value= task.end_date

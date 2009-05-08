@@ -33,6 +33,23 @@ a:hover
 th
   :text-align left
 
+h1
+  :font-size 1.9em
+  :color #333
+
+h2
+  :font-size 1.4em
+  :color #666
+
+h3
+  :color #999
+  :font-size 1.1em
+
+h4
+  :color #999
+  :font-size 1em
+
+
 .clear
   :height 1px
   :clear both
@@ -81,7 +98,7 @@ th
     :font-weight bold
     :padding
       :right 10px
-      :bottom 5px
+      :bottom 2px
       :top 5px
   .value
     :display table-cell
@@ -124,15 +141,16 @@ th
   :width 300px
 
 
-#task
+#task, #event
   :position absolute
   :top 200px
   :left 200px
 
-#task_body
+#task_body, #event_body
   :padding 10px
+  :max-width 500px
 
-  #task_controls
+  #controls
     :float right
 
 

@@ -1,5 +1,7 @@
 %h1
   Tasks for
   = link_to @user.login, @user
+%br
+%br
 
 = render :partial => 'tasks/list', :locals => {:tasks => @tasks, :show_project => true}

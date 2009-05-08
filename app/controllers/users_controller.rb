@@ -19,9 +19,11 @@ class UsersController < ApplicationController
   end
 
   def show
+    @show_timeline = true
     @user = @current_user
     @projects = @user.projects.all :conditions => {:closed => false}
-    @tasks = @user.tasks.all :conditions => {:completed => false}
+    @tasks = @user.tasks.open
+    @events = @user.events.in_future
   end
 
   def edit

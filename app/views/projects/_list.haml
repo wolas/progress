@@ -4,7 +4,8 @@
 .accordion
   - projects.each do |project|
     %h3{:style=>"font-size: 1.2em;"}
-      %a{:href=>"#", :style => project.style}=h project.name
+      %a{:href=>"#", :style => project.style}
+        =h project.name
 
     %div
       %div{:style=>"float:right; width:10%;"}
@@ -13,6 +14,8 @@
         = link_to 'edit', edit_project_path(project)
         %br
         = link_to 'new task', new_project_task_path(project)
+        %br
+        = link_to 'new event', new_project_event_path(project)
         %br
         = link_to 'destroy', project, :method => :delete, :confirm => "Are you sure?"
         %br
@@ -28,16 +31,28 @@
           = collection_widget_for project.users, nil, 2
 
         .two_col{:style=>"width:70%;"}
-          %script{:type=>"text/javascript"}
-            == $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
+          - unless project.tasks.empty?
+            %script{:type=>"text/javascript"}== $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
 
-          .progressbar{:id=>"progressbar#{project.id}"}
+            .progressbar{:id=>"progressbar#{project.id}"}
+
+            .attribute
+              .name Percentage:
+              .value
+                = project.percentage_complete
+                \%
 
           .attribute
-            .name Percentage:
+            .name Tasks:
             .value
-              = project.percentage_complete
-              \%
+              = project.tasks.completed.count
+              \/
+              = project.tasks.count
+
+          .attribute
+            .name Events:
+            .value
+              = project.events.count
 
           - unless @client
             - if project.client
@@ -46,17 +61,16 @@
                 .value= project.client.name
 
           .attribute
+            .name Colour:
+            .value
+              %div{:style => "width:50px;height:10px;background-color:##{project.colour};"}
+
+          .attribute
             .name Date due:
             .value= project.end_date
           .attribute
             .name Days remaining:
             .value= project.days_remaining
-          .attribute
-            .name Tasks:
-            .value
-              = project.tasks_remaining.count
-              \/
-              = project.tasks.count
 
           - if project.description?
             .attribute

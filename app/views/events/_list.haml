@@ -1,0 +1,36 @@
+- show_project ||= false
+
+%script{:type=>"text/javascript"} $(function() {$(".accordion").accordion()});
+
+.accordion
+  - events.each do |event|
+    %h3{:style=>"font-size: 1.2em;"}
+      %a{:href=>"#"}=h event.name
+    %div
+      %div{:style=>"float:right; width:10%;"}
+        = link_to 'show', project_event_path(event.project, event)
+        %br
+        = link_to 'edit', edit_project_event_path(event.project, event)
+
+      %div{:style=>"float:left; width:90%;"}
+
+        .two_col{:style=>"padding-right:20px; width:20%;"}
+          = collection_widget_for event.users, nil, 2
+
+        .two_col{:style=>"width:70%;"}
+          - if show_project
+            .attribute
+              .name Project:
+              .value= link_to h(event.project.name), event.project
+
+          .attribute
+            .name Date:
+            .value= event.date
+          .attribute
+            .name Time:
+            .value= event.time.strftime '%T'
+
+          - if event.description?
+            .attribute
+              .name Description:
+              .value= event.description

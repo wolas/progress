@@ -30,18 +30,33 @@
     - page[:edit_user_link].visual_effect :appear
 
 
-- if @tasks.empty?
-  %p You lucky person, you have no work assigned yet.
+.two_col{:style => 'padding-right: 10%;'}
+  - if @tasks.empty?
+    %p You lucky person, you have no work assigned yet.
 
-- else
-  %h3= link_to 'Tasks', user_tasks_path(@user)
-  = render :partial => 'tasks/list', :locals => {:tasks => @tasks}
+  - else
+    %h3= link_to 'Tasks', user_tasks_path(@user)
+    = render :partial => 'tasks/list', :locals => {:tasks => @tasks}
 
+.two_col
+  - if @events.empty?
+    %p No events to attend. Wohoo!
+
+  - else
+    %h3= link_to 'Events', user_events_path(@user)
+    = render :partial => 'events/list', :locals => {:events => @events}
+
+.clear
 
 - unless @projects.empty?
   %h3= link_to 'Projects', user_projects_path(@user)
   = render :partial => 'projects/list', :locals => {:projects => @projects}
 
+
 %hr
 
-= render :partial => 'calendars/calendar', :locals => {:tasks => @user.tasks.open}
+= render :partial => 'calendars/calendar', :locals => {:tasks => @user.tasks.open, :events => @user.events}
+
+%h2 Timeline
+
+= render :partial => 'calendars/timeline', :locals => {:height => 500}

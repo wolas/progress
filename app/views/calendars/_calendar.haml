@@ -5,6 +5,7 @@
 
 #calendar{:style => 'position:relative;'}
   #task.ui-widget-content.widget{:style => 'display: none;'}
+  #event.ui-widget-content.widget{:style => 'display: none;'}
 
   %table{:width => "100%"}
     %tr{:style => "text-align:center;"}
@@ -23,11 +24,20 @@
             - if day
               = day.day
               %br
+              - events_for_day = events.select {|event| event.happens_in day }
+              - tasks_for_day = tasks.select {|task| task.happens_in day }
 
-              - tasks_for_day = tasks.select{|task| task.happens_in day }
-              - tasks_for_day.each do |task|
-                = link_to_remote "#{task.project.name} - #{task.name}", :update => "task", :url => { :controller => 'calendars', :action => "task_details", :id => task}, :complete => "$('#task').show()"
+              - events_for_day.each do |event|
+                %span{:style => "display:inline;"}
+                  = image_tag 'pin.png'
+                  = event.time.strftime("%H:%M")
+                  = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
                 %br
+
+              - tasks_for_day.each do |task|
+                = link_to_remote "#{task.name}", {:update => "task", :url => { :controller => 'calendars', :action => "task_details", :id => task}, :complete => "$('#task').show()"}, :style => "color: ##{task.project.colour};"
+                %br
+
 
             - else
               &nbsp;

@@ -1,0 +1,11 @@
+%h1
+  - if @client
+    = link_to h(@client.name), @client
+    >
+  = link_to h(@project.name), @project, :style => @project.style
+  >
+  New Event
+
+= render :partial => 'form', :locals => {:event => @event }
+
+= link_to 'Back', events_path

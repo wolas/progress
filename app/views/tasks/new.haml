@@ -4,9 +4,7 @@
     >
   = link_to h(@project.name), @project, :style => @project.style
   >
-  %span{:style => @task.style}
-    New Task:
-    =h @task.name
+  New Task
 
 = render :partial => 'form', :locals => {:task => @task }
 
