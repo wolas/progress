@@ -5,7 +5,7 @@ class Task < ActiveRecord::Base
   has_many :comments, :as => :owner, :order => 'created_at DESC', :dependent => :destroy
 
   validates_presence_of :end_date, :start_date, :name, :project
-  validate_on_create :date_in_future
+  validate_on_create :dates_in_future
 
   named_scope :open, :conditions => {:completed => false}
   named_scope :completed, :conditions => {:completed => true}
@@ -19,9 +19,11 @@ class Task < ActiveRecord::Base
     description && !description.empty?
   end
 
-  def date_in_future
-    return unless end_date
-    errors.add(:end_date, "must be in the future") if late?
+  def dates_in_future
+    return unless end_date and start_date
+    errors.add(:end_date, "must be in the future") if end_date < Date.today
+    errors.add(:start_date, "must be in the future") if start_date < Date.today
+    errors.add(:start_date, "cannot be after the end date") if start_date > end_date
     errors.add(:end_date, "cannot be past the project end date") if end_date > project.end_date
   end
 

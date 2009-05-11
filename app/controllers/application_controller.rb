@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_user, :if => :secure?
 
+  include CalendarHelper
+
   private
   def secure?
     true

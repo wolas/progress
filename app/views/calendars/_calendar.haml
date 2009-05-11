@@ -1,9 +1,22 @@
-- some_day ||= Date.today
-- month = get_month(some_day)
-
-%h2= Date.today.inspect
-
 #calendar{:style => 'position:relative;'}
+
+  - some_day ||= Date.today
+  - month = get_month(some_day)
+  - events = object.events
+  - tasks = object.tasks
+
+  %h2
+    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_month", :current_day => some_day, :object_id => object.id, :object_type => object.class }, :update => 'calendar'
+    &nbsp;
+    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_month", :current_day => some_day, :object_id => object.id, :object_type => object.class }, :update => 'calendar'
+    &nbsp;
+    - if some_day.month == Date.today.month
+      = some_day.inspect
+    - else
+      = Date::MONTHNAMES[some_day.month]
+      = some_day.year
+
+
   #task.ui-widget-content.widget{:style => 'display: none;'}
   #event.ui-widget-content.widget{:style => 'display: none;'}
 
@@ -30,7 +43,7 @@
               - events_for_day.each do |event|
                 %span{:style => "display:inline;"}
                   = image_tag 'pin.png'
-                  = event.time.strftime("%H:%M")
+                  = event.time
                   = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
                 %br
 

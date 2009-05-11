@@ -75,4 +75,14 @@
           - if project.description?
             .attribute
               .name Description:
-              .value= project.description
+              .value
+                %div{:id => "description#{project.id}", :style => 'display:none;'}= project.description
+                = link_to_function 'show', :href => nil, :id => "show_description#{project.id}_link" do |page|
+                  - page[:"description#{project.id}"].visual_effect :blind_down, :duration => 0.5
+                  - page[:"show_description#{project.id}_link"].hide
+                  - page[:"hide_description#{project.id}_link"].visual_effect :appear
+
+                = link_to_function 'hide', :href => nil, :id => "hide_description#{project.id}_link", :style => "display:none;" do |page|
+                  - page[:"description#{project.id}"].visual_effect :blind_up, :duration => 0.5
+                  - page[:"hide_description#{project.id}_link"].hide
+                  - page[:"show_description#{project.id}_link"].visual_effect :appear

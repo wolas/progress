@@ -8,6 +8,11 @@ class Event < ActiveRecord::Base
 
   named_scope :in_future, :conditions => ['date > ?', Date.today]
 
+  def time
+    return unless date
+    date.strftime '%H:%M'
+  end
+
   def late?
     return unless date
     date < Date.today
@@ -24,10 +29,10 @@ class Event < ActiveRecord::Base
   end
 
   def happens_in day
-    date == day.to_date
+    date.to_date == day.to_date
   end
 
   def to_xml
-    "<event textColor='#000' color='##{project.colour}' caption='#{project.name}' title='#{name}' link='/projects/#{project.id}/events/#{id}' start='#{date.strftime("%a, %d %b %Y")} #{time.strftime("%T")}' isDuration='false'>#{description}</event>"
+    "<event textColor='#000' color='##{project.colour}' caption='#{project.name}' title='#{time} - #{name}' link='/projects/#{project.id}/events/#{id}' start='#{date.strftime("%a, %d %b %Y %T %Z")}'>#{description}</event>"
   end
 end

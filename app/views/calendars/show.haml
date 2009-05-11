@@ -1,3 +1,5 @@
 %h1 Calendar
 
-= render :partial => 'calendar', :locals => {:tasks => Task.all, :events => Event.all}
+%br
+
+= render :partial => 'calendar', :locals => {:object => @current_user}

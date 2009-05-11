@@ -47,7 +47,17 @@
     - if @project.description?
       .attribute
         .name Description:
-        .value= @project.description
+        .value
+          #description{:style => "display:none;"}= @project.description
+          = link_to_function 'show', :href => nil, :id => 'show_description_link' do |page|
+            - page[:description].visual_effect :blind_down, :duration => 0.5
+            - page[:show_description_link].hide
+            - page[:hide_description_link].visual_effect :appear
+
+          = link_to_function 'hide', :href => nil, :id => 'hide_description_link', :style => "display:none;" do |page|
+            - page[:description].visual_effect :blind_up, :duration => 0.5
+            - page[:hide_description_link].hide
+            - page[:show_description_link].visual_effect :appear
 
 
   .two_col
@@ -132,3 +142,7 @@
 
 - unless @project.events.empty?
   = render :partial => 'events/list', :locals => {:events => @project.events}
+
+
+
+= render :partial => 'calendars/calendar', :locals => {:object => @project}

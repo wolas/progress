@@ -55,7 +55,7 @@
 
 %hr
 
-= render :partial => 'calendars/calendar', :locals => {:tasks => @user.tasks.open, :events => @user.events}
+= render :partial => 'calendars/calendar', :locals => {:object => @user}
 
 %h2 Timeline
 

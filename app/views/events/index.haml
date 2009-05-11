@@ -1,7 +1,16 @@
 %h1
   Events for
-  = link_to @user.login, @user
+  = link_to @user.login, account_path
 %br
 %br
 
-= render :partial => 'events/list', :locals => {:events => @events, :show_project => true}
+  - if @user.events.empty?
+    %p You lucky person, you have no work assigned yet.
+
+  - else
+    %h3 Open
+    = render :partial => 'events/list', :locals => {:events => @user.events.in_future}
+
+
+.clear
+= render :partial => 'calendars/calendar', :locals => {:events => @user.events.in_future}

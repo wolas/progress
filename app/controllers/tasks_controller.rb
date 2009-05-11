@@ -3,7 +3,6 @@ class TasksController < ApplicationController
   # GET /tasks
   def index
     @user = User.find(params[:user_id])
-    @tasks = @user.tasks
   end
 
   # GET /tasks/1

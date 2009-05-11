@@ -1,7 +1,16 @@
 %h1
   Tasks for
-  = link_to @user.login, @user
+  = link_to @user.login, account_path
 %br
 %br
 
-= render :partial => 'tasks/list', :locals => {:tasks => @tasks, :show_project => true}
+  - if @user.tasks.empty?
+    %p You lucky person, you have no work assigned yet.
+
+  - else
+    %h3 Open
+    = render :partial => 'tasks/list', :locals => {:tasks => @user.tasks.open}
+
+
+.clear
+= render :partial => 'calendars/calendar', :locals => {:tasks => @user.tasks.open}

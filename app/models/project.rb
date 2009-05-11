@@ -26,10 +26,10 @@ class Project < ActiveRecord::Base
 
   def percentage_complete
     task = tasks.count
-    remaining = tasks.completed.count
-    completed = task - remaining
+    completed = tasks.completed.count
+    remaining = task - completed
 
-    return 0 if remaining == 0
+    return 100 if remaining == 0
     ((completed.to_f / task.to_f) * 100.00).to_i
   end
 
