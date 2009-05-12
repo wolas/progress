@@ -1,0 +1,36 @@
+#day
+  %h1
+    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_day", :current_day => date }, :update => 'day'
+    &nbsp;
+    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_day", :current_day => date }, :update => 'day'
+    &nbsp;
+    = date.strftime '%a, %d'
+    = link_to date.strftime('%b'), month_calendar_path
+    = date.strftime '%Y'
+
+
+  .two_col
+    %h2 Events
+
+    %table{:style => 'border: 1px dotted #999;'}
+      - (0..23).to_a.each do |hour|
+        - events_for_hour = events.select {|event| hour.eql? event.date.hour }
+
+        %tr
+          %td.hour_of_day
+            = hour
+            \:
+
+          %td.hour_of_day_expanded
+            - events_for_hour.each do |event|
+              = event.date.strftime "%M"
+              \-
+              = link_to event.name, event
+              %br
+  .two_col
+    %h2 Tasks
+    - if tasks.empty?
+      %p
+        %b No work for today! Go and read something.
+    - else
+      = render :partial => 'tasks/list', :locals => {:tasks => tasks}

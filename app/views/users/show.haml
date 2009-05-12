@@ -32,7 +32,7 @@
 
 .two_col{:style => 'padding-right: 10%;'}
   - if @tasks.empty?
-    %p You lucky person, you have no work assigned yet.
+    %b You lucky person, you have no work assigned yet.
 
   - else
     %h3= link_to 'Tasks', user_tasks_path(@user)
@@ -40,7 +40,7 @@
 
 .two_col
   - if @events.empty?
-    %p No events to attend. Wohoo!
+    %b No events to attend. Wohoo!
 
   - else
     %h3= link_to 'Events', user_events_path(@user)
@@ -55,7 +55,7 @@
 
 %hr
 
-= render :partial => 'calendars/calendar', :locals => {:object => @user}
+= render :partial => 'calendars/month', :locals => {:object => @user}
 
 %h2 Timeline
 

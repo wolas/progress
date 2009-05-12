@@ -37,9 +37,13 @@
             %br
             = link_to_unless_current 'Projects', projects_url
             |
-            = link_to_unless_current 'Calendar', calendar_url
-            %br
             = link_to_unless_current 'Timeline', timeline_url
+            %br
+            = link_to_unless_current 'Month', month_calendar_url
+            |
+            = link_to_unless_current 'Week', week_calendar_url
+            %br
+            = link_to_unless_current 'Day', day_calendar_url
 
     .flash
       - if notice = flash[:notice]

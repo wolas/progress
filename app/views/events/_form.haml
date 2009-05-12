@@ -16,7 +16,7 @@
 
       .attribute
         .name= f.label :date
-        .value= f.time_select :date,  {:minute_step => 15}
+        .value= f.time_select :date,  {:minute_step => 15, :ignore_date => true}
 
       .attribute
         .name= f.label :description

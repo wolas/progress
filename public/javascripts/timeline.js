@@ -1,25 +1,25 @@
 function onLoad() {
    var eventSource = new Timeline.DefaultEventSource();
    var bandInfos = [
-     Timeline.createBandInfo({
-       eventSource:    eventSource,
-       date:           Date(),
-       width:          "45%",
-       intervalUnit:   Timeline.DateTime.DAY,
-       intervalPixels: 200
-     }),
     Timeline.createBandInfo({
        eventSource:    eventSource,
        date:           Date(),
        width:          "35%",
-       intervalUnit:   Timeline.DateTime.WEEK,
+       intervalUnit:   Timeline.DateTime.HOUR,
+       intervalPixels: 200
+     }),
+     Timeline.createBandInfo({
+       eventSource:    eventSource,
+       date:           Date(),
+       width:          "55%",
+       intervalUnit:   Timeline.DateTime.DAY,
        intervalPixels: 200
      }),
      Timeline.createBandInfo({
        overview:       true,
        eventSource:    eventSource,
        date:           Date(),
-       width:          "20%",
+       width:          "10%",
        intervalUnit:   Timeline.DateTime.MONTH,
        intervalPixels: 300
      })

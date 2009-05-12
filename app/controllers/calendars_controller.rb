@@ -1,9 +1,35 @@
 class CalendarsController < ApplicationController
 
-  def show
+  def day
+    @date = params[:date] && params[:date].to_date || Date.today
+    @events = @current_user.events.select { |event| event.date.to_date.eql? @date}
+    @tasks = @current_user.tasks.open.select { |task| task.happens_in @date }
+  end
+
+  def week
+    @date = params[:date] && params[:date].to_date.beginning_of_week || Date.today.beginning_of_week
+    @week = (@date..@date.end_of_week).to_a
+    @events = @current_user.events
+  end
+
+  def month
     @today = Date.today
     @tasks = Task.all
     @events = Event.all
+  end
+
+  def previous_day
+    date = params[:current_day].to_date - 1
+    tasks = @current_user.tasks.open.select { |task| task.happens_in date }
+    events = @current_user.events.select { |event| event.date.to_date.eql? date}
+    render :partial => 'day', :locals => {:tasks => tasks, :events => events, :date => date}
+  end
+
+  def next_day
+    date = params[:current_day].to_date + 1
+    tasks = @current_user.tasks.open.select { |task| task.happens_in date }
+    events = @current_user.events.select { |event| event.date.to_date.eql? date}
+    render :partial => 'day', :locals => {:tasks => tasks, :events => events, :date => date}
   end
 
   def previous_month

@@ -7,6 +7,8 @@ class Event < ActiveRecord::Base
   validate_on_create :date_in_future
 
   named_scope :in_future, :conditions => ['date > ?', Date.today]
+  named_scope :for_date, lambda { |*args| {:conditions => {:date => args.first.to_date }} }
+
 
   def time
     return unless date

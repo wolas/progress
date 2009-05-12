@@ -29,6 +29,13 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
+    p_event = params[:event]
+    date = p_event[:date].to_date
+    p_event[:'date(1i)'] = date.year.to_s
+    p_event[:'date(2i)'] = date.month.to_s
+    p_event[:'date(3i)'] = date.day.to_s
+    p_event.delete(:date)
+
     @event = Event.new(params[:event])
 
     if @event.save

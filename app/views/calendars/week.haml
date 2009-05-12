@@ -1,0 +1,33 @@
+%h1
+  Week starting
+  = link_to @date.strftime('%a, %d'), day_calendar_path(:date => @date)
+  of
+  = link_to @date.strftime('%b'), month_calendar_path(:date => @date)
+
+
+%table{:width => "100%"}
+  %tr{:style => "text-align:center;"}
+    %th{:style => "text-align:center;"} Mon
+    %th{:style => "text-align:center;"} Tue
+    %th{:style => "text-align:center;"} Wed
+    %th{:style => "text-align:center;"} Thu
+    %th{:style => "text-align:center;"} Fri
+
+  %tr
+    - for day in @week
+      - next if day.wday.eql?(0) or day.wday.eql?(6)
+      %td{:class => Date.today == day ? 'today' : 'normal_day'}
+        %table{:style => 'border: 1px dotted #999;'}
+          - (0..23).to_a.each do |hour|
+            - events_for_hour = @events.select {|event| hour.eql? event.date.hour }
+
+            %tr
+              %td.hour_of_day
+                = "#{hour}:"
+
+              %td.hour_of_day_expanded
+                - events_for_hour.each do |event|
+                  = event.date.strftime "%M"
+                  \-
+                  = link_to event.name, event
+                  %br
