@@ -155,6 +155,11 @@ h4 {
   border-bottom: 1px dotted #666;
   width: 300px; }
 
+.this_week {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border: 1px solid red; }
+
 #errorExplanation {
   font-weight: bold;
   padding: 7px;
