@@ -1,16 +1,17 @@
-#week
+#week{:style => 'position:relative;'}
   - date = week.first
 
-  %h1
+  %h2
     = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_week", :current_day => date }, :update => 'week'
     &nbsp;
     = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_week", :current_day => date }, :update => 'week'
     &nbsp;
-    Week starting
+    starting
     = link_to date.strftime('%a, %d'), day_calendar_path(:date => date)
     of
     = link_to date.strftime('%b'), month_calendar_path(:date => date)
 
+  #event.ui-widget-content.widget{:style => 'display: none;'}
 
   %table{:width => "100%"}
     %tr{:style => "text-align:center;"}
@@ -40,5 +41,5 @@
                   - events_for_hour.each do |event|
                     = event.date.strftime "%M"
                     \-
-                    = link_to event.name, event
+                    = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
                     %br

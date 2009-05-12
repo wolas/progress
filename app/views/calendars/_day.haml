@@ -1,13 +1,15 @@
-#day
-  %h1
+#day{:style => 'position:relative;'}
+  %h2
     = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_day", :current_day => date }, :update => 'day'
     &nbsp;
     = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_day", :current_day => date }, :update => 'day'
     &nbsp;
     = date.strftime '%a, %d'
+    of
     = link_to date.strftime('%b'), month_calendar_path
     = date.strftime '%Y'
 
+  #event.ui-widget-content.widget{:style => 'display: none;'}
 
   .two_col
     %h2 Events
@@ -25,7 +27,7 @@
             - events_for_hour.each do |event|
               = event.date.strftime "%M"
               \-
-              = link_to event.name, event
+              = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
               %br
   .two_col
     %h2 Tasks
