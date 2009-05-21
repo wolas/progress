@@ -1,88 +1,99 @@
-%script{:type=>"text/javascript"}
-  $(function() {$(".accordion").accordion()});
-
-.accordion
+%table{:style => 'width:100%;'}
   - projects.each do |project|
-    %h3{:style=>"font-size: 1.2em;"}
-      %a{:href=>"#", :style => project.style}
-        =h project.name
+    %tr
+      %td{:style => 'width: 2%;'}
+        %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour}"}
 
-    %div
-      %div{:style=>"float:right; width:10%;"}
+      %td{:style => project.style + 'width: 15%;'}
+        = link_to_function project.name, :href => nil, :id => "show_project#{project.id}_link" do |page|
+          - page[:"project#{project.id}"].visual_effect :blind_down, :duration => 0.5
+          - page[:"show_project#{project.id}_link"].hide
+          - page[:"hide_project#{project.id}_link"].show
+
+        = link_to_function project.name, :href => nil, :id => "hide_project#{project.id}_link", :style => "display:none;" do |page|
+          - page[:"project#{project.id}"].visual_effect :blind_up, :duration => 0.5
+          - page[:"hide_project#{project.id}_link"].hide
+          - page[:"show_project#{project.id}_link"].show
+
+      %td{:style => 'width: 65%;'}
+        %script{:type=>"text/javascript"}== $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
+
+        .progressbar{:id=>"progressbar#{project.id}", :style => 'positions:relative;'}
+          %div{:style => 'position: absolute; padding-left: 120px;'}
+            %b
+              = project.percentage_complete
+              \%
+
+
+        %div{:id => "project#{project.id}", :style => 'display:none;'}
+          %br
+          .ui-widget-content.widget
+
+            .two_col{:style => 'width: 30%;'}
+              = collection_widget_for project.users, nil, 2
+
+            .two_col{:style => 'width: 70%;'}
+              %div{:style => 'float:right;'}
+
+                = link_to 'new event', new_project_event_path(project)
+                %br
+                = link_to 'new task', new_project_task_path(project)
+                %br
+                = link_to 'edit', edit_project_path(project)
+                %br
+                = link_to 'destroy', project, :method => :delete, :confirm => "Are you sure?"
+
+
+              .attribute
+                .name Tasks:
+                .value
+                  = project.tasks.completed.count
+                  \/
+                  = project.tasks.count
+
+              .attribute
+                .name Events:
+                .value
+                  = project.events.count
+
+              - unless @client
+                - if project.client
+                  .attribute
+                    .name Client:
+                    .value= project.client.name
+
+              .attribute
+                .name Colour:
+                .value
+                  %div{:style => "width:50px;height:10px;background-color:##{project.colour};"}
+
+              .attribute
+                .name Date due:
+                .value= project.end_date
+              .attribute
+                .name Days remaining:
+                .value= project.days_remaining
+
+              - if project.description?
+                .attribute
+                  .name Description:
+                  .value
+                    %div{:id => "description#{project.id}", :style => 'display:none;'}= project.description
+                    = link_to_function 'show', :href => nil, :id => "show_description#{project.id}_link" do |page|
+                      - page[:"description#{project.id}"].visual_effect :blind_down, :duration => 0.5
+                      - page[:"show_description#{project.id}_link"].hide
+                      - page[:"hide_description#{project.id}_link"].visual_effect :appear
+
+                    = link_to_function 'hide', :href => nil, :id => "hide_description#{project.id}_link", :style => "display:none;" do |page|
+                      - page[:"description#{project.id}"].visual_effect :blind_up, :duration => 0.5
+                      - page[:"hide_description#{project.id}_link"].hide
+                      - page[:"show_description#{project.id}_link"].visual_effect :appear
+            .clear
+
+      %td{:style => 'width: 10%;'}
         = link_to 'show', project
-        %br
-        = link_to 'edit', edit_project_path(project)
-        %br
-        = link_to 'new task', new_project_task_path(project)
-        %br
-        = link_to 'new event', new_project_event_path(project)
-        %br
-        = link_to 'destroy', project, :method => :delete, :confirm => "Are you sure?"
-        %br
+        |
         - if project.closed?
           = link_to 'reopen', reopen_project_path(project)
         - else
           = link_to 'close', close_project_path(project)
-
-
-      %div{:style=>"float:left; width:90%;"}
-
-        .two_col{:style=>"padding-right:20px; width:20%;"}
-          = collection_widget_for project.managers, nil, 2
-
-        .two_col{:style=>"width:70%;"}
-          - unless project.tasks.empty?
-            %script{:type=>"text/javascript"}== $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
-
-            .progressbar{:id=>"progressbar#{project.id}"}
-
-            .attribute
-              .name Percentage:
-              .value
-                = project.percentage_complete
-                \%
-
-          .attribute
-            .name Tasks:
-            .value
-              = project.tasks.completed.count
-              \/
-              = project.tasks.count
-
-          .attribute
-            .name Events:
-            .value
-              = project.events.count
-
-          - unless @client
-            - if project.client
-              .attribute
-                .name Client:
-                .value= project.client.name
-
-          .attribute
-            .name Colour:
-            .value
-              %div{:style => "width:50px;height:10px;background-color:##{project.colour};"}
-
-          .attribute
-            .name Date due:
-            .value= project.end_date
-          .attribute
-            .name Days remaining:
-            .value= project.days_remaining
-
-          - if project.description?
-            .attribute
-              .name Description:
-              .value
-                %div{:id => "description#{project.id}", :style => 'display:none;'}= project.description
-                = link_to_function 'show', :href => nil, :id => "show_description#{project.id}_link" do |page|
-                  - page[:"description#{project.id}"].visual_effect :blind_down, :duration => 0.5
-                  - page[:"show_description#{project.id}_link"].hide
-                  - page[:"hide_description#{project.id}_link"].visual_effect :appear
-
-                = link_to_function 'hide', :href => nil, :id => "hide_description#{project.id}_link", :style => "display:none;" do |page|
-                  - page[:"description#{project.id}"].visual_effect :blind_up, :duration => 0.5
-                  - page[:"hide_description#{project.id}_link"].hide
-                  - page[:"show_description#{project.id}_link"].visual_effect :appear
