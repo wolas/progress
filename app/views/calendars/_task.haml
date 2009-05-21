@@ -24,9 +24,12 @@
     .name End
     .value= task.end_date
 
-  .attribute
-    .name Description
-    .value= task.description
+  - if task.description?
+    .attribute
+      .name Description
+      .value= task.description
 
-
-  %p= render :partial => 'users/list', :locals => {:users => task.users}
+  - if task.users.empty?
+    %p No users assigned to this task
+  - else
+    %p= render :partial => 'users/list', :locals => {:users => task.users}

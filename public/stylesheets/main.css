@@ -10,6 +10,8 @@ body {
 a {
   color: orange;
   text-decoration: none; }
+  a img {
+    border: none; }
 
 a:hover {
   text-decoration: underline; }
@@ -113,10 +115,13 @@ h4 {
 .progressbar {
   width: 300px; }
 
+.flash {
+  width: 700px; }
+
 #task, #event {
   position: absolute;
   top: 100px;
-  left: 300px; }
+  left: 150px; }
 
 #task_body, #event_body {
   padding: 10px;

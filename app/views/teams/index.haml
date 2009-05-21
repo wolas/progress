@@ -1,0 +1,27 @@
+%h1 Listing teams
+
+= link_to_function 'New team', :href => new_team_path, :id => 'new_team_link' do |page|
+  - page[:create_team].visual_effect :blind_down, :duration => 0.5
+  - page[:new_team_link].hide
+  - page[:cancel_new_team_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_team_path, :id => 'cancel_new_team_link', :style => "display:none;" do |page|
+  - page[:create_team].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_team_link].hide
+  - page[:new_team_link].visual_effect :appear
+
+#create_team{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:team => Team.new }
+
+%table{:width => "100%"}
+  %tr
+    %th Name
+
+  -for team in @teams
+    %tr
+      %td= h team.name
+
+    
+      %td= link_to 'Show', team_path(team)
+      %td= link_to 'Edit', edit_team_path(team)
+      %td= link_to 'Destroy', team_path(team), :method => :delete

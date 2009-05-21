@@ -28,7 +28,7 @@
       %div{:style=>"float:left; width:90%;"}
 
         .two_col{:style=>"padding-right:20px; width:20%;"}
-          = collection_widget_for project.users, nil, 2
+          = collection_widget_for project.managers, nil, 2
 
         .two_col{:style=>"width:70%;"}
           - unless project.tasks.empty?

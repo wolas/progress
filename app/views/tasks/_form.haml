@@ -1,34 +1,25 @@
 %script{:type => "text/javascript"}
-  == $(function() {$("#task_end_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
-  == $(function() {$("#task_start_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
+  == $(function() {$("#task_end_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
+  == $(function() {$("#task_start_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
 
 .ui-widget-content.widget
   -form_for task do |f|
-    .two_col
-      = f.error_messages
+    = f.error_messages
 
-      .attribute
-        .name= f.label :name
-        .value= f.text_field :name
+    .attribute
+      .name= f.label :name
+      .value= f.text_field :name
 
-      .attribute
-        .name= f.label :start_date
-        .value= f.text_field :start_date
+    .attribute
+      .name= f.label :start_date
+      .value= f.text_field :start_date
 
-      .attribute
-        .name= f.label :end_date
-        .value= f.text_field :end_date
+    .attribute
+      .name= f.label :end_date
+      .value= f.text_field :end_date
 
-      .attribute
-        .name= f.label :description
-        .value.middle= f.text_area :description, :rows => 8
+    .attribute
+      .name= f.label :description
+      .value.middle= f.text_area :description, :rows => 8
 
-    .two_col
-      %h4 Assigned to
-
-      = render :partial => 'users/list', :locals => {:users => User.all, :object => task}
-
-
-    = f.hidden_field :project_id
-    .clear
     .task_submit_button= f.submit "Save"

@@ -1,0 +1,8 @@
+- object ||= nil
+
+.attribute
+  .value
+    = text_field_tag :name, nil, :id => :search
+
+
+= observe_field :search, :url => { :controller => 'users', :action => :search, :object_id => object.id, :object_class => object.class }, :frequency => 0.25, :update => :search_results, :with => 'name'

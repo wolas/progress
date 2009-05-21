@@ -1,12 +1,20 @@
 class Project < ActiveRecord::Base
 
   belongs_to :client
+
   has_many :tasks, :order => 'end_date ASC', :dependent => :destroy
-  has_many :events, :order => 'date ASC', :dependent => :destroy
+  has_many :events, :order => 'date DESC', :dependent => :destroy
+
   has_and_belongs_to_many :users
 
   validates_presence_of :end_date, :name, :colour
   validate_on_create :date_in_future
+
+  alias managers users
+
+  def people_involved
+    (tasks.map { |task| task.users } + events.map { |task| task.users }).flatten
+  end
 
   def late?
     end_date < Date.today
@@ -21,7 +29,7 @@ class Project < ActiveRecord::Base
   end
 
   def days_remaining
-    (end_date.to_date - Date.today).to_i
+    (end_date.to_date - Date.today).to_i + 1
   end
 
   def percentage_complete

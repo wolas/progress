@@ -76,7 +76,7 @@ class CalendarsController < ApplicationController
 
     data = "<data>"
     Task.open.each {|task| data += task.to_xml }
-    Event.in_future.each {|event| data += event.to_xml }
+    Event.all.each {|event| data += event.to_xml }
     data += "</data>"
 
     respond_to do |format|

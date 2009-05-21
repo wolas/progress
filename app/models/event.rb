@@ -16,8 +16,7 @@ class Event < ActiveRecord::Base
   end
 
   def late?
-    return unless date
-    date < Date.today
+    date and date < Date.today
   end
 
   def description?
@@ -32,6 +31,12 @@ class Event < ActiveRecord::Base
 
   def happens_in day
     date.to_date == day.to_date
+  end
+
+  def style
+    result = 'color: red;' if happens_in(Date.today)
+    result = 'text-decoration: line-through;' if late?
+    result or ''
   end
 
   def to_xml

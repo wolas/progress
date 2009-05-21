@@ -8,8 +8,8 @@
   %span{:style => @project.style}
     =h @project.name
 
-#project_show
-  .two_col
+.two_col
+  #project_show
     - unless @project.tasks.empty?
       %script{:type=>"text/javascript"}== $(function() {$("#progressbar").progressbar({value: #{@project.percentage_complete}});});
 
@@ -59,37 +59,36 @@
             - page[:hide_description_link].hide
             - page[:show_description_link].visual_effect :appear
 
+  #update_project{:style => 'display:none;'}
+    = render :partial => 'form', :locals => {:project => @project }
 
-  .two_col
-    %h3 Project Managers
-    = collection_widget_for @project.users
+  %p
+    = link_to_function 'Edit', :href => edit_project_path(@project), :id => "edit_project_link" do |page|
+      - page[:project_show].visual_effect :blind_up, :duration => 0.5
+      - page[:update_project].visual_effect :blind_down, :duration => 0.5
+      - page[:edit_project_link].hide
+      - page[:cancel_edit_project_link].visual_effect :appear
 
+    = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_project_link', :style => "display:none;" do |page|
+      - page[:project_show].visual_effect :blind_down, :duration => 0.5
+      - page[:update_project].visual_effect :blind_up, :duration => 0.5
+      - page[:cancel_edit_project_link].hide
+      - page[:edit_project_link].visual_effect :appear
+    |
+    = link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
+    |
+    - if @project.closed?
+      = link_to 'Reopen', reopen_project_path(@project)
+    - else
+      = link_to 'Close', close_project_path(@project)
 
-  .clear
+.two_col
+  %h3 Project Managers
 
+  = render :partial => 'users/manage', :locals => {:object => @project }
 
-#update_project{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:project => @project }
+.clear
 
-%p
-  = link_to_function 'Edit', :href => edit_project_path(@project), :id => "edit_project_link" do |page|
-    - page[:project_show].visual_effect :blind_up, :duration => 0.5
-    - page[:update_project].visual_effect :blind_down, :duration => 0.5
-    - page[:edit_project_link].hide
-    - page[:cancel_edit_project_link].visual_effect :appear
-
-  = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_project_link', :style => "display:none;" do |page|
-    - page[:project_show].visual_effect :blind_down, :duration => 0.5
-    - page[:update_project].visual_effect :blind_up, :duration => 0.5
-    - page[:cancel_edit_project_link].hide
-    - page[:edit_project_link].visual_effect :appear
-  |
-  = link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
-  |
-  - if @project.closed?
-    = link_to 'Reopen', reopen_project_path(@project)
-  - else
-    = link_to 'Close', close_project_path(@project)
 
 %br
 

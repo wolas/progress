@@ -1,0 +1,25 @@
+#manage_users
+  .two_col
+    - if object.users.empty?
+      No users assigned to this
+      = object.class.to_s.downcase
+      yet
+
+    - else
+      = render :partial => 'users/remove', :locals => {:object => object }
+
+  .two_col{:style => 'padding-left: 20px;'}
+    .attribute
+      .name Search
+      .value
+        = text_field_tag :name, nil, :id => :search
+        = observe_field :search, :url => { :controller => 'users', :action => :search, :object_id => object.id, :object_class => object.class }, :frequency => 0.25, :update => :users, :with => 'name'
+
+    #users
+      - to_add = User.all - object.users
+      - if to_add.empty?
+        No one left to be assigned!
+      - else
+        = render :partial => 'users/add', :locals => {:object => object, :users => to_add }
+
+  .clear

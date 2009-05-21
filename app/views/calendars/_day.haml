@@ -1,3 +1,5 @@
+- events = events.select {|event| event.happens_in(date) }
+
 #day{:style => 'position:relative;'}
   %h2
     = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_day", :current_day => date }, :update => 'day'
@@ -8,8 +10,6 @@
     of
     = link_to date.strftime('%b'), month_calendar_path
     = date.strftime '%Y'
-
-  #event.ui-widget-content.widget{:style => 'display: none;'}
 
   .two_col
     %h2 Events
@@ -36,3 +36,4 @@
         %b No work for today! Go and read something.
     - else
       = render :partial => 'tasks/list', :locals => {:tasks => tasks}
+  .clear

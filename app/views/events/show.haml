@@ -7,8 +7,8 @@
   =h @event.name
 
 
-#event_show
-  .two_col
+.two_col
+  #event_show
     .attribute
       .name Date:
       .value=h @event.date
@@ -24,25 +24,26 @@
         .name Description:
         .value= @event.description
 
-  .two_col
-    %h3 Assigned to
-    = collection_widget_for @event.users
+  #update_event{:style => 'display:none;'}
+    = render :partial => 'form', :locals => {:event => @event }
 
-  .clear
+  = link_to_function 'Edit', :href => edit_event_path(@event), :id => "edit_event_link" do |page|
+    - page[:event_show].visual_effect :blind_up, :duration => 0.5
+    - page[:update_event].visual_effect :blind_down, :duration => 0.5
+    - page[:edit_event_link].hide
+    - page[:cancel_edit_event_link].visual_effect :appear
 
-#update_event{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:event => @event }
+  = link_to_function 'Cancel', :href => edit_event_path(@event), :id => 'cancel_edit_event_link', :style => "display:none;" do |page|
+    - page[:event_show].visual_effect :blind_down, :duration => 0.5
+    - page[:update_event].visual_effect :blind_up, :duration => 0.5
+    - page[:cancel_edit_event_link].hide
+    - page[:edit_event_link].visual_effect :appear
 
-= link_to_function 'Edit', :href => edit_event_path(@event), :id => "edit_event_link" do |page|
-  - page[:event_show].visual_effect :blind_up, :duration => 0.5
-  - page[:update_event].visual_effect :blind_down, :duration => 0.5
-  - page[:edit_event_link].hide
-  - page[:cancel_edit_event_link].visual_effect :appear
+.two_col
+  %h3 Assigned to
 
-= link_to_function 'Cancel', :href => edit_event_path(@event), :id => 'cancel_edit_event_link', :style => "display:none;" do |page|
-  - page[:event_show].visual_effect :blind_down, :duration => 0.5
-  - page[:update_event].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_edit_event_link].hide
-  - page[:edit_event_link].visual_effect :appear
+  = render :partial => 'users/manage', :locals => {:object => @event }
+
+.clear
 
 %p= render :partial => 'comments/list', :locals => {:comments => @event.comments, :owner => @event}

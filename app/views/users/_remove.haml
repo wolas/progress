@@ -1,0 +1,7 @@
+%table
+  - object.users.each do |user|
+    %tr
+      %td
+        %span
+          = render :partial => "users/widget", :locals => {:user => user}
+          = link_to_remote image_tag('cross.png'), :url => {:controller => 'users', :action => :remove_user, :object_id => object, :object_class => object.class, :user => user}, :update => 'manage_users'

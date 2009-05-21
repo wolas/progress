@@ -1,0 +1,22 @@
+#team_show
+  .attribute
+    .name Name:
+    .value=h @team.name 
+
+#update_team{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:team => @team }
+
+= link_to_function 'Edit', :href => edit_team_path(@team), :id => "edit_team_link" do |page|
+  - page[:team_show].visual_effect :blind_up, :duration => 0.5
+  - page[:update_team].visual_effect :blind_down, :duration => 0.5
+  - page[:edit_team_link].hide
+  - page[:cancel_edit_team_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => edit_team_path(@team), :id => 'cancel_edit_team_link', :style => "display:none;" do |page|
+  - page[:team_show].visual_effect :blind_down, :duration => 0.5
+  - page[:update_team].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_edit_team_link].hide
+  - page[:edit_team_link].visual_effect :appear
+
+|
+= link_to 'Back', teams_path

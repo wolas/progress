@@ -5,7 +5,7 @@
 .accordion
   - events.each do |event|
     %h3{:style=>"font-size: 1.2em;"}
-      %a{:href=>"#"}=h event.name
+      %a{:style => event.style, :href=>"#"}=h event.name
     %div
       %div{:style=>"float:right; width:10%;"}
         = link_to 'show', project_event_path(event.project, event)

@@ -5,13 +5,11 @@
 
 %p
   = link_to_function 'Edit', :href => edit_client_path(@client), :id => "edit_client_link" do |page|
-    - page[:client_show].visual_effect :blind_up, :duration => 0.5
     - page[:update_client].visual_effect :blind_down, :duration => 0.5
     - page[:edit_client_link].hide
     - page[:cancel_edit_client_link].visual_effect :appear
 
   = link_to_function 'Cancel', :href => edit_client_path(@client), :id => 'cancel_edit_client_link', :style => "display:none;" do |page|
-    - page[:client_show].visual_effect :blind_down, :duration => 0.5
     - page[:update_client].visual_effect :blind_up, :duration => 0.5
     - page[:cancel_edit_client_link].hide
     - page[:edit_client_link].visual_effect :appear

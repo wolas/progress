@@ -1,0 +1,20 @@
+%h1 Dashboard
+
+%br
+%br
+%br
+%br
+
+%script{:type => "text/javascript"}
+  $(function() { $("#tabs").tabs().find(".ui-tabs-nav").sortable({axis:'x'}); });
+  $(function() {$(".draggable").draggable();});
+
+
+#tabs
+  %ul
+    %li
+      %a{:href => "dashboard/get_month"} Month
+    %li
+      %a{:href => "dashboard/get_week"} Week
+    %li
+      %a{:href => "dashboard/get_day"} Day

@@ -1,5 +1,25 @@
 class UsersController < ApplicationController
 
+  def search
+    object = Kernel.eval( params[:object_class] ).find params[:object_id]
+    users = User.all(:conditions => ["login LIKE ?", "%#{params[:name]}%"]) - object.users
+    render( users.empty? ? {:text => "No Users found!"} : {:partial => 'add', :locals => {:users => users, :object => object}})
+  end
+
+  def remove_user
+    object = Kernel.eval( params[:object_class] ).find params[:object_id]
+    user = User.find params[:user]
+    object.users.delete user
+    render :partial => 'users/manage', :locals => {:object => object }
+  end
+
+  def add_user
+    object = Kernel.eval( params[:object_class] ).find params[:object_id]
+    user = User.find params[:user]
+    object.users << user
+    render :partial => 'users/manage', :locals => {:object => object }
+  end
+
   def index
     @users = User.all
   end

@@ -1,33 +1,27 @@
 %script{:type => "text/javascript"}
-  == $(function() {$("#event_date").datepicker({minDate: 0, maxDate: #{event.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
+  == $(function() {$("#event_date").datepicker({minDate: 0, maxDate: #{event.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
 
 .ui-widget-content.widget
   -form_for event do |f|
-    .two_col
-      = f.error_messages
+    = f.error_messages
 
-      .attribute
-        .name= f.label :name
-        .value= f.text_field :name
+    .attribute
+      .name= f.label :name
+      .value= f.text_field :name
 
-      .attribute
-        .name= f.label :date
-        .value= f.text_field :date
+    .attribute
+      .name= f.label :date
+      .value= f.text_field :date
 
-      .attribute
-        .name= f.label :date
-        .value= f.time_select :date,  {:minute_step => 15, :ignore_date => true}
+    .attribute
+      .name= f.label :time
+      .value= f.time_select :date,  {:minute_step => 15, :ignore_date => true}
 
-      .attribute
-        .name= f.label :description
-        .value.middle= f.text_area :description, :rows => 8
-
-    .two_col
-      %h4 Assigned to
-
-      = render :partial => 'users/list', :locals => {:users => User.all, :object => event}
+    .attribute
+      .name= f.label :description
+      .value.middle= f.text_area :description, :rows => 8
 
 
     = f.hidden_field :project_id
-    .clear
+
     .event_submit_button= f.submit "Save"

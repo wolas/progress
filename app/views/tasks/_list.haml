@@ -35,9 +35,12 @@
           .attribute
             .name Date due:
             .value= task.end_date
+
           .attribute
-            .name Days remaining:
-            .value= task.days_remaining
+            .name
+              Days
+              = task.days_remaining < 0 ? 'ago:' : 'remaining:'
+            .value= task.days_remaining.abs
 
           - if task.description?
             .attribute

@@ -8,8 +8,8 @@
     =h @task.name
 
 
-#task_show
-  .two_col
+.two_col
+  #task_show
     .attribute
       .name Start date:
       .value=h @task.start_date
@@ -28,31 +28,33 @@
         .name Description:
         .value= @task.description
 
-  .two_col
-    %h3 Assigned to
-    = collection_widget_for @task.users
+  #update_task{:style => 'display:none;'}
+    = render :partial => 'form', :locals => {:task => @task }
 
-  .clear
+  = link_to_function 'Edit', :href => edit_task_path(@task), :id => "edit_task_link" do |page|
+    - page[:task_show].visual_effect :blind_up, :duration => 0.5
+    - page[:update_task].visual_effect :blind_down, :duration => 0.5
+    - page[:edit_task_link].hide
+    - page[:cancel_edit_task_link].visual_effect :appear
 
-#update_task{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:task => @task }
+  = link_to_function 'Cancel', :href => edit_task_path(@task), :id => 'cancel_edit_task_link', :style => "display:none;" do |page|
+    - page[:task_show].visual_effect :blind_down, :duration => 0.5
+    - page[:update_task].visual_effect :blind_up, :duration => 0.5
+    - page[:cancel_edit_task_link].hide
+    - page[:edit_task_link].visual_effect :appear
 
-= link_to_function 'Edit', :href => edit_task_path(@task), :id => "edit_task_link" do |page|
-  - page[:task_show].visual_effect :blind_up, :duration => 0.5
-  - page[:update_task].visual_effect :blind_down, :duration => 0.5
-  - page[:edit_task_link].hide
-  - page[:cancel_edit_task_link].visual_effect :appear
+  |
+  - if @task.completed?
+    = link_to 'reopen', mark_open_task_path(@task)
+  - else
+    = link_to 'mark completed', mark_completed_task_path(@task)
 
-= link_to_function 'Cancel', :href => edit_task_path(@task), :id => 'cancel_edit_task_link', :style => "display:none;" do |page|
-  - page[:task_show].visual_effect :blind_down, :duration => 0.5
-  - page[:update_task].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_edit_task_link].hide
-  - page[:edit_task_link].visual_effect :appear
+.two_col
+  %h3 Assigned to
 
-|
-- if @task.completed?
-  = link_to 'reopen', mark_open_task_path(@task)
-- else
-  = link_to 'mark completed', mark_completed_task_path(@task)
+  = render :partial => 'users/manage', :locals => {:object => @task }
+
+.clear
+
 
 %p= render :partial => 'comments/list', :locals => {:comments => @task.comments, :owner => @task}

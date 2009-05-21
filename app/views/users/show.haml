@@ -40,7 +40,10 @@
 
 .two_col
   - if @events.empty?
-    %b No events to attend. Wohoo!
+    %b
+      No
+      = link_to 'events', user_events_path(@user)
+      to attend. Wohoo!
 
   - else
     %h3= link_to 'Events', user_events_path(@user)

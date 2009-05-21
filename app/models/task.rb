@@ -24,11 +24,11 @@ class Task < ActiveRecord::Base
     errors.add(:end_date, "must be in the future") if end_date < Date.today
     errors.add(:start_date, "must be in the future") if start_date < Date.today
     errors.add(:start_date, "cannot be after the end date") if start_date > end_date
-    errors.add(:end_date, "cannot be past the project end date") if end_date > project.end_date
+    errors.add(:end_date, "cannot be past the project end date") if project and end_date > project.end_date
   end
 
   def days_remaining
-    (end_date.to_date - Date.today).to_i
+    (end_date.to_date - Date.today).to_i + 1
   end
 
   def style

@@ -15,9 +15,6 @@
       = javascript_include_tag "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true"
       = javascript_include_tag 'timeline'
 
-
-
-
   %body{:onload=> 'onLoad();', :onresize=> 'onResize();'}
     - if logged_in?
       #user_badge.ui-widget-content.widget
@@ -44,6 +41,8 @@
             = link_to_unless_current 'Week', week_calendar_url
             %br
             = link_to_unless_current 'Day', day_calendar_url
+            |
+            = link_to_unless_current 'Dashboard', dashboard_url
 
     .flash
       - if notice = flash[:notice]
@@ -58,4 +57,7 @@
             %span{:class => "ui-icon ui-icon-alert", :style => "float: left; margin-right: 0.3em;"}
             = error
 
+    %script{:type => "text/javascript"} $(function() {$(".draggable").draggable();});
+    #event.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
+    #task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
     #content= yield

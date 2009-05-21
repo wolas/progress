@@ -1,6 +1,6 @@
 %script{:type => "text/javascript"}
   //<![CDATA[
-  $(function() {$("#project_end_date").datepicker({minDate: 0, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/calendar.gif', buttonImageOnly: true});});
+  $(function() {$("#project_end_date").datepicker({minDate: 0, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
 
   $('#colorpicker').ColorPicker({
   color: '#0000ff',
@@ -14,40 +14,30 @@
   });
   //]]>
 
-
-
-.clear
-
 .ui-widget-content.widget
   -form_for project do |f|
-    .two_col
-      = f.error_messages
+    = f.error_messages
 
-      .attribute
-        .name= f.label :client
-        .value= f.collection_select :client_id, Client.all, :id, :name, {:include_blank => "None"}
+    .attribute
+      .name= f.label :client
+      .value= f.collection_select :client_id, Client.all, :id, :name, {:include_blank => "None"}
 
-      .attribute
-        .name= f.label :name
-        .value= f.text_field :name
-      .attribute
-        .name= f.label :end_date
-        .value= f.text_field :end_date
+    .attribute
+      .name= f.label :name
+      .value= f.text_field :name
+    .attribute
+      .name= f.label :end_date
+      .value= f.text_field :end_date
 
-      .attribute
-        .name= f.label :description
-        .middle.value= f.text_area :description, :rows => 8, :cols => 35
+    .attribute
+      .name= f.label :description
+      .middle.value= f.text_area :description, :rows => 8, :cols => 35
 
-      .attribute
-        .name= f.label :colour
-        .value
-          = f.text_field :colour
-          = image_tag 'colorpicker/select.png', :width => '15x', :id => 'colorpicker'
+    .attribute
+      .name= f.label :colour
+      .value
+        = f.text_field :colour
+        = image_tag 'colorpicker/select.png', :width => '15x', :id => 'colorpicker'
 
-    .two_col
-      %h4 Project Managers
 
-      = collection_widget_for User.all, project
-
-    .clear
     .project_submit_button= f.submit "Save"

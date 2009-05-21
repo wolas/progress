@@ -13,4 +13,4 @@
 
 
 .clear
-= render :partial => 'calendars/calendar', :locals => {:events => @user.events.in_future}
+= render :partial => 'calendars/month', :locals => {:object => @user}
