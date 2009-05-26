@@ -22,4 +22,6 @@
       .name= f.label :description
       .value.middle= f.text_area :description, :rows => 8
 
+    = hidden_field_tag 'task[project_id]', task.project.id
+
     .task_submit_button= f.submit "Save"

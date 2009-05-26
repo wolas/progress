@@ -1,10 +1,10 @@
 %table{:style => 'width:100%;'}
   - projects.each do |project|
     %tr
-      %td{:style => 'width: 2%;'}
+      %td.project_row{:style => 'width: 2%;'}
         %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour}"}
 
-      %td{:style => project.style + 'width: 15%;'}
+      %td.project_row{:style => project.style + 'width: 15%;'}
         = link_to_function project.name, :href => nil, :id => "show_project#{project.id}_link" do |page|
           - page[:"project#{project.id}"].visual_effect :blind_down, :duration => 0.5
           - page[:"show_project#{project.id}_link"].hide
@@ -15,15 +15,17 @@
           - page[:"hide_project#{project.id}_link"].hide
           - page[:"show_project#{project.id}_link"].show
 
-      %td{:style => 'width: 65%;'}
+      %td.project_row{:style => 'width: 65%;'}
         %script{:type=>"text/javascript"}== $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
 
         .progressbar{:id=>"progressbar#{project.id}", :style => 'positions:relative;'}
-          %div{:style => 'position: absolute; padding-left: 120px;'}
+          %div{:style => 'position: absolute; padding-left: 135px;padding-top: 5px;'}
             %b
               = project.percentage_complete
               \%
 
+          %div{:style => 'position: absolute; padding-left: 230px;padding-top: 5px;'}
+            = project.end_date
 
         %div{:id => "project#{project.id}", :style => 'display:none;'}
           %br
@@ -90,7 +92,7 @@
                       - page[:"show_description#{project.id}_link"].visual_effect :appear
             .clear
 
-      %td{:style => 'width: 10%;'}
+      %td.project_row{:style => 'width: 10%;'}
         = link_to 'show', project
         |
         - if project.closed?

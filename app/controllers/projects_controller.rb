@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
 
     if @project.save
       flash[:notice] = 'Project was successfully created.'
-      redirect_to( @project.client ? @project.client : @project )
+      redirect_to @project
     else
       render :action => "new"
     end
