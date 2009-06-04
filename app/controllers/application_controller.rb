@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user, :logged_in?
+  helper_method :current_user_session, :current_user, :logged_in?, :admin?
 
   before_filter :require_user, :if => :secure?
 
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   private
   def secure?
     true
+  end
+
+  def admin? role = :root
+    current_user.has_role? role
   end
 
   def logged_in?

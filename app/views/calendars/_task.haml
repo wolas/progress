@@ -32,4 +32,4 @@
   - if task.users.empty?
     %p No users assigned to this task
   - else
-    %p= render :partial => 'users/list', :locals => {:users => task.users}
+    %p= render :partial => 'users/list', :locals => {:users => task.users, :groups => 3}

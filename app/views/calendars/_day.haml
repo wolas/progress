@@ -35,5 +35,5 @@
       %p
         %b No work for today! Go and read something.
     - else
-      = render :partial => 'tasks/list', :locals => {:tasks => tasks}
+      = render :partial => 'tasks/list', :locals => {:tasks => tasks.select { |task| task.happens_in date } }
   .clear

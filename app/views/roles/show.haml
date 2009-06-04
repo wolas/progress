@@ -1,0 +1,22 @@
+#role_show
+  .attribute
+    .name Name:
+    .value=h @role.name 
+
+#update_role{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:role => @role }
+
+= link_to_function 'Edit', :href => edit_role_path(@role), :id => "edit_role_link" do |page|
+  - page[:role_show].visual_effect :blind_up, :duration => 0.5
+  - page[:update_role].visual_effect :blind_down, :duration => 0.5
+  - page[:edit_role_link].hide
+  - page[:cancel_edit_role_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => edit_role_path(@role), :id => 'cancel_edit_role_link', :style => "display:none;" do |page|
+  - page[:role_show].visual_effect :blind_down, :duration => 0.5
+  - page[:update_role].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_edit_role_link].hide
+  - page[:edit_role_link].visual_effect :appear
+
+|
+= link_to 'Back', roles_path

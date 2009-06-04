@@ -1,20 +1,11 @@
-%h1 Dashboard
+- unless @projects.empty?
+  %h2= link_to 'Projects', user_projects_path(@user)
+  = render :partial => 'projects/list', :locals => {:projects => @projects}
 
-%br
-%br
-%br
-%br
+%hr
 
-%script{:type => "text/javascript"}
-  $(function() { $("#tabs").tabs().find(".ui-tabs-nav").sortable({axis:'x'}); });
-  $(function() {$(".draggable").draggable();});
+= render :partial => 'calendars/tabs'
 
+%h2 Timeline
 
-#tabs
-  %ul
-    %li
-      %a{:href => "dashboard/get_month"} Month
-    %li
-      %a{:href => "dashboard/get_week"} Week
-    %li
-      %a{:href => "dashboard/get_day"} Day
+= render :partial => 'calendars/timeline', :locals => {:height => 500}

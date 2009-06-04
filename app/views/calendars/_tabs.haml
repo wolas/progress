@@ -1,0 +1,13 @@
+%script{:type => "text/javascript"}
+  $(function() { $("#tabs").tabs().find(".ui-tabs-nav").sortable({axis:'x'}); });
+  $(function() {$(".draggable").draggable();});
+
+
+#tabs
+  %ul
+    %li
+      %a{:href => "calendars/get_month"} Month
+    %li
+      %a{:href => "calendars/get_day"} Day
+    %li
+      %a{:href => "calendars/get_week"} Week

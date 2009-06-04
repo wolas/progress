@@ -16,33 +16,36 @@
       = javascript_include_tag 'timeline'
 
   %body{:onload=> 'onLoad();', :onresize=> 'onResize();'}
-    - if logged_in?
-      #user_badge.ui-widget-content.widget
-        .two_col
-          %span
-            = image_tag gravatar_url(current_user.email), :style => "vertical-align:middle;"
-            = link_to h(current_user.login), current_user
-        .two_col
-          #user_menu
-            = link_to 'Logout', logout_url
-            |
-            = link_to 'Account', account_url
-            %br
-            = link_to_unless_current 'Users', users_url
-            |
-            = link_to_unless_current 'Clients', clients_url
-            %br
-            = link_to_unless_current 'Projects', projects_url
-            |
-            = link_to_unless_current 'Timeline', timeline_url
-            %br
-            = link_to_unless_current 'Month', month_calendar_url
-            |
-            = link_to_unless_current 'Week', week_calendar_url
-            %br
-            = link_to_unless_current 'Day', day_calendar_url
-            |
-            = link_to_unless_current 'Dashboard', dashboard_url
+    #header
+      #logo= image_tag 'logo.png'
+
+      - if logged_in?
+        %div{:class=>"corner userbox"}
+          .box
+            .gravatar= gravatar_for current_user, :width => '40'
+            .top
+              .name= link_to current_user.name
+              .links
+                = link_to 'Logout', logout_url
+                |
+                = link_to 'Account', account_url
+                |
+                = link_to_unless_current 'Dashboard', dashboard_url
+
+            .bottom
+              .select
+                .site_links
+                  = link_to_unless_current 'Users', users_url
+                  |
+                  = link_to_unless_current 'Clients', clients_url
+                  |
+                  = link_to_unless_current 'Projects', projects_url
+                  - if admin?
+                    %br
+                    = link_to_unless_current 'Roles', roles_url
+
+              .inbox
+                %span Foo
 
     .flash
       - if notice = flash[:notice]
@@ -60,4 +63,5 @@
     %script{:type => "text/javascript"} $(function() {$(".draggable").draggable();});
     #event.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
     #task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
+
     #content= yield

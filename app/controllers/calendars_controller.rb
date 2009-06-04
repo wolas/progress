@@ -1,5 +1,16 @@
 class CalendarsController < ApplicationController
 
+  def get_week
+    date = params[:date] && params[:date].to_date.beginning_of_week || Date.today.beginning_of_week
+    week = (date..date.end_of_week).to_a
+    render :partial => 'calendars/week', :locals => {:week => week, :events => @current_user.events }
+  end
+
+  def get_day
+    date = Date.today
+    render :partial => 'calendars/day', :locals => {:date => date, :events => @current_user.events, :tasks => @current_user.tasks.open}
+  end
+
   def day
     @date = params[:date] && params[:date].to_date || Date.today
     @events = @current_user.events.select { |event| event.date.to_date.eql? @date}
@@ -49,13 +60,23 @@ class CalendarsController < ApplicationController
   def previous_month
     klass = Kernel.eval params[:object_type]
     object = klass.find params[:object_id]
-    render :partial => 'month', :locals => {:some_day => params[:current_day].to_date.last_month, :object => object}
+    render :partial => 'month', :locals => {:state => params[:state], :date => params[:current_day].to_date.last_month, :object => object}
   end
 
   def next_month
     klass = Kernel.eval params[:object_type]
     object = klass.find params[:object_id]
-    render :partial => 'month', :locals => {:some_day => params[:current_day].to_date.next_month, :object => object}
+    render :partial => 'month', :locals => {:state => params[:state], :date => params[:current_day].to_date.next_month, :object => object}
+  end
+
+  def filter
+    klass = Kernel.eval params[:object_type]
+    object = klass.find params[:object_id]
+    render :partial => 'month', :locals => {:object => object, :date => params[:date].to_date, :state => params[:state]}
+  end
+
+  def get_month
+    render :partial => 'calendars/month', :locals => {:object => @current_user}
   end
 
   def timeline

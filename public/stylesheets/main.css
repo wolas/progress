@@ -1,10 +1,74 @@
 body {
+  margin: 0;
+  padding: 0;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 0.9em;
-  padding-left: 50px;
-  padding-right: 50px; }
+  font-size: 0.9em; }
+
+#header {
+  background: #fcfcfc url(/images/header_bg.png) 0 100% repeat-x;
+  height: 6.82em;
+  min-width: 75em;
+  border-bottom: 5px solid #dddddd;
+  margin-bottom: 1em; }
+  #header #logo {
+    float: left;
+    margin-top: 1em;
+    margin-left: 4em; }
+  #header .userbox {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background: #EAF2F5;
+    border: 1px solid #ddd;
+    float: right;
+    margin-top: 1.2em;
+    margin-right: 4em;
+    width: 25em;
+    color: #aac; }
+    #header .userbox .box {
+      margin: .25em .5em .25em .5em; }
+    #header .userbox .gravatar {
+      float: left;
+      padding: .2em; }
+      #header .userbox .gravatar img {
+        border: 1px solid #d0d0d0;
+        padding: 2px;
+        background-color: white;
+        margin-right: .7em; }
+    #header .userbox .top {
+      overflow: hidden; }
+      #header .userbox .top .name {
+        float: left;
+        overflow: hidden;
+        font-weight: bold;
+        width: 5em; }
+        #header .userbox .top .name a {
+          color: #000; }
+      #header .userbox .top .links {
+        font-size: 85%;
+        margin-top: .2em;
+        float: right;
+        text-align: right; }
+        #header .userbox .top .links a {
+          color: #4183c4; }
+        #header .userbox .top .links a:hover {
+          text-decoration: underline; }
+    #header .userbox a {
+      color: #4183c4; }
+    #header .userbox .bottom {
+      overflow: hidden; }
+      #header .userbox .bottom .select {
+        float: right;
+        margin-top: .5em; }
+    #header .userbox .inbox {
+      float: left;
+      margin-top: .7em; }
+      #header .userbox .inbox a {
+        padding-left: 20px;
+        display: block; }
 
 #content {
+  padding-left: 4em;
+  padding-right: 4em;
   margin-top: 20px; }
 
 a {
@@ -147,9 +211,6 @@ h4 {
   vertical-align: top;
   border: 1px solid red; }
 
-.fieldWithErrors {
-  color: red; }
-
 .hour_of_day {
   border-right: 1px solid #333;
   padding-left: 5px;
@@ -168,6 +229,9 @@ h4 {
 .project_row {
   padding-bottom: 10px;
   padding-top: 5px; }
+
+.fieldWithErrors {
+  color: red; }
 
 #errorExplanation {
   font-weight: bold;

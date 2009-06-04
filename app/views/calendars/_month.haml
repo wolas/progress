@@ -1,23 +1,24 @@
 #calendar{:style => 'position:relative;'}
 
-  - some_day ||= Date.today
-  - month = get_month(some_day)
+  - date ||= Date.today
+  - month = get_month(date)
+  - state ||= 'open'
+  - tasks = object.tasks_with_state state
   - events = object.events
-  - tasks = object.tasks
 
   %h2
-    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_month", :current_day => some_day, :object_id => object.id, :object_type => object.class }, :update => 'calendar'
+    = select_tag 'state', options_for_select(['all', 'open', 'closed'], state)
+    = observe_field :state, :url => { :controller => 'calendars', :action => :filter }, :frequency => 0.25, :update => :calendar, :with => "'state=' + value + '&object_type=#{object.class}&object_id=#{object.id}&date=#{date}'"
+    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_month", :current_day => date, :object_id => object.id, :object_type => object.class, :state => state }, :update => 'calendar'
     &nbsp;
-    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_month", :current_day => some_day, :object_id => object.id, :object_type => object.class }, :update => 'calendar'
+    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_month", :current_day => date, :object_id => object.id, :object_type => object.class, :state => state }, :update => 'calendar'
     &nbsp;
-    - if some_day.month == Date.today.month
-      = some_day.inspect
-    - else
-      = Date::MONTHNAMES[some_day.month]
-      = some_day.year
 
-  #event.ui-widget-content.widget{:style => 'display: none;'}
-  #task.ui-widget-content.widget{:style => 'display: none;'}
+    - if date.month == Date.today.month
+      = date.inspect
+    - else
+      = Date::MONTHNAMES[date.month]
+      = date.year
 
   %table{:width => "100%"}
     %tr{:style => "text-align:center;"}
@@ -33,7 +34,7 @@
           - next if day.wday.eql?(0) or day.wday.eql?(6)
 
           %td{:class => Date.today == day ? 'today' : 'normal_day'}
-            %div{:style => day.month == some_day.month ? 'font-weight:bold;color:#666;' : 'color:#999;' }
+            %div{:style => day.month == date.month ? 'font-weight:bold;color:#666;' : 'color:#999;' }
               = link_to day.day, day_calendar_path(:date => day)
 
             - events_for_day = events.select {|event| event.happens_in day }
@@ -47,5 +48,5 @@
               %br
 
             - tasks_for_day.each do |task|
-              = link_to_remote "#{task.name}", {:update => "task", :url => { :controller => 'calendars', :action => "task_details", :id => task}, :complete => "$('#task').show()"}, :style => "color: ##{task.project.colour};"
+              = link_to_remote "#{task.name}", {:update => "task", :url => { :controller => 'calendars', :action => "task_details", :id => task}, :complete => "$('#task').show()"}, :style => "color: ##{task.project.colour};#{task.style}"
               %br

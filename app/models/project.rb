@@ -10,10 +10,12 @@ class Project < ActiveRecord::Base
   validates_presence_of :end_date, :name, :colour
   validate_on_create :date_in_future
 
+  named_scope :open, :conditions => {:closed => false}
+
   alias managers users
 
-  def people_involved
-    (tasks.map { |task| task.users } + events.map { |task| task.users }).flatten
+  def people_involved conditions = {}
+    (tasks.all(conditions).map { |task| task.users } + events.all(conditions).map { |event| event.users }).uniq.flatten
   end
 
   def late?
@@ -22,10 +24,6 @@ class Project < ActiveRecord::Base
 
   def date_in_future
     errors.add(:end_date, "must be in the future") if end_date && late?
-  end
-
-  def description?
-    description && !description.empty?
   end
 
   def days_remaining
@@ -39,6 +37,14 @@ class Project < ActiveRecord::Base
 
     return 100 if remaining == 0
     ((completed.to_f / task.to_f) * 100.00).to_i
+  end
+
+  def tasks_with_state state = 'open'
+    case state
+      when 'open'   then tasks.open
+      when 'closed' then tasks.closed
+      else tasks
+    end
   end
 
   def style

@@ -1,0 +1,9 @@
+.role_form
+  -form_for role do |f|
+    = f.error_messages
+    
+    .attribute
+      .name= f.label :name
+      .value= f.text_field :name 
+    
+    .role_submit_button= f.submit "Save"

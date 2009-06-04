@@ -9,14 +9,11 @@ class Task < ActiveRecord::Base
 
   named_scope :open, :conditions => {:completed => false}
   named_scope :completed, :conditions => {:completed => true}
+  named_scope :closed, :conditions => {:completed => true}
 
   def late?
     return unless end_date
     end_date < Date.today
-  end
-
-  def description?
-    description && !description.empty?
   end
 
   def dates_in_future

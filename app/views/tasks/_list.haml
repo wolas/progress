@@ -1,48 +1,33 @@
 - show_project ||= false
 
-%script{:type=>"text/javascript"} $(function() {$(".accordion").accordion()});
-
-.accordion
+%table.ui-widget-content.widget{:width => '100%'}
   - tasks.each do |task|
-    %h3{:style=>"font-size: 1.2em;"}
-      %a{:style => task.style, :href=>"#"}=h task.name
-    %div
-      %div{:style=>"float:right; width:10%;"}
-        = link_to 'show', project_task_path(task.project, task)
-        - unless task.completed?
-          %br
-          = link_to 'edit', edit_project_task_path(task.project, task)
-        %br
+    %tr
+      %td{:style => 'width: 2%;'}
+        %div{:style => "height: 20px; width: 20px; background-color: ##{task.project.colour}"}
+
+      %td{:style => 'width: 20%;'}= link_to task.name, project_task_path(task.project, task)
+
+      %td{:style => 'width: 28%;text-align:middle;'}
+        = task.end_date
+        == (#{task.days_remaining})
+
+      %td{:style => 'width: 30%; text-align:middle;'}
+        = link_to_function "#{task.users.count} Users", :href => nil, :id => "show_task#{task.id}_link" do |page|
+          - page[:"task#{task.id}"].visual_effect :blind_down, :duration => 0.5
+          - page[:"show_task#{task.id}_link"].hide
+          - page[:"hide_task#{task.id}_link"].show
+
+        = link_to_function "#{task.users.count} Users", :href => nil, :id => "hide_task#{task.id}_link", :style => "display:none;" do |page|
+          - page[:"task#{task.id}"].visual_effect :blind_up, :duration => 0.5
+          - page[:"hide_task#{task.id}_link"].hide
+          - page[:"show_task#{task.id}_link"].show
+
+        %div{:id => "task#{task.id}", :style => 'display:none;'}
+          = collection_widget_for task.users, nil, 3
+
+      %td{:style => 'width: 20%;text-align:right;'}
         - if task.completed?
           = link_to 'reopen', mark_open_task_path(task)
         - else
           = link_to 'mark completed', mark_completed_task_path(task)
-
-      %div{:style=>"float:left; width:90%;"}
-
-        .two_col{:style=>"padding-right: 10%; width:20%;"}
-          = collection_widget_for task.users, nil, 2
-
-        .two_col{:style=>"width:65%;"}
-          - if show_project
-            .attribute
-              .name Project:
-              .value= link_to h(task.project.name), task.project
-
-          .attribute
-            .name Start date:
-            .value= task.start_date
-          .attribute
-            .name Date due:
-            .value= task.end_date
-
-          .attribute
-            .name
-              Days
-              = task.days_remaining < 0 ? 'ago:' : 'remaining:'
-            .value= task.days_remaining.abs
-
-          - if task.description?
-            .attribute
-              .name Description:
-              .value= task.description

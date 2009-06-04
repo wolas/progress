@@ -39,11 +39,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @show_timeline = true
     @user = @current_user
-    @projects = @user.projects.all :conditions => {:closed => false}
-    @tasks = @user.tasks.open
-    @events = @user.events.in_future
   end
 
   def edit
@@ -52,6 +48,7 @@ class UsersController < ApplicationController
 
   def update
     @user = @current_user # makes our views "cleaner" and more consistent
+    params[:user][:role_ids] ||= []
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
       redirect_to account_url

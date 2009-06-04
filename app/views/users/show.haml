@@ -2,53 +2,42 @@
   = @user.login.capitalize
   account.
 
+#user_show
+  .attribute
+    .name Email
+    .value= @user.email
+  .attribute
+    .name Tasks
+    .value= @user.tasks.count
+  .attribute
+    .name Events
+    .value= @user.events.count
+
 #update_user{:style => 'display:none;'}
   = render :partial => 'form', :locals => {:user => @user }
 
 %p
   = link_to_function 'Edit', :href => edit_user_path(@user), :id => "edit_user_link" do |page|
+    - page[:user_show].visual_effect :blind_up, :duration => 0.5
     - page[:update_user].visual_effect :blind_down, :duration => 0.5
     - page[:edit_user_link].hide
     - page[:cancel_edit_user_link].visual_effect :appear
 
   = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_user_link', :style => "display:none;" do |page|
+    - page[:user_show].visual_effect :blind_down, :duration => 0.5
     - page[:update_user].visual_effect :blind_up, :duration => 0.5
     - page[:cancel_edit_user_link].hide
     - page[:edit_user_link].visual_effect :appear
 
-- unless @projects.empty?
-  %h3= link_to 'Projects', user_projects_path(@user)
-  = render :partial => 'projects/list', :locals => {:projects => @projects}
 
-%hr
+- if admin?
+  %h2 Roles
 
-.two_col{:style => 'padding-right: 10%;'}
-  - if @tasks.empty?
-    %h3 You lucky person, you have no work assigned yet.
+  - form_for @user do |f|
+    - Role.all.each do |role|
+      %span
+        = check_box_tag 'user[role_ids][]', role.id, @user.has_role?(role.name), :style => 'vertical-align:middle;'
+        = role.name
+      %br
 
-  - else
-    %h3= link_to 'Tasks', user_tasks_path(@user)
-    = render :partial => 'tasks/list', :locals => {:tasks => @tasks}
-
-.two_col
-  - if @events.empty?
-    %h3
-      No
-      = link_to 'events', user_events_path(@user)
-      to attend. Wohoo!
-
-  - else
-    %h3= link_to 'Events', user_events_path(@user)
-    = render :partial => 'events/list', :locals => {:events => @events}
-
-.clear
-
-
-
-%hr
-
-= render :partial => 'calendars/month', :locals => {:object => @user}
-
-%h2 Timeline
-
-= render :partial => 'calendars/timeline', :locals => {:height => 500}
+    %p= f.submit 'save roles'

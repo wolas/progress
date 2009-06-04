@@ -1,0 +1,27 @@
+%h1 Listing roles
+
+= link_to_function 'New role', :href => new_role_path, :id => 'new_role_link' do |page|
+  - page[:create_role].visual_effect :blind_down, :duration => 0.5
+  - page[:new_role_link].hide
+  - page[:cancel_new_role_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_role_path, :id => 'cancel_new_role_link', :style => "display:none;" do |page|
+  - page[:create_role].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_role_link].hide
+  - page[:new_role_link].visual_effect :appear
+
+#create_role{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:role => Role.new }
+
+%table{:width => "100%"}
+  %tr
+    %th Name
+
+  -for role in @roles
+    %tr
+      %td= h role.name
+
+    
+      %td= link_to 'Show', role_path(role)
+      %td= link_to 'Edit', edit_role_path(role)
+      %td= link_to 'Destroy', role_path(role), :method => :delete
