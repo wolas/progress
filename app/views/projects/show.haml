@@ -1,32 +1,4 @@
-%script{:type=>"text/javascript"}== $(function() {$("#progressbar").progressbar({value: #{@project.percentage_complete}});});
-
-%table{:width => '100%'}
-  %tr
-    %td{:width => '100px'}
-      = collection_widget_for @project.users, nil, 3
-
-    %td{:width => '300px'}
-      #progressbar{:style => 'height:20px; positions:relative;'}
-        %div{:style => 'position: absolute; padding-left: 10px;padding-top: 2px;'}
-          = @project.tasks.completed.count
-          \/
-          = @project.tasks.count
-
-        %div{:style => 'position: absolute; padding-left: 120px;padding-top: 2px;'}
-          %b
-            = @project.percentage_complete
-            \%
-
-        %div{:style => 'position: absolute; padding-left: 200px;padding-top: 2px;'}
-          = @project.end_date
-          == (#{@project.days_remaining})
-
-    %td{:style => 'padding-left: 10px;'}
-      %h1
-        - if @client
-          = link_to h(@client.name), @client
-          >
-        %span{:style => @project.style}=h @project.name
+= render :partial => 'header', :locals => {:project => @project}
 
 #update_project{:style => 'display:none;'}
   = render :partial => 'form', :locals => {:project => @project }

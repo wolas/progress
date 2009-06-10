@@ -1,14 +1,27 @@
-- groups ||= 1
-- object ||= nil
+- groups ||= 3
+- object ||= object
+- hide_users ||= object && object.users.count > groups
 
-%table
-  - users.in_groups_of(groups, false).each do |people|
-    %tr
-      - people.each do |user|
-        %td
-          %span
-            = check_box_tag "#{object.class.to_s.downcase}[user_ids][]", user.id, object.users.include?(user) if object
+- if hide_users
+  - type = "#{object.class}_#{object.id}"
+
+  = link_to_function "#{object.users.count} users", :href => nil, :id => "show_#{type}_link" do |page|
+    - page[:"#{type}"].visual_effect :fade_in, :duration => 0.5
+    - page[:"show_#{type}_link"].hide
+    - page[:"hide_#{type}_link"].show
+
+  = link_to_function "hide", :href => nil, :id => "hide_#{type}_link", :style => "display:none;" do |page|
+    - page[:"#{type}"].visual_effect :fade, :duration => 0.5
+    - page[:"hide_#{type}_link"].hide
+    - page[:"show_#{type}_link"].show
+
+%div{:id => "#{type}", :style => hide_users ? 'display:none;' : ''}
+  %table
+    - users.in_groups_of(groups, false).each do |people|
+      %tr
+        - people.each do |user|
+          %td
             %span
-              = image_tag gravatar_url(user.email), :style => 'width:30px;vertical-align: middle;'
+              = image_tag gravatar_url(user.email), :style => 'width:30px;vertical-align: middle;', :alt => 'avatar'
               %br
               = link_to h(user.login), user

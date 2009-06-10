@@ -13,18 +13,7 @@
         == (#{task.days_remaining})
 
       %td{:style => 'width: 30%; text-align:middle;'}
-        = link_to_function "#{task.users.count} Users", :href => nil, :id => "show_task#{task.id}_link" do |page|
-          - page[:"task#{task.id}"].visual_effect :fade_in, :duration => 0.5
-          - page[:"show_task#{task.id}_link"].hide
-          - page[:"hide_task#{task.id}_link"].show
-
-        = link_to_function "#{task.users.count} Users", :href => nil, :id => "hide_task#{task.id}_link", :style => "display:none;" do |page|
-          - page[:"task#{task.id}"].visual_effect :fade, :duration => 0.5
-          - page[:"hide_task#{task.id}_link"].hide
-          - page[:"show_task#{task.id}_link"].show
-
-        %div{:id => "task#{task.id}", :style => 'display:none;'}
-          = collection_widget_for task.users, nil, 3
+        = collection_widget_for task.users, :object => task, :hide => true
 
       %td{:style => 'width: 20%;text-align:right;'}
         - if task.completed?

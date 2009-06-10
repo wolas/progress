@@ -15,7 +15,7 @@
       %div{:style=>"float:left; width:90%;"}
 
         .two_col{:style=>"padding-right:20px; width:20%;"}
-          = collection_widget_for event.users, nil, 2
+          = collection_widget_for event.users
 
         .two_col{:style=>"width:70%;"}
           - if show_project

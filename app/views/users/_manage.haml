@@ -6,7 +6,13 @@
       yet
 
     - else
-      = render :partial => 'users/remove', :locals => {:object => object }
+      %table
+        - object.users.each do |user|
+          %tr
+            %td
+              %span
+                = render :partial => "users/widget", :locals => {:user => user}
+                = link_to_remote image_tag('cross.png'), :url => {:controller => 'users', :action => :remove_user, :object_id => object, :object_class => object.class, :user => user}, :update => 'manage_users'
 
   .two_col{:style => 'padding-left: 20px;'}
     .attribute
@@ -20,6 +26,12 @@
       - if to_add.empty?
         No one left to be assigned!
       - else
-        = render :partial => 'users/add', :locals => {:object => object, :users => to_add }
+        %table
+          - to_add.each do |user|
+            %tr
+              %td
+                %span
+                  = render :partial => "users/widget", :locals => {:user => user}
+                  = link_to_remote image_tag('accept.png'), :url => {:controller => 'users', :action => :add_user, :object_id => object, :object_class => object.class, :user => user}, :update => 'manage_users'
 
   .clear

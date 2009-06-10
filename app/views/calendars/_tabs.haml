@@ -13,6 +13,4 @@
 #task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
 
 #calendar
-  = render :partial => 'calendars/timeline'
-
-%script{:type => 'text/javascript'}= render :partial => 'calendars/timeline_js', :locals => {:object => object}
+  = render :partial => 'calendars/timeline', :locals => {:object => object}

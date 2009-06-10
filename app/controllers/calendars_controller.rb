@@ -1,6 +1,6 @@
 class CalendarsController < ApplicationController
 
-  before_filter :init_object, :except => [:timeline, :event_details, :task_details]
+  before_filter :init_object, :except => [:event_details, :task_details]
 
   def day
     date = params[:date] ? params[:date].to_date : Date.today
@@ -63,7 +63,7 @@ class CalendarsController < ApplicationController
   end
 
   def timeline
-    render :partial => 'timeline', :locals => {:height => 500}
+    render :partial => 'timeline', :locals => {:object => @object, :height => 500}
   end
 
   def get_timeline
