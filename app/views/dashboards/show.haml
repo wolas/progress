@@ -2,10 +2,6 @@
   %h2= link_to 'Projects', user_projects_path(@user)
   = render :partial => 'projects/list', :locals => {:projects => @projects}
 
-%hr
 
-= render :partial => 'calendars/tabs'
 
-%h2 Timeline
-
-= render :partial => 'calendars/timeline', :locals => {:height => 500}
+%p= render :partial => 'calendars/tabs'

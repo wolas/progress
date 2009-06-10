@@ -14,6 +14,12 @@ class Project < ActiveRecord::Base
 
   alias managers users
 
+  def full_name
+    str = ""
+    str += "(#{client.name})" if client
+    str += " #{name}"
+  end
+
   def people_involved conditions = {}
     (tasks.all(conditions).map { |task| task.users } + events.all(conditions).map { |event| event.users }).uniq.flatten
   end

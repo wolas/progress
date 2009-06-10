@@ -8,9 +8,9 @@
 
 
   %h3
-    = link_to project.name, project
     - if client = project.client
       == (#{link_to client.name, client})
+    = link_to project.name, project
     \-
     = link_to task.name, task
 

@@ -1,31 +1,43 @@
-%table{:style => 'width:100%;'}
+%table{:cellspacing => 0, :style => 'width:100%;'}
   - projects.each do |project|
     %tr
       %td.project_row{:style => 'width: 2%;'}
         %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour}"}
 
-      %td.project_row{:style => project.style + 'width: 15%;'}
-        = link_to_function project.name, :href => nil, :id => "show_project#{project.id}_link" do |page|
+      %td.project_row{:style => project.style + 'width: 25%;'}
+        = link_to_function project.full_name, :href => nil, :id => "show_project#{project.id}_link" do |page|
           - page[:"project#{project.id}"].visual_effect :blind_down, :duration => 0.5
           - page[:"show_project#{project.id}_link"].hide
           - page[:"hide_project#{project.id}_link"].show
 
-        = link_to_function project.name, :href => nil, :id => "hide_project#{project.id}_link", :style => "display:none;" do |page|
+        = link_to_function project.full_name, :href => nil, :id => "hide_project#{project.id}_link", :style => "display:none;" do |page|
           - page[:"project#{project.id}"].visual_effect :blind_up, :duration => 0.5
           - page[:"hide_project#{project.id}_link"].hide
           - page[:"show_project#{project.id}_link"].show
 
-      %td.project_row{:style => 'width: 65%;'}
+      %td.project_row{:style => 'width: 73%;'}
         %script{:type=>"text/javascript"}== $(function() {$("#progressbar#{project.id}").progressbar({value: #{project.percentage_complete}});});
 
         .progressbar{:id=>"progressbar#{project.id}", :style => 'positions:relative;'}
-          %div{:style => 'position: absolute; padding-left: 135px;padding-top: 5px;'}
+          %div{:style => 'position: absolute; padding-left: 120px;padding-top: 5px;'}
             %b
               = project.percentage_complete
               \%
 
           %div{:style => 'position: absolute; padding-left: 230px;padding-top: 5px;'}
             = project.end_date
+
+          %div{:style => 'position: absolute; padding-left: 330px;padding-top: 5px;'}
+            = link_to 'new event', new_project_event_path(project)
+            |
+            = link_to 'new task', new_project_task_path(project)
+            |
+            = link_to 'show', project
+            |
+            - if project.closed?
+              = link_to 'reopen', reopen_project_path(project)
+            - else
+              = link_to 'close', close_project_path(project)
 
         %div{:id => "project#{project.id}", :style => 'display:none;'}
           %br
@@ -35,17 +47,6 @@
               = collection_widget_for project.users, nil, 2
 
             .two_col{:style => 'width: 70%;'}
-              %div{:style => 'float:right;'}
-
-                = link_to 'new event', new_project_event_path(project)
-                %br
-                = link_to 'new task', new_project_task_path(project)
-                %br
-                = link_to 'edit', edit_project_path(project)
-                %br
-                = link_to 'destroy', project, :method => :delete, :confirm => "Are you sure?"
-
-
               .attribute
                 .name Tasks:
                 .value
@@ -54,24 +55,10 @@
                   = project.tasks.count
 
               .attribute
-                .name Events:
+                .name Events remaining:
                 .value
-                  = project.events.count
+                  = project.events.in_future.count
 
-              - unless @client
-                - if project.client
-                  .attribute
-                    .name Client:
-                    .value= project.client.name
-
-              .attribute
-                .name Colour:
-                .value
-                  %div{:style => "width:50px;height:10px;background-color:##{project.colour};"}
-
-              .attribute
-                .name Date due:
-                .value= project.end_date
               .attribute
                 .name Days remaining:
                 .value= project.days_remaining
@@ -91,11 +78,6 @@
                       - page[:"hide_description#{project.id}_link"].hide
                       - page[:"show_description#{project.id}_link"].visual_effect :appear
             .clear
-
-      %td.project_row{:style => 'width: 10%;'}
-        = link_to 'show', project
-        |
-        - if project.closed?
-          = link_to 'reopen', reopen_project_path(project)
-        - else
-          = link_to 'close', close_project_path(project)
+            - unless project.tasks.open.empty?
+              %h3 Tasks
+              %p= render :partial => 'tasks/list', :locals => {:tasks => project.tasks.open }

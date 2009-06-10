@@ -1,13 +1,18 @@
-%script{:type => "text/javascript"}
-  $(function() { $("#tabs").tabs().find(".ui-tabs-nav").sortable({axis:'x'}); });
-  $(function() {$(".draggable").draggable();});
+- object ||= @current_user
+- params = {:object => {:id => object.id, :type => object.class}}
 
+#tab_nav.ui-widget-header.ui-corner-all
+  = link_to_remote 'Timeline', :url => timeline_calendar_path, :update => 'calendar', :complete => 'onLoad()'
+  = link_to_remote 'Month', :url => month_calendar_path(params), :update => 'calendar'
+  = link_to_remote 'Day', :url => day_calendar_path(params), :update => 'calendar'
+  = link_to_remote 'Week', :url => week_calendar_path(params), :update => 'calendar'
 
-#tabs
-  %ul
-    %li
-      %a{:href => "calendars/get_month"} Month
-    %li
-      %a{:href => "calendars/get_day"} Day
-    %li
-      %a{:href => "calendars/get_week"} Week
+  .clear
+
+#event.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
+#task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
+
+#calendar
+  = render :partial => 'calendars/timeline'
+
+%script{:type => 'text/javascript'}= render :partial => 'calendars/timeline_js', :locals => {:object => object}

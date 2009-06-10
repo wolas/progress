@@ -12,7 +12,9 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    @show_timeline = true
     @project = Project.find(params[:id])
+    @object = @project
     @client = @project.client
   end
 

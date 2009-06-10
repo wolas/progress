@@ -10,8 +10,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :has_many => [:tasks, :events, :projects]
 
   map.resource :user_session
-  map.resource :calendar, :collection => {:get_timeline => :get}, :member => {:day => :get, :week => :get, :month => :get}
-  map.resource :dashboard, :member => {:get_month => :get, :get_week => :get, :get_day => :get, :get_timeline => :get}
+  map.resource :calendar, :collection => {:get_timeline => :get}, :member => {:timeline => :post, :day => :post, :week => :post, :month => :post}
+  map.resource :dashboard, :member => {:month => :get, :week => :get, :day => :post, :timeline => :get}
   map.resource :account, :controller => "users"
 
   # named routes

@@ -224,7 +224,9 @@ h4
   :width 300px
 
 .flash
-  :width 700px
+  :padding
+    :left 4em
+    :right 4em
 
 #task, #event
   :position absolute
@@ -238,18 +240,35 @@ h4
   #controls
     :float right
 
+#tab_nav
+  a
+    :display block
+    :float left
+    :height 30px
+    :width 80px
+    :margin-right 2px
+    :text-align center
+    :padding-top 15px
+
+#calendar
+  +round_borders
+  :position relative
+  :border 1px solid #999
+  :padding 5px
 
 =calendar_day
   +round_borders
   :height 100px
   :width 14%
   :vertical-align top
+  :background-color #eee
+  :padding 3px
 
 .normal_day
   +calendar_day
   :border-width 1px
   :border-style solid
-  :border-color = !light_green
+  :border-color #ccc
 
 .today
   +calendar_day

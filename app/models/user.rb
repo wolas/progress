@@ -11,9 +11,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :login, :email
 
-  def projects_involved closed = false
-    prj = (tasks.map { |task| task.project } + events.map { |event| event.project }).uniq
-    closed ? prj.select {|p| p.closed? } : prj.select {|p| not p.closed? }
+  def projects_involved
+    (tasks.map { |task| task.project } + events.map { |event| event.project }).uniq
   end
 
   def has_role? role
@@ -22,7 +21,7 @@ class User < ActiveRecord::Base
 
   def add_role role
     return if has_role?(role)
-    r = Role.find_by_name(role)
+    r = Role.find_by_name(role.to_s)
     roles << (r ? r : Role.create(:name => role.to_s))
   end
 

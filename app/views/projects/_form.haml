@@ -15,29 +15,38 @@
   //]]>
 
 .ui-widget-content.widget
-  -form_for project do |f|
-    = f.error_messages
+  .two_col
+    -form_for project do |f|
+      = f.error_messages
 
-    .attribute
-      .name= f.label :client
-      .value= f.collection_select :client_id, Client.all, :id, :name, {:include_blank => "None"}
+      .attribute
+        .name= f.label :client
+        .value= f.collection_select :client_id, Client.all, :id, :name, {:include_blank => "None"}
 
-    .attribute
-      .name= f.label :name
-      .value= f.text_field :name
-    .attribute
-      .name= f.label :end_date
-      .value= f.text_field :end_date
+      .attribute
+        .name= f.label :name
+        .value= f.text_field :name
+      .attribute
+        .name= f.label :end_date
+        .value= f.text_field :end_date
 
-    .attribute
-      .name= f.label :description
-      .middle.value= f.text_area :description, :rows => 8, :cols => 35
+      .attribute
+        .name= f.label :description
+        .middle.value= f.text_area :description, :rows => 8, :cols => 35
 
-    .attribute
-      .name= f.label :colour
-      .value
-        = f.text_field :colour
-        = image_tag 'colorpicker/select.png', :width => '15x', :id => 'colorpicker'
+      .attribute
+        .name= f.label :colour
+        .value
+          = f.text_field :colour
+          = image_tag 'colorpicker/select.png', :width => '15x', :id => 'colorpicker'
 
 
-    .project_submit_button= f.submit "Save"
+      .project_submit_button= f.submit "Save"
+
+  .two_col
+    - unless project.new_record?
+      %h3 Project Managers
+
+      = render :partial => 'users/manage', :locals => {:object => project }
+
+  .clear

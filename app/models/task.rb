@@ -29,7 +29,7 @@ class Task < ActiveRecord::Base
   end
 
   def style
-    result = 'color: red;' if late?
+    result = 'text-decoration: blink;' if late?
     result = 'text-decoration: line-through;' if completed?
     result = '' if project.closed?
     result or ''

@@ -1,52 +1,46 @@
-#calendar{:style => 'position:relative;'}
+- date ||= Date.today
+- month = get_month(date)
+- state ||= 'open'
+- tasks = object.tasks_with_state state
+- events = object.events
 
-  - date ||= Date.today
-  - month = get_month(date)
-  - state ||= 'open'
-  - tasks = object.tasks_with_state state
-  - events = object.events
 
-  %h2
-    = select_tag 'state', options_for_select(['all', 'open', 'closed'], state)
-    = observe_field :state, :url => { :controller => 'calendars', :action => :filter }, :frequency => 0.25, :update => :calendar, :with => "'state=' + value + '&object_type=#{object.class}&object_id=#{object.id}&date=#{date}'"
-    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_month", :current_day => date, :object_id => object.id, :object_type => object.class, :state => state }, :update => 'calendar'
-    &nbsp;
-    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_month", :current_day => date, :object_id => object.id, :object_type => object.class, :state => state }, :update => 'calendar'
-    &nbsp;
+%h2
+  = select_tag 'state', options_for_select(['all', 'open', 'closed'], state)
+  = observe_field :state, :url => { :controller => 'calendars', :action => :filter }, :frequency => 0.25, :update => :calendar, :with => "'state=' + value + '&object_type=#{object.class}&object_id=#{object.id}&date=#{date}'"
+  = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_month", :current_day => date, :object => {:id => object.id, :type => object.class}, :state => state }, :update => 'calendar'
+  &nbsp;
+  = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_month", :current_day => date, :object => {:id => object.id, :type => object.class}, :state => state }, :update => 'calendar'
+  &nbsp;
+  = date.strftime "%B %Y"
 
-    - if date.month == Date.today.month
-      = date.inspect
-    - else
-      = Date::MONTHNAMES[date.month]
-      = date.year
+%table{:width => "100%"}
+  %tr{:style => "text-align:center;"}
+    %th{:style => "text-align:center;"} Mon
+    %th{:style => "text-align:center;"} Tue
+    %th{:style => "text-align:center;"} Wed
+    %th{:style => "text-align:center;"} Thu
+    %th{:style => "text-align:center;"} Fri
 
-  %table{:width => "100%"}
-    %tr{:style => "text-align:center;"}
-      %th{:style => "text-align:center;"} Mon
-      %th{:style => "text-align:center;"} Tue
-      %th{:style => "text-align:center;"} Wed
-      %th{:style => "text-align:center;"} Thu
-      %th{:style => "text-align:center;"} Fri
+  - for week in month
+    %tr
+      - for day in week
+        - next if day.wday.eql?(0) or day.wday.eql?(6)
 
-    - for week in month
-      %tr
-        - for day in week
-          - next if day.wday.eql?(0) or day.wday.eql?(6)
+        %td{:class => Date.today == day ? 'today' : 'normal_day'}
+          %div.ui-widget-header.ui-corner-all{:style => "padding-left: 7px;#{day.month == date.month ? 'font-weight:bold;' : ''}"}
+            = link_to_remote day.day, :url => day_calendar_path(:date => day, :object => {:id => object.id, :type => object.class}), :update => 'calendar'
 
-          %td{:class => Date.today == day ? 'today' : 'normal_day'}
-            %div{:style => day.month == date.month ? 'font-weight:bold;color:#666;' : 'color:#999;' }
-              = link_to day.day, day_calendar_path(:date => day)
+          - events_for_day = events.select {|event| event.happens_in day }
+          - tasks_for_day = tasks.select {|task| task.happens_in day }
 
-            - events_for_day = events.select {|event| event.happens_in day }
-            - tasks_for_day = tasks.select {|task| task.happens_in day }
+          - events_for_day.each do |event|
+            %span{:style => "display:inline;"}
+              = image_tag 'pin.png'
+              = event.time
+              = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
+            %br
 
-            - events_for_day.each do |event|
-              %span{:style => "display:inline;"}
-                = image_tag 'pin.png'
-                = event.time
-                = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
-              %br
-
-            - tasks_for_day.each do |task|
-              = link_to_remote "#{task.name}", {:update => "task", :url => { :controller => 'calendars', :action => "task_details", :id => task}, :complete => "$('#task').show()"}, :style => "color: ##{task.project.colour};#{task.style}"
-              %br
+          - tasks_for_day.each do |task|
+            = link_to_remote "#{task.name}", {:update => "task", :url => { :controller => 'calendars', :action => "task_details", :id => task}, :complete => "$('#task').show()"}, :style => "color: ##{task.project.colour};#{task.style}"
+            %br

@@ -2,42 +2,42 @@
   = @user.login.capitalize
   account.
 
-#user_show
-  .attribute
-    .name Email
-    .value= @user.email
-  .attribute
-    .name Tasks
-    .value= @user.tasks.count
-  .attribute
-    .name Events
-    .value= @user.events.count
+.two_col
+  #user_show
+    .attribute
+      .name Email
+      .value= @user.email
+    .attribute
+      .name Tasks
+      .value= @user.tasks.count
+    .attribute
+      .name Events
+      .value= @user.events.count
 
-#update_user{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:user => @user }
+  #update_user{:style => 'display:none;'}
+    = render :partial => 'form', :locals => {:user => @user }
 
-%p
-  = link_to_function 'Edit', :href => edit_user_path(@user), :id => "edit_user_link" do |page|
-    - page[:user_show].visual_effect :blind_up, :duration => 0.5
-    - page[:update_user].visual_effect :blind_down, :duration => 0.5
-    - page[:edit_user_link].hide
-    - page[:cancel_edit_user_link].visual_effect :appear
+  %p
+    = link_to_function 'Edit', :href => edit_user_path(@user), :id => "edit_user_link" do |page|
+      - page[:user_show].visual_effect :blind_up, :duration => 0.5
+      - page[:update_user].visual_effect :blind_down, :duration => 0.5
+      - page[:edit_user_link].hide
+      - page[:cancel_edit_user_link].visual_effect :appear
 
-  = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_user_link', :style => "display:none;" do |page|
-    - page[:user_show].visual_effect :blind_down, :duration => 0.5
-    - page[:update_user].visual_effect :blind_up, :duration => 0.5
-    - page[:cancel_edit_user_link].hide
-    - page[:edit_user_link].visual_effect :appear
+    = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_user_link', :style => "display:none;" do |page|
+      - page[:user_show].visual_effect :blind_down, :duration => 0.5
+      - page[:update_user].visual_effect :blind_up, :duration => 0.5
+      - page[:cancel_edit_user_link].hide
+      - page[:edit_user_link].visual_effect :appear
 
+.two_col
+  - if admin?
+    %h2 Roles
 
-- if admin?
-  %h2 Roles
-
-  - form_for @user do |f|
-    - Role.all.each do |role|
-      %span
-        = check_box_tag 'user[role_ids][]', role.id, @user.has_role?(role.name), :style => 'vertical-align:middle;'
-        = role.name
-      %br
-
-    %p= f.submit 'save roles'
+    - form_for @user do |f|
+      - Role.all.each do |role|
+        %span
+          = check_box_tag 'user[role_ids][]', role.id, @user.has_role?(role.name), :onchange => 'this.form.submit();',:style => 'vertical-align:middle;'
+          = role.name
+        %br
+.clear

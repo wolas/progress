@@ -6,7 +6,7 @@
       %td{:style => 'width: 2%;'}
         %div{:style => "height: 20px; width: 20px; background-color: ##{task.project.colour}"}
 
-      %td{:style => 'width: 20%;'}= link_to task.name, project_task_path(task.project, task)
+      %td{:style => 'width: 20%;' + task.style}= link_to task.name, project_task_path(task.project, task)
 
       %td{:style => 'width: 28%;text-align:middle;'}
         = task.end_date
@@ -14,12 +14,12 @@
 
       %td{:style => 'width: 30%; text-align:middle;'}
         = link_to_function "#{task.users.count} Users", :href => nil, :id => "show_task#{task.id}_link" do |page|
-          - page[:"task#{task.id}"].visual_effect :blind_down, :duration => 0.5
+          - page[:"task#{task.id}"].visual_effect :fade_in, :duration => 0.5
           - page[:"show_task#{task.id}_link"].hide
           - page[:"hide_task#{task.id}_link"].show
 
         = link_to_function "#{task.users.count} Users", :href => nil, :id => "hide_task#{task.id}_link", :style => "display:none;" do |page|
-          - page[:"task#{task.id}"].visual_effect :blind_up, :duration => 0.5
+          - page[:"task#{task.id}"].visual_effect :fade, :duration => 0.5
           - page[:"hide_task#{task.id}_link"].hide
           - page[:"show_task#{task.id}_link"].show
 

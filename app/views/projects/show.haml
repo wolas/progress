@@ -1,96 +1,67 @@
-%script{:type=>"text/javascript"}
-  == $(function() {$("#progressbar").progressbar({value: #{@project.percentage_complete}});});
+%script{:type=>"text/javascript"}== $(function() {$("#progressbar").progressbar({value: #{@project.percentage_complete}});});
 
-%h1
-  - if @client
-    = link_to h(@client.name), @client
-    >
-  %span{:style => @project.style}
-    =h @project.name
+%table{:width => '100%'}
+  %tr
+    %td{:width => '100px'}
+      = collection_widget_for @project.users, nil, 3
 
-.two_col
-  #project_show
-    - unless @project.tasks.empty?
-      %script{:type=>"text/javascript"}== $(function() {$("#progressbar").progressbar({value: #{@project.percentage_complete}});});
+    %td{:width => '300px'}
+      #progressbar{:style => 'height:20px; positions:relative;'}
+        %div{:style => 'position: absolute; padding-left: 10px;padding-top: 2px;'}
+          = @project.tasks.completed.count
+          \/
+          = @project.tasks.count
 
-      #progressbar{:style => 'width:400px;'}
+        %div{:style => 'position: absolute; padding-left: 120px;padding-top: 2px;'}
+          %b
+            = @project.percentage_complete
+            \%
 
-      .attribute
-        .name Percentage:
-        .value
-          = @project.percentage_complete
-          \%
+        %div{:style => 'position: absolute; padding-left: 200px;padding-top: 2px;'}
+          = @project.end_date
+          == (#{@project.days_remaining})
 
-    .attribute
-      .name Tasks:
-      .value
-        = @project.tasks.completed.count
-        \/
-        = @project.tasks.count
+    %td{:style => 'padding-left: 10px;'}
+      %h1
+        - if @client
+          = link_to h(@client.name), @client
+          >
+        %span{:style => @project.style}=h @project.name
 
-    - unless @client
-      - if @project.client
-        .attribute
-          .name Client:
-          .value= @project.client.name
-    .attribute
-      .name Colour:
-      .value
-        %div{:style => "width:50px;height:10px;background-color:##{@project.colour};"}
-    .attribute
-      .name Date due:
-      .value= @project.end_date
-    .attribute
-      .name Days remaining:
-      .value= @project.days_remaining
+#update_project{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:project => @project }
 
-    - if @project.description?
-      .attribute
-        .name Description:
-        .value
-          #description{:style => "display:none;"}= @project.description
-          = link_to_function 'show', :href => nil, :id => 'show_description_link' do |page|
-            - page[:description].visual_effect :blind_down, :duration => 0.5
-            - page[:show_description_link].hide
-            - page[:hide_description_link].visual_effect :appear
+- if @project.description?
+  #description{:style => "display:none;"}= @project.description
+  = link_to_function 'description', :href => nil, :id => 'show_description_link' do |page|
+    - page[:description].visual_effect :blind_down, :duration => 0.5
+    - page[:show_description_link].hide
+    - page[:hide_description_link].visual_effect :appear
 
-          = link_to_function 'hide', :href => nil, :id => 'hide_description_link', :style => "display:none;" do |page|
-            - page[:description].visual_effect :blind_up, :duration => 0.5
-            - page[:hide_description_link].hide
-            - page[:show_description_link].visual_effect :appear
+  = link_to_function 'description', :href => nil, :id => 'hide_description_link', :style => "display:none;" do |page|
+    - page[:description].visual_effect :blind_up, :duration => 0.5
+    - page[:hide_description_link].hide
+    - page[:show_description_link].visual_effect :appear
+  |
+= link_to_function 'Edit', :href => edit_project_path(@project), :id => "edit_project_link" do |page|
+  - page[:project_show].visual_effect :blind_up, :duration => 0.5
+  - page[:update_project].visual_effect :blind_down, :duration => 0.5
+  - page[:edit_project_link].hide
+  - page[:cancel_edit_project_link].visual_effect :appear
 
-  #update_project{:style => 'display:none;'}
-    = render :partial => 'form', :locals => {:project => @project }
+= link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_project_link', :style => "display:none;" do |page|
+  - page[:project_show].visual_effect :blind_down, :duration => 0.5
+  - page[:update_project].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_edit_project_link].hide
+  - page[:edit_project_link].visual_effect :appear
+|
+= link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
+|
+- if @project.closed?
+  = link_to 'Reopen', reopen_project_path(@project)
+- else
+  = link_to 'Close', close_project_path(@project)
 
-  %p
-    = link_to_function 'Edit', :href => edit_project_path(@project), :id => "edit_project_link" do |page|
-      - page[:project_show].visual_effect :blind_up, :duration => 0.5
-      - page[:update_project].visual_effect :blind_down, :duration => 0.5
-      - page[:edit_project_link].hide
-      - page[:cancel_edit_project_link].visual_effect :appear
-
-    = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_project_link', :style => "display:none;" do |page|
-      - page[:project_show].visual_effect :blind_down, :duration => 0.5
-      - page[:update_project].visual_effect :blind_up, :duration => 0.5
-      - page[:cancel_edit_project_link].hide
-      - page[:edit_project_link].visual_effect :appear
-    |
-    = link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
-    |
-    - if @project.closed?
-      = link_to 'Reopen', reopen_project_path(@project)
-    - else
-      = link_to 'Close', close_project_path(@project)
-
-.two_col
-  %h3 Project Managers
-
-  = render :partial => 'users/manage', :locals => {:object => @project }
-
-.clear
-
-
-%br
 
 %h2
   Tasks
@@ -144,4 +115,4 @@
 
 
 
-= render :partial => 'calendars/month', :locals => {:object => @project}
+%p= render :partial => 'calendars/tabs', :locals => {:object => @project}

@@ -1,43 +1,43 @@
-#week{:style => 'position:relative;'}
-  - date = week.first
+- date = week.first
+- events = something.events
 
-  %h2
-    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_week", :current_day => date }, :update => 'week'
-    &nbsp;
-    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_week", :current_day => date }, :update => 'week'
-    &nbsp;
-    starting
-    = link_to date.strftime('%a, %d'), day_calendar_path(:date => date)
-    of
-    = link_to date.strftime('%b'), month_calendar_path(:date => date)
+%h2
+  = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_week", :current_day => date, :object => {:id => something.id, :type => something.class} }, :update => 'calendar'
+  &nbsp;
+  = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_week", :current_day => date, :object => {:id => something.id, :type => something.class} }, :update => 'calendar'
+  &nbsp;
+  starting
+  = date.strftime('%a, %d')
+  of
+  = link_to_remote date.strftime('%b'), :url => month_calendar_path(:date => date, :something => {:id => something.id, :type => something.class}), :update => 'calendar'
 
-  %table{:width => "100%"}
-    %tr{:style => "text-align:center;"}
-      %th{:style => "text-align:center;"} Mon
-      %th{:style => "text-align:center;"} Tue
-      %th{:style => "text-align:center;"} Wed
-      %th{:style => "text-align:center;"} Thu
-      %th{:style => "text-align:center;"} Fri
+%table{:width => "100%"}
+  %tr{:style => "text-align:center;"}
+    %th{:style => "text-align:center;"}= link_to_remote 'Mon', :url => day_calendar_path(:date => week[0], :object => {:id => something.id, :type => something.class}), :update => 'calendar'
+    %th{:style => "text-align:center;"}= link_to_remote 'Tue', :url => day_calendar_path(:date => week[1], :object => {:id => something.id, :type => something.class}), :update => 'calendar'
+    %th{:style => "text-align:center;"}= link_to_remote 'Wed', :url => day_calendar_path(:date => week[2], :object => {:id => something.id, :type => something.class}), :update => 'calendar'
+    %th{:style => "text-align:center;"}= link_to_remote 'Thu', :url => day_calendar_path(:date => week[3], :object => {:id => something.id, :type => something.class}), :update => 'calendar'
+    %th{:style => "text-align:center;"}= link_to_remote 'Fri', :url => day_calendar_path(:date => week[4], :object => {:id => something.id, :type => something.class}), :update => 'calendar'
 
-    %tr
-      - for day in week
-        - next if day.wday.eql?(0) or day.wday.eql?(6)
+  %tr
+    - for day in week
+      - next if day.wday.eql?(0) or day.wday.eql?(6)
 
-        - events_for_day = events.select {|event| event.happens_in day}
+      - events_for_day = events.select {|event| event.happens_in day}
 
-        %td{:class => Date.today == day ? 'this_week' : 'normal_week'}
+      %td{:class => Date.today == day ? 'this_week' : 'normal_week'}
 
-          %table{:style => 'border: 1px dotted #999;'}
-            - (0..23).to_a.each do |hour|
-              - events_for_hour = events_for_day.select {|event| hour.eql? event.date.hour }
+        %table{:style => 'border: 1px dotted #999;'}
+          - (0..23).to_a.each do |hour|
+            - events_for_hour = events_for_day.select {|event| hour.eql? event.date.hour }
 
-              %tr
-                %td.hour_of_day
-                  = "#{hour}:"
+            %tr
+              %td.hour_of_day
+                = "#{hour}:"
 
-                %td.hour_of_day_expanded
-                  - events_for_hour.each do |event|
-                    = event.date.strftime "%M"
-                    \-
-                    = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
-                    %br
+              %td.hour_of_day_expanded
+                - events_for_hour.each do |event|
+                  = event.date.strftime "%M"
+                  \-
+                  = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
+                  %br

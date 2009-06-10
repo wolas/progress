@@ -1,39 +1,44 @@
-- events = events.select {|event| event.happens_in(date) }
+- events = object.events.select {|event| event.happens_in(date) }
+- tasks = object.tasks.open.select { |task| task.happens_in date }
 
-#day{:style => 'position:relative;'}
-  %h2
-    = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_day", :current_day => date }, :update => 'day'
-    &nbsp;
-    = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_day", :current_day => date }, :update => 'day'
-    &nbsp;
-    = date.strftime '%a, %d'
-    of
-    = link_to date.strftime('%b'), month_calendar_path
-    = date.strftime '%Y'
 
-  .two_col
-    %h2 Events
+%h2
+  = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_day", :current_day => date, :object => {:id => object.id, :type => object.class}}, :update => 'calendar'
+  &nbsp;
+  = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_day", :current_day => date, :object => {:id => object.id, :type => object.class}}, :update => 'calendar'
+  &nbsp;
+  = date.strftime '%a, %d'
+  of
+  = link_to_remote date.strftime('%b'), :url => month_calendar_path(:date => date, :object => {:id => object.id, :type => object.class}), :update => 'calendar'
+  = date.strftime '%Y'
 
-    %table{:style => 'border: 1px dotted #999;'}
-      - (0..23).to_a.each do |hour|
-        - events_for_hour = events.select {|event| hour.eql? event.date.hour }
 
-        %tr
-          %td.hour_of_day
-            = hour
-            \:
+.two_col
+  %h2 Events
 
-          %td.hour_of_day_expanded
-            - events_for_hour.each do |event|
-              = event.date.strftime "%M"
-              \-
-              = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
-              %br
-  .two_col
+  %table{:style => 'border: 1px dotted #999;'}
+    - (0..23).to_a.each do |hour|
+      - events_for_hour = events.select {|event| hour.eql? event.date.hour }
+
+      %tr
+        %td.hour_of_day
+          = hour
+          \:
+
+        %td.hour_of_day_expanded
+          - events_for_hour.each do |event|
+            = event.date.strftime "%M"
+            \-
+            = link_to_remote "#{event.name}", {:update => "event", :url => { :controller => 'calendars', :action => "event_details", :id => event}, :complete => "$('#event').show()"}, :style => "color: ##{event.project.colour};"
+            %br
+.two_col
+  - if tasks.empty?
+    %p
+      %b
+        No tasks for today! Go and
+        = link_to 'read', 'http://www.wikipedia.com', :target => '_blank'
+        something.
+  - else
     %h2 Tasks
-    - if tasks.empty?
-      %p
-        %b No work for today! Go and read something.
-    - else
-      = render :partial => 'tasks/list', :locals => {:tasks => tasks.select { |task| task.happens_in date } }
-  .clear
+    = render :partial => 'tasks/list', :locals => {:tasks =>  tasks}
+.clear
