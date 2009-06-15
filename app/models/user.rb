@@ -11,8 +11,9 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :login, :email
 
-  def projects_involved
-    (tasks.map { |task| task.project } + events.map { |event| event.project }).uniq
+  def projects_involved options = {}
+    prjs = (tasks.map { |task| task.project } + events.map { |event| event.project }).uniq
+    options[:open] ? prjs.select {|p| p.open? } : prjs
   end
 
   def has_role? role

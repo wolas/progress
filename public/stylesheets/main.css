@@ -1,4 +1,5 @@
 body {
+  background-color: #dfdfdf;
   margin: 0;
   padding: 0;
   font-family: verdana, arial, helvetica, sans-serif;
@@ -68,8 +69,22 @@ body {
 
 #content {
   padding-left: 4em;
-  padding-right: 4em;
   margin-top: 20px; }
+  #content #center {
+    float: left;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 20px;
+    width: 70%;
+    background-color: #fff;
+    border-right: 3px solid #bfbfbf;
+    border-bottom: 3px solid #bfbfbf; }
+  #content #right {
+    float: left;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 20px;
+    width: 20%; }
 
 a {
   color: orange;
@@ -188,6 +203,78 @@ h4 {
   top: 100px;
   left: 150px; }
 
+.late {
+  color: #cf0000;
+  border-color: #cf0000; }
+
+.today {
+  color: #cf0000;
+  border-color: #cf0000; }
+
+.upcoming {
+  color: #ffcf00;
+  border-color: #ffcf00; }
+
+.completed {
+  color: #009f00;
+  border-color: #009f00; }
+
+.header_late {
+  background-color: #cf0000; }
+
+.header_upcoming {
+  background-color: #ffcf00; }
+
+.header_completed {
+  background-color: #009f00; }
+
+.header_today {
+  background-color: #cf0000; }
+
+.task_list {
+  border-left-width: 1px;
+  border-left-style: solid; }
+  .task_list .task_list_header {
+    font-weight: bold;
+    color: #fff;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px; }
+  .task_list .task_list_item {
+    padding-left: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-bottom: 1px solid #eee; }
+    .task_list .task_list_item .task_name {
+      font-size: 1.2em;
+      font-weight: bold; }
+    .task_list .task_list_item .task_users {
+      color: #000;
+      display: inline;
+      font-size: 0.8em; }
+
+.event_list {
+  width: 100%; }
+  .event_list .event_list_header {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px; }
+  .event_list .event_list_item {
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px; }
+
+.list_item_date {
+  display: inline;
+  font-size: .8em;
+  font-weight: bold; }
+
 #task_body, #event_body {
   padding: 10px;
   max-width: 500px; }
@@ -209,28 +296,26 @@ h4 {
   position: relative;
   border: 1px solid #999;
   padding: 5px; }
-
-.normal_day {
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  height: 100px;
-  width: 14%;
-  vertical-align: top;
-  background-color: #eee;
-  padding: 3px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #ccc; }
-
-.today {
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  height: 100px;
-  width: 14%;
-  vertical-align: top;
-  background-color: #eee;
-  padding: 3px;
-  border: 1px solid red; }
+  #calendar .normal_day {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    height: 100px;
+    width: 14%;
+    vertical-align: top;
+    background-color: #eee;
+    padding: 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ccc; }
+  #calendar .today {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    height: 100px;
+    width: 14%;
+    vertical-align: top;
+    background-color: #eee;
+    padding: 3px;
+    border: 1px solid red; }
 
 .hour_of_day {
   border-right: 1px solid #333;

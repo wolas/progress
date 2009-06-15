@@ -1,10 +1,4 @@
-%h1
-  - if @client
-    = link_to h(@client.name), @client
-    >
-  = link_to h(@project.name), @project, :style => @project.style
-  >
-  New Task
+= render :partial => 'projects/header', :locals => {:project => @project}
 
 = render :partial => 'form', :locals => {:task => @task }
 

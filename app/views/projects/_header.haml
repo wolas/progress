@@ -26,8 +26,8 @@
 
     %td{:style => 'padding-left: 10px;'}
       %h1{:style => "color:##{project.colour}"}
-        - if @client
-          = link_to h(@client.name), @client
+        - if project.client
+          = link_to h(project.client.name), project.client
           >
 
         - if task

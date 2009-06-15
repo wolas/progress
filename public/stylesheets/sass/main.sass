@@ -13,6 +13,7 @@
   :color #ffffff
 
 body
+  :background-color #dfdfdf
   :margin 0
   :padding 0
   :font
@@ -99,9 +100,29 @@ body
 #content
   :padding
     :left 4em
-    :right 4em
   :margin
     :top 20px
+
+  #center
+    :float left
+    :padding
+      :left 2%
+      :right 2%
+      :bottom 20px
+    :width 70%
+    :background-color #fff
+    :border-right 3px solid #bfbfbf
+    :border-bottom 3px solid #bfbfbf
+
+  #right
+    :float left
+    :padding
+      :left 2%
+      :right 2%
+      :bottom 20px
+    :width 20%
+
+
 a
   :color orange
   :text-decoration none
@@ -233,6 +254,93 @@ h4
   :top 100px
   :left 150px
 
+.late
+  :color #cf0000
+  :border-color #cf0000
+
+.today
+  :color #cf0000
+  :border-color #cf0000
+
+.upcoming
+  :color #ffcf00
+  :border-color #ffcf00
+
+.completed
+  :color #009f00
+  :border-color #009f00
+
+.header_late
+  :background-color #cf0000
+
+.header_upcoming
+  :background-color #ffcf00
+
+.header_completed
+  :background-color #009f00
+
+.header_today
+  :background-color #cf0000
+
+.task_list
+  :border-left
+    :width 1px
+    :style solid
+
+  .task_list_header
+    :font-weight bold
+
+    :color #fff
+    :padding
+      :top 3px
+      :bottom 3px
+      :left 5px
+
+  .task_list_item
+    :padding
+      :left 5px
+      :top 10px
+      :bottom 10px
+    :border-left
+      :width 1px
+      :style solid
+    :border-bottom 1px solid #eee
+
+    .task_name
+      :font
+        :size 1.2em
+        :weight bold
+
+    .task_users
+      :color #000
+      :display inline
+      :font-size 0.8em
+
+.event_list
+  :width 100%
+
+  .event_list_header
+    +round_borders
+    :font-weight bold
+
+    :color #fff
+    :padding
+      :top 3px
+      :bottom 3px
+      :left 5px
+
+  .event_list_item
+    :padding
+      :left 5px
+      :top 3px
+      :bottom 3px
+
+.list_item_date
+  :display inline
+  :font
+    :size .8em
+    :weight bold
+
 #task_body, #event_body
   :padding 10px
   :max-width 500px
@@ -250,12 +358,6 @@ h4
     :text-align center
     :padding-top 15px
 
-#calendar
-  +round_borders
-  :position relative
-  :border 1px solid #999
-  :padding 5px
-
 =calendar_day
   +round_borders
   :height 100px
@@ -264,15 +366,22 @@ h4
   :background-color #eee
   :padding 3px
 
-.normal_day
-  +calendar_day
-  :border-width 1px
-  :border-style solid
-  :border-color #ccc
+#calendar
+  +round_borders
+  :position relative
+  :border 1px solid #999
+  :padding 5px
 
-.today
-  +calendar_day
-  :border 1px solid red
+
+  .normal_day
+    +calendar_day
+    :border-width 1px
+    :border-style solid
+    :border-color #ccc
+
+  .today
+    +calendar_day
+    :border 1px solid red
 
 
 .hour_of_day

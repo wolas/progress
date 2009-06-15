@@ -14,6 +14,10 @@ class Project < ActiveRecord::Base
 
   alias managers users
 
+  def open?
+    not closed?
+  end
+
   def full_name
     str = ""
     str += "(#{client.name})" if client

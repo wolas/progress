@@ -51,5 +51,6 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
   :timeline => "%a, %d %b %Y %H:%M:%S %Z",
   :timeline2 => "%a, %d %b %Y",
   :date_time12  => "%m-%d-%Y %I:%M%p",
-  :date_time24  => "%m-%d-%Y %H:%M"
+  :date_time24  => "%m-%d-%Y %H:%M",
+  :long => "%A, %e of %B"
 )

@@ -16,6 +16,10 @@ class Task < ActiveRecord::Base
     end_date < Date.today
   end
 
+  def open?
+    not completed?
+  end
+
   def dates_in_future
     return unless end_date and start_date
     errors.add(:end_date, "must be in the future") if end_date < Date.today

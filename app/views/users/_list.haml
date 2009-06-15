@@ -6,7 +6,7 @@
   - type = "#{object.class}_#{object.id}"
 
   = link_to_function "#{object.users.count} users", :href => nil, :id => "show_#{type}_link" do |page|
-    - page[:"#{type}"].visual_effect :fade_in, :duration => 0.5
+    - page[:"#{type}"].visual_effect :appear, :duration => 0.5
     - page[:"show_#{type}_link"].hide
     - page[:"hide_#{type}_link"].show
 

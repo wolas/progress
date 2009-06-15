@@ -45,8 +45,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update_attributes(params[:task])
-      flash[:notice] = 'Task was successfully updated.'
-      redirect_to(@task)
+      request.xhr? ? render(:partial => 'tasks/list_full', :locals => {:list => @task.project.tasks}) : redirect_to(@task)
     else
       @project = @task.project
       @client = @project.client
