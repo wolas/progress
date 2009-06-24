@@ -8,4 +8,11 @@ class DashboardsController < ApplicationController
     @events = @user.events.in_future
   end
 
+  def update_task
+    @task = Task.find(params[:id])
+    @task.update_attributes(params[:task])
+
+    render(:partial => 'task_list', :locals => {:tasks => current_user.tasks})
+  end
+
 end

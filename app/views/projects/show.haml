@@ -1,77 +1,48 @@
-= render :partial => 'header', :locals => {:project => @project}
+- content_for :title do
+  = render :partial => 'header', :locals => {:project => @project}
 
-- if @project.description?
-  = link_to_function 'Description', :href => nil, :id => 'show_description_link' do |page|
-    - page[:description].visual_effect :blind_down, :duration => 0.5
-    - page[:show_description_link].hide
-    - page[:hide_description_link].visual_effect :appear
+%div{:style => 'float:right'}
+  - if @project.description?
+    = link_to_function 'Description', :href => nil, :id => 'show_description_link' do |page|
+      - page[:description].visual_effect :blind_down, :duration => 0.5
+      - page[:show_description_link].hide
+      - page[:hide_description_link].visual_effect :appear
 
-  = link_to_function 'Hide', :href => nil, :id => 'hide_description_link', :style => "display:none;" do |page|
-    - page[:description].visual_effect :blind_up, :duration => 0.5
-    - page[:hide_description_link].hide
-    - page[:show_description_link].visual_effect :appear
+    = link_to_function 'Hide', :href => nil, :id => 'hide_description_link', :style => "display:none;" do |page|
+      - page[:description].visual_effect :blind_up, :duration => 0.5
+      - page[:hide_description_link].hide
+      - page[:show_description_link].visual_effect :appear
+    |
+  = link_to_remote 'Edit', :url => edit_project_path(@project), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
-= link_to_function 'Edit', :href => edit_project_path(@project), :id => "edit_project_link" do |page|
-  - page[:project_show].visual_effect :blind_up, :duration => 0.5
-  - page[:update_project].visual_effect :blind_down, :duration => 0.5
-  - page[:edit_project_link].hide
-  - page[:cancel_edit_project_link].visual_effect :appear
+  = link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
+  |
+  = link_to_remote 'New task', :url => new_task_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  |
+  = link_to_remote 'New event', :url => new_event_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  |
+  - if @project.closed?
+    = link_to 'Reopen', reopen_project_path(@project)
+  - else
+    = link_to 'Close', close_project_path(@project)
 
-= link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_project_link', :style => "display:none;" do |page|
-  - page[:project_show].visual_effect :blind_down, :duration => 0.5
-  - page[:update_project].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_edit_project_link].hide
-  - page[:edit_project_link].visual_effect :appear
-|
-= link_to 'Destroy', @project, :method => :delete, :confirm => "Are you sure?"
-|
-= link_to_function 'New task', :href => new_project_task_path(@project), :id => "new_task_link" do |page|
-  - page[:new_task].visual_effect :blind_down, :duration => 0.5
-  - page[:new_task_link].hide
-  - page[:cancel_new_task_link].visual_effect :appear
+= collection_widget_for @project.users
 
-= link_to_function 'Cancel', :href => nil, :id => 'cancel_new_task_link', :style => "display:none;" do |page|
-  - page[:new_task].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_new_task_link].hide
-  - page[:new_task_link].visual_effect :appear
-
-|
-= link_to_function 'New event', :href => new_project_event_path(@project), :id => "new_event_link" do |page|
-  - page[:new_event].visual_effect :blind_down, :duration => 0.5
-  - page[:new_event_link].hide
-  - page[:cancel_new_event_link].visual_effect :appear
-
-= link_to_function 'Cancel', :href => nil, :id => 'cancel_new_event_link', :style => "display:none;" do |page|
-  - page[:new_event].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_new_event_link].hide
-  - page[:new_event_link].visual_effect :appear
-
-|
-- if @project.closed?
-  = link_to 'Reopen', reopen_project_path(@project)
-- else
-  = link_to 'Close', close_project_path(@project)
-
-#update_project{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:project => @project }
+#interactive_window
+  .close_interactive_window
+    = link_to_function 'x' do |page|
+      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+  #interactive_content
 
 #description{:style => "display:none;"}= @project.description
 
-#new_event{:style => 'display:none;'}
-  = render :partial => 'events/form', :locals => {:event => Event.new(:project => @project) }
 
-#new_task{:style => 'display:none;'}
-  = render :partial => 'tasks/form', :locals => {:task => Task.new(:project => @project) }
-
-
-%p= render :partial => 'tasks/list_full', :locals => {:list => @project.tasks}
+%p= render :partial => 'tasks/list', :locals => {:list => @project.tasks}
 
 - content_for(:right) do
-  %h2
-    Events
-
-  - unless @project.events.empty?
-    = render :partial => 'events/list_full', :locals => {:events => @project.events}
+  - unless @project.events.in_future.empty?
+    %h3 Events
+    = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future}
 
 
 

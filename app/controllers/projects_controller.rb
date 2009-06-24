@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
-    @client = @project.client
+    render(:partial => 'form', :locals => {:project => @project}) and return if request.xhr?
   end
 
   # POST /projects

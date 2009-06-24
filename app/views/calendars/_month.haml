@@ -4,10 +4,9 @@
 - tasks = object.tasks_with_state state
 - events = object.events
 
-
 %h2
   = select_tag 'state', options_for_select(['all', 'open', 'closed'], state)
-  = observe_field :state, :url => { :controller => 'calendars', :action => :filter }, :frequency => 0.25, :update => :calendar, :with => "'state=' + value + '&object_type=#{object.class}&object_id=#{object.id}&date=#{date}'"
+  = observe_field :state, :url => { :controller => 'calendars', :action => :filter }, :frequency => 0.25, :update => :calendar, :with => "'state=' + value + '&object[type]=#{object.class}&object[id]=#{object.id}&date=#{date}'"
   = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_month", :current_day => date, :object => {:id => object.id, :type => object.class}, :state => state }, :update => 'calendar'
   &nbsp;
   = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_month", :current_day => date, :object => {:id => object.id, :type => object.class}, :state => state }, :update => 'calendar'

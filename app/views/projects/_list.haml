@@ -48,5 +48,3 @@
               = link_to 'close', close_project_path(project)
 
         %div{:id => "project#{project.id}", :style => 'display:none;'}
-          - unless project.tasks.open.empty?
-            %p= render :partial => 'tasks/list', :locals => {:tasks => project.tasks.open }

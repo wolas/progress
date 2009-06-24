@@ -8,17 +8,20 @@
 - all = [[:upcoming, upcoming], [:today, today], [:completed, past]]
 
 .event_list.ui-widget-content.widget
-  - all.each do |type, date_events|
-    - next if date_events.empty?
+  - if today.empty? and upcoming.empty?
+    No events at the moment
+  - else
+    - all.each do |type, date_events|
+      - next if date_events.empty?
 
-    %div{:class => "event_list_header header_#{type}"}= type.to_s.capitalize
+      %div{:class => "event_list_header header_#{type}"}= type.to_s.capitalize
+      %p
+        - date_events.each do |date, events|
 
-    - date_events.each do |date, events|
+          %div{:class => "list_item_date #{type}"}= date.to_time.to_s(:long)
 
-      %div{:class => "list_item_date #{type}"}= date.to_time.to_s(:long)
-
-      - events.each do |event|
-        .event_list_item
-          = event.time
-          \-
-          = link_to event.name, project_event_path(event.project, event)
+          - events.each do |event|
+            .event_list_item
+              = event.time
+              \-
+              = link_to event.name, project_event_path(event.project, event)

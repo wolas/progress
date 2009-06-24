@@ -18,7 +18,7 @@
   %body
     #header
       #logo= image_tag 'logo.png'
-
+      #title= yield(:title)
       - if logged_in?
         %div{:class=>"corner userbox"}
           .box

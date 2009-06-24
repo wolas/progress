@@ -1,22 +1,32 @@
-- show_project ||= false
+#task_list
+  - completed, open  = list.partition {|task| task.completed? }
+  - late, upcoming = open.partition {|task| task.late? }
+  - tasks = [[:late, late], [:upcoming, upcoming], [:completed, completed]]
 
-%table.ui-widget-content.widget{:width => '100%'}
-  - tasks.each do |task|
-    %tr
-      %td{:style => 'width: 2%;'}
-        %div{:style => "height: 20px; width: 20px; background-color: ##{task.project.colour}"}
+  - tasks.each do |type, tasks|
 
-      %td{:style => 'width: 20%;' + task.style}= link_to task.name, project_task_path(task.project, task)
+    - unless tasks.empty?
+      %div{:class => "task_list #{type}"}
+        %div{:class => "task_list_header header_#{type}"}= type.to_s.capitalize
 
-      %td{:style => 'width: 28%;text-align:middle;'}
-        = task.end_date
-        == (#{task.days_remaining})
+        - tasks.reverse.each do |task|
+          %div{:class => "task_list_item #{type}", :id => "task_item_#{task.id}"}
 
-      %td{:style => 'width: 30%; text-align:middle;'}
-        = collection_widget_for task.users, :object => task, :hide => true
+            %div{:class => "list_item_date #{type}"}
+              = task.end_date.to_s(:long)
+              - if task.open?
+                - if task.days_remaining > 1
+                  == (#{task.days_remaining} days away)
+                - else
+                  == (#{task.days_remaining.abs} days ago)
+            \-
+            .task_users= collection_widget_for task.users, :object => task, :hide => true
 
-      %td{:style => 'width: 20%;text-align:right;'}
-        - if task.completed?
-          = link_to 'reopen', mark_open_task_path(task)
-        - else
-          = link_to 'mark completed', mark_completed_task_path(task)
+            .task_name
+              - form_for task do |f|
+                = f.check_box :completed
+                = link_to task.name, project_task_path(task.project, task), :style => 'color: #000;'
+
+              = observe_form "edit_task_#{task.id}", :frequency => 0.25, :url => {:controller => 'tasks', :action => 'update', :id => task}, :update => "task_list", :complete => update_page {|p| p[:"task_item_#{task.id}"].visual_effect :highlight }
+
+      %br

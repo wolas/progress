@@ -14,9 +14,11 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @project = Project.find(params[:project_id]) if params[:project_id]
-    @task = Task.new :project => @project
+    @project = Project.find(params[:project_id])
+    @task = @project.tasks.new
     @client = @project.client
+
+    render(:partial => 'form', :locals => {:task => @task}) and return if request.xhr?
   end
 
   # GET /tasks/1/edit
@@ -45,25 +47,12 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update_attributes(params[:task])
-      request.xhr? ? render(:partial => 'tasks/list_full', :locals => {:list => @task.project.tasks}) : redirect_to(@task)
+      request.xhr? ? render(:partial => 'tasks/list', :locals => {:list => @task.project.tasks}) : redirect_to(@task)
     else
       @project = @task.project
       @client = @project.client
       render :action => "edit"
     end
-  end
-
-  def mark_completed
-    @task = Task.find(params[:id])
-    @task.update_attributes :completed => true
-    flash[:notice] = 'Task has been marked completed.'
-    redirect_to :back
-  end
-
-  def mark_open
-    @task = Task.find(params[:id])
-    @task.update_attributes :completed => false
-    redirect_to :back
   end
 
   # DELETE /tasks/1

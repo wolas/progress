@@ -1,7 +1,22 @@
-- unless @projects.empty?
-  %h2= link_to 'Projects', user_projects_path(@user)
-  = render :partial => 'projects/list', :locals => {:projects => @projects}
+- content_for :title do
+  Dashboard
+
+- if @user.tasks.empty?
+  You have no tasks assigned to you.
+  %ul
+    %li go see your boss!
+    %li= link_to 'create a new project', new_project_path
+    %li= link_to 'see all projects', projects_path
+
+- else
+  - content_for(:right) do
+    - unless @user.events.in_future.empty?
+      %h3 Events
+      = render :partial => 'events/list_full', :locals => {:events => @user.events.in_future}
+
+    = render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks.completed}
 
 
+  %p= render :partial => 'task_list', :locals => {:tasks => @user.tasks}
 
-%p= render :partial => 'calendars/tabs'
+  %p= render :partial => 'calendars/tabs'

@@ -1,0 +1,21 @@
+- task ||= nil
+- project = task.project if task
+- width ||= 400
+
+%script{:type=>"text/javascript"}
+  == $(function() {$("#progressbar").progressbar({value: #{project.percentage_complete}});});
+
+#progressbar{:style => "height:20px; positions:relative;width:#{width}px;"}
+  %div{:style => 'position: absolute; padding-left: 5px;padding-top: 2px;'}
+    = project.tasks.completed.count
+    \/
+    = project.tasks.count
+
+  %div{:style => "position: absolute; padding-left: #{width - (width/2)}px;padding-top: 2px;"}
+    %b
+      = project.percentage_complete
+      \%
+
+  %div{:style => "position: absolute; padding-left: #{width - 95}px;padding-top: 2px;"}
+    = project.end_date
+    == (#{project.days_remaining})

@@ -35,10 +35,4 @@
   - page[:cancel_edit_task_link].hide
   - page[:edit_task_link].visual_effect :appear
 
-|
-- if @task.completed?
-  = link_to 'reopen', mark_open_task_path(@task)
-- else
-  = link_to 'mark completed', mark_completed_task_path(@task)
-
 %p= render :partial => 'comments/list', :locals => {:comments => @task.comments, :owner => @task}

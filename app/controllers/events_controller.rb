@@ -18,6 +18,8 @@ class EventsController < ApplicationController
     @project = Project.find(params[:project_id]) if params[:project_id]
     @event = Event.new :project => @project
     @client = @project.client
+
+    render(:partial => 'form', :locals => {:event => @event}) and return if request.xhr?
   end
 
   # GET /events/1/edit

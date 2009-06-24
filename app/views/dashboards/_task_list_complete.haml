@@ -1,0 +1,23 @@
+.task_list_complete
+  - completed = tasks.select {|task| task.completed? }.slice(1, 10) || []
+  - completed = completed.group_by(&:end_date).to_a.sort
+  - list = [[:completed, completed]]
+
+  - list.each do |type, tasks|
+    - next if tasks.empty?
+    =#h tasks.inspect
+
+    %div{:class => "task_list_header header_#{type}"} Last 10 Completed Tasks
+
+    - tasks.reverse.each do |date, tasks|
+      %div{:class => "list_item_date #{type}"}
+        - days = Date.today - date.to_date
+        %span{:style => 'font-weight: normal;'}= date.to_s(:long)
+        == (#{days.abs} days #{days < 0 ? 'away' : 'ago'})
+
+      - tasks.reverse.each do |task|
+        %div{:class => "task_list_item #{type}", :id => "task_item_#{task.id}", :style => 'background-color: #fff;'}
+          .task_name= link_to task.name, project_task_path(task.project, task), :style => 'color: #000;'
+          \-
+          .task_users= collection_widget_for task.users, :object => task, :hide => true
+    %br
