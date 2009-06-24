@@ -4,9 +4,9 @@
 - if @user.tasks.empty?
   You have no tasks assigned to you.
   %ul
-    %li go see your boss!
-    %li= link_to 'create a new project', new_project_path
-    %li= link_to 'see all projects', projects_path
+    %li Go see your boss now!
+    %li= link_to 'Create a new project', new_project_path
+    %li= link_to 'See all projects', projects_path
 
 - else
   - content_for(:right) do
