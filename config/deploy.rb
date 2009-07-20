@@ -15,11 +15,6 @@ set :scm_passphrase, "deploypassword"
 
 server "152.146.39.15", :app, :web, :db, :primary => true
 
-after "deploy:update_code", :fix_script_perms
-task :fix_script_perms do
-  run "chmod 755 #{latest_release}/script/spin"
-end
-
 namespace :deploy do
   task :restart do
     run run "sudo -p 'sudo password: ' god restart progress"
