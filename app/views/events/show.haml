@@ -1,49 +1,37 @@
-%h1
-  - if @client
-    = link_to h(@client.name), @client
-    >
-  = link_to h(@project.name), @project, :style => @project.style
-  >
-  =h @event.name
+- content_for :title do
+  = render :partial => 'projects/header', :locals => {:task => @event}
 
+%div{:style => 'float:right'}
+  = link_to_remote 'Edit', :url => edit_event_path(@event), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  |
+  = link_to_remote 'Users', :url => {:controller => 'users', :action => 'manage', :object_id => @event, :object_class => @event.class}, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
-.two_col
-  #event_show
-    .attribute
-      .name Date:
-      .value=h @event.date
-    .attribute
-      .name Time:
-      .value=h @event.time
-    .attribute
-      .name Project:
-      .value=h @event.project.name
-
-    - if @event.description
-      .attribute
-        .name Description:
-        .value= @event.description
-
-  #update_event{:style => 'display:none;'}
-    = render :partial => 'form', :locals => {:event => @event }
-
-  = link_to_function 'Edit', :href => edit_event_path(@event), :id => "edit_event_link" do |page|
-    - page[:event_show].visual_effect :blind_up, :duration => 0.5
-    - page[:update_event].visual_effect :blind_down, :duration => 0.5
-    - page[:edit_event_link].hide
-    - page[:cancel_edit_event_link].visual_effect :appear
-
-  = link_to_function 'Cancel', :href => edit_event_path(@event), :id => 'cancel_edit_event_link', :style => "display:none;" do |page|
-    - page[:event_show].visual_effect :blind_down, :duration => 0.5
-    - page[:update_event].visual_effect :blind_up, :duration => 0.5
-    - page[:cancel_edit_event_link].hide
-    - page[:edit_event_link].visual_effect :appear
-
-.two_col
-  %h3 Assigned to
-
-  = render :partial => 'users/manage', :locals => {:object => @event }
+= collection_widget_for @event.users
 
 .clear
+
+#interactive_window.ui-widget-content.widget
+  .close_interactive_window
+    = link_to_function 'x' do |page|
+      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+  #interactive_content
+
+
+
+#event_show
+  .attribute
+    .name Date:
+    .value=h @event.date
+  .attribute
+    .name Time:
+    .value=h @event.time
+  .attribute
+    .name Project:
+    .value=h @event.project.name
+
+  - if @event.description
+    .attribute
+      .name Description:
+      .value= @event.description
 
 %p= render :partial => 'comments/list', :locals => {:comments => @event.comments, :owner => @event}

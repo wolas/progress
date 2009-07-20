@@ -1,5 +1,20 @@
-= render :partial => 'projects/header', :locals => {:task => @task}
+- content_for :title do
+  = render :partial => 'projects/header', :locals => {:task => @task}
 
+%div{:style => 'float:right'}
+  = link_to_remote 'Edit', :url => edit_task_path(@task), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  |
+  = link_to_remote 'Users', :url => {:controller => 'users', :action => 'manage', :object_id => @task, :object_class => @task.class}, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+
+= collection_widget_for @task.users
+
+.clear
+
+#interactive_window.ui-widget-content.widget
+  .close_interactive_window
+    = link_to_function 'x' do |page|
+      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+  #interactive_content
 
 #task_show
   .attribute
@@ -20,19 +35,5 @@
       .name Description:
       .value= @task.description
 
-#update_task{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:task => @task }
-
-= link_to_function 'Edit', :href => edit_task_path(@task), :id => "edit_task_link" do |page|
-  - page[:task_show].visual_effect :blind_up, :duration => 0.5
-  - page[:update_task].visual_effect :blind_down, :duration => 0.5
-  - page[:edit_task_link].hide
-  - page[:cancel_edit_task_link].visual_effect :appear
-
-= link_to_function 'Cancel', :href => edit_task_path(@task), :id => 'cancel_edit_task_link', :style => "display:none;" do |page|
-  - page[:task_show].visual_effect :blind_down, :duration => 0.5
-  - page[:update_task].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_edit_task_link].hide
-  - page[:edit_task_link].visual_effect :appear
 
 %p= render :partial => 'comments/list', :locals => {:comments => @task.comments, :owner => @task}

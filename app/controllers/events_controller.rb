@@ -17,7 +17,6 @@ class EventsController < ApplicationController
   def new
     @project = Project.find(params[:project_id]) if params[:project_id]
     @event = Event.new :project => @project
-    @client = @project.client
 
     render(:partial => 'form', :locals => {:event => @event}) and return if request.xhr?
   end
@@ -26,7 +25,7 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     @project = @event.project
-    @client = @project.client
+    render(:partial => 'form', :locals => {:event => @event}) and return if request.xhr?
   end
 
   # POST /events

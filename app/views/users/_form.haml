@@ -1,14 +1,17 @@
 .ui-widget-content.widget
 
-  - form_for user, :url => account_path do |f|
+  - form_for user, :html => { :multipart => true } do |f|
 
     = error_messages_for :user
     .attribute
-      .name= f.label :login
+      .name= f.label :login, 'Name'
       .value= f.text_field :login
     .attribute
       .name= f.label :email
       .value= f.text_field :email
+    .attribute
+      .name Avatar
+      .value= f.file_field :avatar
 
     .attribute
       .name= f.label :password, user.new_record? ? nil : "Change password"

@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :login, :email
 
+  has_attached_file :avatar, :styles => { :thumb => "100x100>" }, :default_url => 'default_face.png'
+
   def projects_involved options = {}
     prjs = (tasks.map { |task| task.project } + events.map { |event| event.project }).uniq
     options[:open] ? prjs.select {|p| p.open? } : prjs

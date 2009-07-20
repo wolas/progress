@@ -34,10 +34,10 @@ body {
     color: #aac; }
     #header .userbox .box {
       margin: .25em .5em .25em .5em; }
-    #header .userbox .gravatar {
+    #header .userbox .avatar {
       float: left;
       padding: .2em; }
-      #header .userbox .gravatar img {
+      #header .userbox .avatar img {
         border: 1px solid #d0d0d0;
         padding: 2px;
         background-color: white;
@@ -202,16 +202,17 @@ h4 {
 .progressbar {
   width: 300px; }
 
-.flash {
+#flash {
   padding-left: 4em;
   padding-right: 4em; }
 
 #interactive_window {
   display: none; }
-  #interactive_window .close_interactive_window {
-    float: right;
-    padding-right: 15px;
-    padding-top: 5px; }
+
+.close_interactive_window {
+  float: right;
+  padding-right: 15px;
+  padding-top: 5px; }
 
 #task, #event {
   position: absolute;

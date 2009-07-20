@@ -1,4 +1,5 @@
-%h1 Progress
+-content_for :title do
+  Clients
 
 = link_to_function 'New client', :href => new_client_path, :id => 'new_client_link' do |page|
   - page[:create_client].visual_effect :blind_down, :duration => 0.5

@@ -1,8 +1,8 @@
 #task_list
+
   - completed, open  = list.partition {|task| task.completed? }
   - late, upcoming = open.partition {|task| task.late? }
   - tasks = [[:late, late], [:upcoming, upcoming], [:completed, completed]]
-
   - tasks.each do |type, tasks|
 
     - unless tasks.empty?
@@ -20,7 +20,11 @@
                 - else
                   == (#{task.days_remaining.abs} days ago)
             \-
-            .task_users= collection_widget_for task.users, :object => task, :hide => true
+            .task_users
+              - if task.users.empty?
+                %span{:style => 'color:red;'}Not assigned
+              - else
+                = task.users.map{ |user| link_to user.name, user }.join(', ')
 
             .task_name
               - form_for task do |f|

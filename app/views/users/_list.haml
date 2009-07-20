@@ -20,8 +20,8 @@
     - users.in_groups_of(groups, false).each do |people|
       %tr
         - people.each do |user|
-          %td
+          %td{:width => '40px', :valign => 'bottom'}
             %span
-              = image_tag gravatar_url(user.email), :style => 'width:30px;vertical-align: middle;', :alt => 'avatar'
+              = image_tag user.avatar.url(:thumb), :style => 'width:30px;vertical-align: middle;', :alt => 'avatar'
               %br
               = link_to h(user.login), user

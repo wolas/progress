@@ -16,16 +16,13 @@ class TasksController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @task = @project.tasks.new
-    @client = @project.client
-
     render(:partial => 'form', :locals => {:task => @task}) and return if request.xhr?
   end
 
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
-    @project = @task.project
-    @client = @project.client
+    render(:partial => 'form', :locals => {:task => @task}) and return if request.xhr?
   end
 
   # POST /tasks

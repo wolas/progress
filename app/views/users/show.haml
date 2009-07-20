@@ -1,18 +1,21 @@
-%h1
+-content_for :title do
   = @user.login.capitalize
-  account.
 
 .two_col
   #user_show
-    .attribute
-      .name Email
-      .value= @user.email
-    .attribute
-      .name Tasks
-      .value= @user.tasks.count
-    .attribute
-      .name Events
-      .value= @user.events.count
+    .two_col
+      = image_tag @user.avatar.url :thumb
+    .two_col
+      .attribute
+        .name Email
+        .value= @user.email
+      .attribute
+        .name Tasks
+        .value= @user.tasks.count
+      .attribute
+        .name Events
+        .value= @user.events.count
+    .clear
 
   #update_user{:style => 'display:none;'}
     = render :partial => 'form', :locals => {:user => @user }

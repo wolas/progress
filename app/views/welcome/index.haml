@@ -1,7 +1,4 @@
-%h1 Welcome to Progress Y&amp;R Italy
+-content_for :title do
+  Welcome to Progress Y&amp;R Italy
 
-Please
-= link_to "login", login_url
-or
-= link_to "register", register_url
-to continue.
+%p= render :partial => 'user_sessions/login', :locals => {:user_session => UserSession.new}

@@ -1,5 +1,7 @@
 class Project < ActiveRecord::Base
 
+  PRIORITIES = [:low, :medium, :high, :urgent]
+
   belongs_to :client
 
   has_many :tasks, :order => 'end_date ASC', :dependent => :destroy

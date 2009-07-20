@@ -23,7 +23,7 @@
   - @users.each do |user|
     %tr
       %td{:width => "200px"}
-        = image_tag gravatar_url(user.email), :style => "vertical-align:middle;"
+        = image_tag user.avatar.url(:thumb), :width => '40px', :style => "vertical-align:middle;"
         = link_to h(user.login), user
       %td= user.projects.count
       %td= user.tasks.count
