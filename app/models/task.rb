@@ -1,7 +1,16 @@
 class Task < ActiveRecord::Base
+  PEOPLE = [:digital_refs, :art_directors, :art_operatives, :flash_operatives, :front_end_developers, :back_end_developers]
 
   belongs_to :project
-  has_and_belongs_to_many :users
+
+  has_and_belongs_to_many :art_directors, :join_table => :tasks_art_director, :class_name => 'User'
+  has_and_belongs_to_many :art_operatives, :join_table => :tasks_art_operative, :class_name => 'User'
+  has_and_belongs_to_many :flash_operatives, :join_table => :tasks_flash_operative, :class_name => 'User'
+  has_and_belongs_to_many :front_end_developers, :join_table => :tasks_front_end_developer, :class_name => 'User'
+  has_and_belongs_to_many :back_end_developers, :join_table => :tasks_back_end_developer, :class_name => 'User'
+  has_and_belongs_to_many :digital_refs, :join_table => :tasks_digital_ref, :class_name => 'User'
+
+
   has_many :comments, :as => :owner, :order => 'created_at DESC', :dependent => :destroy
 
   validates_presence_of :end_date, :start_date, :name, :project
@@ -10,6 +19,10 @@ class Task < ActiveRecord::Base
   named_scope :open, :conditions => {:completed => false}
   named_scope :completed, :conditions => {:completed => true}
   named_scope :closed, :conditions => {:completed => true}
+
+  def users
+    PEOPLE.map{|user| eval user.to_s }.flatten.uniq
+  end
 
   def late?
     return unless end_date

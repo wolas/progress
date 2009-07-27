@@ -52,6 +52,25 @@ class TasksController < ApplicationController
     end
   end
 
+  def users
+    @users = User.all
+    @object = Kernel.eval( params[:object_class] ).find params[:object_id]
+  end
+
+  def add_user
+    task = Task.find params[:id]
+    user = User.find params[:user]
+    task.send(params[:type].to_sym) << user
+    render(:partial => 'users', :locals => {:object => task})
+  end
+
+  def remove_user
+    task = Task.find params[:id]
+    user = User.find params[:user]
+    task.send(params[:type]).delete user
+    render(:partial => 'users', :locals => {:object => task})
+  end
+
   # DELETE /tasks/1
   def destroy
     Task.find(params[:id]).destroy

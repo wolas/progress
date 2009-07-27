@@ -4,9 +4,9 @@
 %div{:style => 'float:right'}
   = link_to_remote 'Edit', :url => edit_task_path(@task), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
-  = link_to_remote 'Users', :url => {:controller => 'users', :action => 'manage', :object_id => @task, :object_class => @task.class}, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote 'Users', :url => {:controller => 'tasks', :action => 'users', :object_id => @task, :object_class => @task.class}, :complete => "$('#interactive_window').show()"
 
-= collection_widget_for @task.users
+= @task.users.map{|user| user.name }.join ', '
 
 .clear
 
