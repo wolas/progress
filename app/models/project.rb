@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-
+  PEOPLE = [:manager, :digital_ref, :art_director, :art_operative, :flash_operative, :front_end_developer, :back_end_developer]
   PRIORITIES = [:low, :medium, :high, :urgent]
 
   belongs_to :client
@@ -7,14 +7,22 @@ class Project < ActiveRecord::Base
   has_many :tasks, :order => 'end_date ASC', :dependent => :destroy
   has_many :events, :order => 'date DESC', :dependent => :destroy
 
-  has_and_belongs_to_many :users
+  belongs_to :manager, :class_name => 'User'
+  belongs_to :digital_ref, :class_name => 'User'
+  belongs_to :art_director, :class_name => 'User'
+  belongs_to :art_operative, :class_name => 'User'
+  belongs_to :flash_operative, :class_name => 'User'
+  belongs_to :front_end_developer, :class_name => 'User'
+  belongs_to :back_end_developer, :class_name => 'User'
 
   validates_presence_of :end_date, :name, :colour
   validate_on_create :date_in_future
 
   named_scope :open, :conditions => {:closed => false}
 
-  alias managers users
+  def people
+    PEOPLE.map{|person| eval person.to_s }.compact
+  end
 
   def open?
     not closed?

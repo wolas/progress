@@ -46,8 +46,6 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
 
-    params[:project][:user_ids] ||= []
-
     if @project.update_attributes(params[:project])
       flash[:notice] = 'Project was successfully updated.'
       redirect_to(@project)
@@ -67,6 +65,25 @@ class ProjectsController < ApplicationController
     project = Project.find(params[:id])
     project.update_attributes(:closed => false)
     redirect_to :back
+  end
+
+  def users
+    @users = User.all
+    @object = Kernel.eval( params[:object_class] ).find params[:object_id]
+  end
+
+  def add_user
+    project = Project.find params[:id]
+    user = User.find params[:user]
+    project.update_attributes params[:type].to_sym => user
+    render(:partial => 'users', :locals => {:object => project})
+  end
+
+  def remove_user
+    project = Project.find params[:id]
+    user = User.find params[:user]
+    project.update_attributes params[:type] => nil
+    render(:partial => 'users', :locals => {:object => project})
   end
 
   # DELETE /projects/1

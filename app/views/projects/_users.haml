@@ -1,0 +1,23 @@
+#users
+  %script{:type=>"text/javascript"}
+    $(function() {
+    $(".draggable").draggable({ revert: 'invalid' });
+    - for type in Project::PEOPLE
+      = "$(\".droppable_#{type}\").droppable({activeClass: 'ui-state-hover',hoverClass: 'ui-state-active',drop: function(event, ui) {addUser(ui.draggable.attr('id'), '#{type}', '#{object.id}');}});"
+
+    function addUser(id, type, object) {$.ajax({data:'user=' + id + '&type=' + type + '&id=' + object, dataType:'script', type:'post', url:"/projects/add_user" }); return false;}
+    });
+
+
+  - for type in Project::PEOPLE
+    - person = object.send type
+
+    .attribute
+      .name= type.to_s.humanize.capitalize
+      .value
+        %div{:class => "droppable_#{type}", :style => 'min-height: 20px; width: 200px;'}
+          - if person
+            %span.draggable
+              = link_to_remote image_tag('cross.png', :width => 10), :url => {:controller => 'projects', :action => 'remove_user', :id => object, :type => type, :user => person}, :update => 'users'
+              = image_tag person.avatar.url(:thumb), :style => "vertical-align: middle;width:30px"
+              = person.name

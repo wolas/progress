@@ -1,0 +1,15 @@
+= javascript_tag '$(function() {$(".draggable").draggable({ revert: "invalid" });});'
+
+- users ||= User.all
+
+#users
+  %h3 Users (Drag &amp; Drop)
+  %table{:cellspacing => 0}
+    - users.each do |user|
+      %tr
+        %td
+          %span.draggable{:id => user.id}
+            = image_tag 'drag.png', :style => "vertical-align: middle;"
+            &nbsp;
+            = image_tag user.avatar.url(:thumb), :style => "vertical-align: middle;width:30px"
+            = user.login

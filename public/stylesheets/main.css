@@ -317,7 +317,7 @@ h4 {
 #task_body, #event_body {
   padding: 10px;
   max-width: 500px; }
-  #task_body #controls,   #event_body #controls {
+  #task_body #controls, #event_body #controls {
     float: right; }
 
 #tab_nav a {
@@ -374,6 +374,9 @@ h4 {
 .project_row {
   padding-bottom: 10px;
   padding-top: 5px; }
+
+.draggable {
+  cursor: move; }
 
 .fieldWithErrors {
   color: red; }

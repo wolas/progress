@@ -20,22 +20,23 @@
   = link_to_remote 'New task', :url => new_task_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'New event', :url => new_event_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
-  - if admin?
-    |
-    = link_to_remote 'Users', :url => {:controller => 'users', :action => 'manage', :object_id => @project, :object_class => @project.class}, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  |
+  = link_to_remote 'Users', :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :complete => "$('#interactive_window').show()"
   |
   - if @project.closed?
     = link_to 'Reopen', reopen_project_path(@project)
   - else
     = link_to 'Close', close_project_path(@project)
 
-= collection_widget_for @project.users
+%br
+%br
 
-#interactive_window.ui-widget-content.widget
-  .close_interactive_window
-    = link_to_function 'x' do |page|
-      - page[:interactive_window].visual_effect :fade, :duration => 0.5
-  #interactive_content
+%p
+  #interactive_window.ui-widget-content.widget
+    .close_interactive_window
+      = link_to_function 'x' do |page|
+        - page[:interactive_window].visual_effect :fade, :duration => 0.5
+    #interactive_content
 
 #description{:style => "display:none;"}= @project.description
 

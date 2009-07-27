@@ -1,0 +1,2 @@
+page.replace_html 'interactive_content', :partial => 'users', :locals => {:object => @object, :users => @users}
+page.replace_html 'right', :partial => 'users/drag_list', :locals => {:users => User.all}

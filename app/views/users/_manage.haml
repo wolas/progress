@@ -1,6 +1,6 @@
 #manage_users
   .two_col
-    - if object.users.empty?
+    - if object.managers.empty?
       No users assigned to this
       = object.class.to_s.downcase
       yet
@@ -22,7 +22,7 @@
         = observe_field :search, :url => { :controller => 'users', :action => :search, :object_id => object.id, :object_class => object.class }, :frequency => 0.25, :update => :users, :with => 'name'
 
     #users
-      - to_add = User.all - object.users
+      - to_add = User.all - object.managers
       - if to_add.empty?
         No one left to be assigned!
       - else

@@ -17,6 +17,6 @@ server "152.146.39.15", :app, :web, :db, :primary => true
 
 namespace :deploy do
   task :restart do
-    run run "sudo -p 'sudo password: ' god restart progress"
+    run "sudo -p 'sudo password: ' god restart progress"
   end
 end
