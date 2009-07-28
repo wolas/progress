@@ -19,7 +19,7 @@
 - unless @task.stories.empty?
   - content_for :right do
     %h3 Updates
-    = render :partial => 'stories/list', :locals => {:stories => @task.stories}
+    = render :partial => 'stories/mini_list', :locals => {:stories => @task.stories}
 
 
 #task_show

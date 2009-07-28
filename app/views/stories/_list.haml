@@ -6,10 +6,12 @@
 
     - stories.each do |story|
       .story
-        .story_data= widget_for story.creator
+        .story_data{:style => 'font-size: .9em;'}
+          = widget_for story.creator
+          .story_time{:style => 'font-size: .7em;'}= story.created_at.to_time.strftime "%l:%M %p"
 
         .story_body
-          = story.body.gsub "#{current_user.name} has", "you have"
+          = story.body.gsub "#{current_user.name} has", "You have"
           for
           = story.parent_type.downcase
           = link_to story.parent.name, story.parent

@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(params[:comment].merge(:user => current_user))
 
     if @comment.save
+      @comment.owner.stories.create :body => "<div class='quote'>#{@comment.body}</div>", :creator => current_user
       flash[:notice] = 'Comment was successfully created.'
       redirect_to @comment.owner
     else

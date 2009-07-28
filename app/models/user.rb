@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :tasks, :order => 'end_date ASC'
   has_and_belongs_to_many :events, :order => 'date DESC'
   has_and_belongs_to_many :roles
-  has_and_belongs_to_many :stories, :join_table => :stories_users
+  has_and_belongs_to_many :stories, :order => 'created_at DESC'
 
   has_many :created_stories, :class_name => 'Story', :order => 'created_at DESC', :foreign_key => :creator_id
 

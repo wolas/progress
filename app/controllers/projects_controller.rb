@@ -47,7 +47,7 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     @project.attributes = params[:project]
-    @project.changes.each_pair { |attribute, values| @project.stories.create :body => "#{attribute.to_s.humanize} changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user}
+    @project.changes.each_pair { |attribute, values| @project.stories.create :body => "<div class='changed_data'>#{attribute.to_s.humanize}</div> changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user}
 
     if @project.save
       flash[:notice] = 'Project was successfully updated.'

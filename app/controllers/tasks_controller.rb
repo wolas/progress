@@ -44,7 +44,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.attributes = params[:task]
 
-    @task.changes.each_pair { |attribute, values| @task.stories.create :body => "#{attribute.to_s.humanize} changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user}
+    @task.changes.each_pair do |attribute, values|
+      @task.stories.create :body => "<div class='changed_data'>#{attribute.to_s.humanize}</div> changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user
+    end
 
     if @task.save
       request.xhr? ? render(:partial => 'tasks/list', :locals => {:list => @task.project.tasks}) : redirect_to(@task)

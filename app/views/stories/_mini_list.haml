@@ -1,6 +1,6 @@
 - stories = stories.group_by {|story| story.created_at.to_date }
 
-.event_list.ui-widget-content.widget
+.event_list.widget
   - stories.each do |date, stories|
     %div{:class => "event_list_header header_completed"}= date.to_s(:long)
 

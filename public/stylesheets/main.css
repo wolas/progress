@@ -385,11 +385,11 @@ h4 {
   padding-top: 10px; }
   .story .story_body {
     padding-left: 2%;
-    border-left: 1px solid #999;
     float: left;
     width: 80%;
     font-size: .9em; }
   .story .story_data {
+    border-right: 1px solid #999;
     float: left;
     width: 15%;
     padding-left: 2%;
@@ -398,6 +398,16 @@ h4 {
 .changed_data {
   font-weight: bold;
   display: inline; }
+
+.quote {
+  font-style: oblique;
+  margin-bottom: 5px;
+  min-height: 25px;
+  padding-left: 25px;
+  padding-top: 10px;
+  background-image: url(/images/quotes.png);
+  background-position: left;
+  background-repeat: no-repeat; }
 
 .fieldWithErrors {
   color: red; }
