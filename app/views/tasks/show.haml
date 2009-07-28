@@ -1,20 +1,26 @@
 - content_for :title do
   = render :partial => 'projects/header', :locals => {:task => @task}
 
+
 %div{:style => 'float:right'}
   = link_to_remote 'Edit', :url => edit_task_path(@task), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'Users', :url => {:controller => 'tasks', :action => 'users', :object_id => @task, :object_class => @task.class}, :complete => "$('#interactive_window').show()"
 
-= @task.users.map{|user| user.name }.join ', '
+= @task.users.map{|user| link_to user.name, user }.join ', '
 
-.clear
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
     = link_to_function 'x' do |page|
       - page[:interactive_window].visual_effect :fade, :duration => 0.5
   #interactive_content
+
+- unless @task.stories.empty?
+  - content_for :right do
+    %h3 Updates
+    = render :partial => 'stories/list', :locals => {:stories => @task.stories}
+
 
 #task_show
   .attribute

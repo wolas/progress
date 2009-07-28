@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :stories
+
   # resources
   map.resources :roles
   map.resources :teams

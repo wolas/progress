@@ -1,0 +1,18 @@
+.story_form
+  -form_for story do |f|
+    = f.error_messages
+    
+    .attribute
+      .name= f.label :parent_id
+      .value= f.text_field :parent_id 
+    .attribute
+      .name= f.label :parent_type
+      .value= f.text_field :parent_type 
+    .attribute
+      .name= f.label :body
+      .value= f.text_area :body 
+    .attribute
+      .name= f.label :user_id
+      .value= f.text_field :user_id 
+    
+    .story_submit_button= f.submit "Save"

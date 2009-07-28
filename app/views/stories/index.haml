@@ -1,0 +1,33 @@
+%h1 Listing stories
+
+= link_to_function 'New story', :href => new_story_path, :id => 'new_story_link' do |page|
+  - page[:create_story].visual_effect :blind_down, :duration => 0.5
+  - page[:new_story_link].hide
+  - page[:cancel_new_story_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_story_path, :id => 'cancel_new_story_link', :style => "display:none;" do |page|
+  - page[:create_story].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_story_link].hide
+  - page[:new_story_link].visual_effect :appear
+
+#create_story{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:story => Story.new }
+
+%table{:width => "100%"}
+  %tr
+    %th Parent
+    %th Parent type
+    %th Body
+    %th User
+
+  -for story in @stories
+    %tr
+      %td= h story.parent_id
+      %td= h story.parent_type
+      %td= h story.body
+      %td= h story.user_id
+
+    
+      %td= link_to 'Show', story_path(story)
+      %td= link_to 'Edit', edit_story_path(story)
+      %td= link_to 'Destroy', story_path(story), :method => :delete

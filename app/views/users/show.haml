@@ -44,3 +44,7 @@
           = role.name
         %br
 .clear
+
+- unless @user.stories.empty?
+  %h3 News feed
+  = render :partial => 'stories/list', :locals => {:stories => @user.stories}

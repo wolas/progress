@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
   def new
     client = Client.find(params[:client_id]) if params[:client_id]
     @project = Project.new :client => client
+    render :partial => 'form', :locals => {:project => @project} if request.xhr?
   end
 
   # GET /projects/1/edit
@@ -45,8 +46,10 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   def update
     @project = Project.find(params[:id])
+    @project.attributes = params[:project]
+    @project.changes.each_pair { |attribute, values| @project.stories.create :body => "#{attribute.to_s.humanize} changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user}
 
-    if @project.update_attributes(params[:project])
+    if @project.save
       flash[:notice] = 'Project was successfully updated.'
       redirect_to(@project)
     else

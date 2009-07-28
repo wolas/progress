@@ -42,8 +42,11 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   def update
     @task = Task.find(params[:id])
+    @task.attributes = params[:task]
 
-    if @task.update_attributes(params[:task])
+    @task.changes.each_pair { |attribute, values| @task.stories.create :body => "#{attribute.to_s.humanize} changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user}
+
+    if @task.save
       request.xhr? ? render(:partial => 'tasks/list', :locals => {:list => @task.project.tasks}) : redirect_to(@task)
     else
       @project = @task.project
@@ -61,6 +64,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
     user = User.find params[:user]
     task.send(params[:type].to_sym) << user
+    task.stories.create :body => "#{user.name} has been assigned as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
     render(:partial => 'users', :locals => {:object => task})
   end
 

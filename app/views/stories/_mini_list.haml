@@ -1,0 +1,13 @@
+- stories = stories.group_by {|story| story.created_at.to_date }
+
+.event_list.ui-widget-content.widget
+  - stories.each do |date, stories|
+    %div{:class => "event_list_header header_completed"}= date.to_s(:long)
+
+    - stories.each do |story|
+      .story
+        .story_data= widget_for story.creator, 20
+
+        .story_body= story.body
+
+        .clear

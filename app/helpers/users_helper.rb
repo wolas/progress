@@ -1,7 +1,7 @@
 module UsersHelper
-  def widget_for user
+  def widget_for user, size = nil
     return unless user
-    render :partial => 'users/widget', :locals => {:user => user }
+    render :partial => 'users/widget', :locals => {:user => user, :size => size }
   end
 
   def collection_widget_for users, options = {}

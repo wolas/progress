@@ -1,0 +1,31 @@
+#story_show
+  .attribute
+    .name Parent:
+    .value=h @story.parent_id 
+  .attribute
+    .name Parent type:
+    .value=h @story.parent_type 
+  .attribute
+    .name Body:
+    .value=h @story.body 
+  .attribute
+    .name User:
+    .value=h @story.user_id 
+
+#update_story{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:story => @story }
+
+= link_to_function 'Edit', :href => edit_story_path(@story), :id => "edit_story_link" do |page|
+  - page[:story_show].visual_effect :blind_up, :duration => 0.5
+  - page[:update_story].visual_effect :blind_down, :duration => 0.5
+  - page[:edit_story_link].hide
+  - page[:cancel_edit_story_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => edit_story_path(@story), :id => 'cancel_edit_story_link', :style => "display:none;" do |page|
+  - page[:story_show].visual_effect :blind_down, :duration => 0.5
+  - page[:update_story].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_edit_story_link].hide
+  - page[:edit_story_link].visual_effect :appear
+
+|
+= link_to 'Back', stories_path

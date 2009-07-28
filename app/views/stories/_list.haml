@@ -1,0 +1,17 @@
+- stories = stories.group_by {|story| story.created_at.to_date }
+
+.event_list.widget
+  - stories.each do |date, stories|
+    %div{:class => "event_list_header header_completed"}= date.to_s(:long)
+
+    - stories.each do |story|
+      .story
+        .story_data= widget_for story.creator
+
+        .story_body
+          = story.body.gsub "#{current_user.name} has", "you have"
+          for
+          = story.parent_type.downcase
+          = link_to story.parent.name, story.parent
+
+        .clear

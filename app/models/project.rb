@@ -1,19 +1,14 @@
 class Project < ActiveRecord::Base
-  PEOPLE = [:manager, :digital_ref, :art_director, :art_operative, :flash_operative, :front_end_developer, :back_end_developer]
+  PEOPLE = [:manager]
   PRIORITIES = [:low, :medium, :high, :urgent]
 
   belongs_to :client
 
   has_many :tasks, :order => 'end_date ASC', :dependent => :destroy
   has_many :events, :order => 'date DESC', :dependent => :destroy
+  has_many :stories, :as => :parent, :order => 'created_at DESC', :dependent => :destroy
 
   belongs_to :manager, :class_name => 'User'
-  belongs_to :digital_ref, :class_name => 'User'
-  belongs_to :art_director, :class_name => 'User'
-  belongs_to :art_operative, :class_name => 'User'
-  belongs_to :flash_operative, :class_name => 'User'
-  belongs_to :front_end_developer, :class_name => 'User'
-  belongs_to :back_end_developer, :class_name => 'User'
 
   validates_presence_of :end_date, :name, :colour
   validate_on_create :date_in_future
@@ -35,7 +30,7 @@ class Project < ActiveRecord::Base
   end
 
   def people_involved conditions = {}
-    (tasks.all(conditions).map { |task| task.users } + events.all(conditions).map { |event| event.users }).uniq.flatten
+    (tasks.all(conditions).map { |task| task.users } + events.all(conditions).map { |event| event.users }).flatten.uniq
   end
 
   def late?

@@ -29,22 +29,8 @@
             = link_to 'new event', new_project_event_path(project)
             |
             = link_to 'new task', new_project_task_path(project)
-            - unless project.tasks.open.empty?
-              |
-              = link_to_function "show tasks", :href => nil, :id => "show_project#{project.id}_link" do |page|
-                - page[:"project#{project.id}"].visual_effect :blind_down, :duration => 0.5
-                - page[:"show_project#{project.id}_link"].hide
-                - page[:"hide_project#{project.id}_link"].show
-
-              = link_to_function "hide tasks", :href => nil, :id => "hide_project#{project.id}_link", :style => "display:none;" do |page|
-                - page[:"project#{project.id}"].visual_effect :blind_up, :duration => 0.5
-                - page[:"hide_project#{project.id}_link"].hide
-                - page[:"show_project#{project.id}_link"].show
-
             |
             - if project.closed?
               = link_to 'reopen', reopen_project_path(project)
             - else
               = link_to 'close', close_project_path(project)
-
-        %div{:id => "project#{project.id}", :style => 'display:none;'}

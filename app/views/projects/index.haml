@@ -1,22 +1,18 @@
-%h1
+- content_for :title do
   - if @user
     Projects for
     = link_to @user.login, account_path
   - else
     All Projects
 
-= link_to_function 'New project', :href => new_project_path, :id => 'new_project_link' do |page|
-  - page[:create_project].visual_effect :blind_down, :duration => 0.5
-  - page[:new_project_link].hide
-  - page[:cancel_new_project_link].visual_effect :appear
+%div{:style => 'float:right'}
+  = link_to_remote 'New', :url => new_project_path, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
-= link_to_function 'Cancel', :href => new_project_path, :id => 'cancel_new_project_link', :style => "display:none;" do |page|
-  - page[:create_project].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_new_project_link].hide
-  - page[:new_project_link].visual_effect :appear
-
-#create_project{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:project => Project.new }
+#interactive_window.ui-widget-content.widget
+  .close_interactive_window
+    = link_to_function 'x' do |page|
+      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+  #interactive_content
 
 - completed, in_progress = @projects.partition{|project| project.closed?}
 

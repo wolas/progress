@@ -207,7 +207,8 @@ h4 {
   padding-right: 4em; }
 
 #interactive_window {
-  display: none; }
+  display: none;
+  margin-top: 20px; }
 
 .close_interactive_window {
   float: right;
@@ -276,18 +277,20 @@ h4 {
 
 .event_list {
   width: 100%; }
-  .event_list .event_list_header {
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    font-weight: bold;
-    color: #fff;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 5px; }
-  .event_list .event_list_item {
-    padding-left: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px; }
+
+.event_list_header {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  font-weight: bold;
+  color: #fff;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px; }
+
+.event_list_item {
+  padding-left: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px; }
 
 .list_item_date {
   display: inline;
@@ -377,6 +380,24 @@ h4 {
 
 .draggable {
   cursor: move; }
+
+.story {
+  padding-top: 10px; }
+  .story .story_body {
+    padding-left: 2%;
+    border-left: 1px solid #999;
+    float: left;
+    width: 80%;
+    font-size: .9em; }
+  .story .story_data {
+    float: left;
+    width: 15%;
+    padding-left: 2%;
+    font-size: .7em; }
+
+.changed_data {
+  font-weight: bold;
+  display: inline; }
 
 .fieldWithErrors {
   color: red; }

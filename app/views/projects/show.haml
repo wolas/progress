@@ -1,7 +1,7 @@
 - content_for :title do
   = render :partial => 'header', :locals => {:project => @project}
 
-%div{:style => 'float:right'}
+%div{:style => 'float:right;'}
   - if @project.description?
     = link_to_function 'Description', :href => nil, :id => 'show_description_link' do |page|
       - page[:description].visual_effect :blind_down, :duration => 0.5
@@ -31,14 +31,14 @@
 %br
 %br
 
-%p
-  #interactive_window.ui-widget-content.widget
-    .close_interactive_window
-      = link_to_function 'x' do |page|
-        - page[:interactive_window].visual_effect :fade, :duration => 0.5
-    #interactive_content
+#interactive_window.ui-widget-content.widget
+  .close_interactive_window
+    = link_to_function 'x' do |page|
+      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+  #interactive_content
 
 #description{:style => "display:none;"}= @project.description
+
 
 
 %p= render :partial => 'tasks/list', :locals => {:list => @project.tasks}
@@ -47,6 +47,10 @@
   - unless @project.events.in_future.empty?
     %h3 Events
     = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future}
+
+  - unless @project.stories.empty?
+    %h3 Updates
+    = render :partial => 'stories/mini_list', :locals => {:stories => @project.stories}
 
 
 

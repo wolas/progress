@@ -12,6 +12,7 @@ class Task < ActiveRecord::Base
 
 
   has_many :comments, :as => :owner, :order => 'created_at DESC', :dependent => :destroy
+  has_many :stories, :as => :parent, :order => 'created_at DESC', :dependent => :destroy
 
   validates_presence_of :end_date, :start_date, :name, :project
   validate_on_create :dates_in_future
@@ -23,6 +24,7 @@ class Task < ActiveRecord::Base
   def users
     PEOPLE.map{|user| eval user.to_s }.flatten.uniq
   end
+  alias people_involved users
 
   def late?
     return unless end_date
