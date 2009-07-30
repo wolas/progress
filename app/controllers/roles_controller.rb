@@ -1,5 +1,10 @@
 class RolesController < ApplicationController
-  
+
+  def user_roles
+    user = User.find params[:id]
+    render :partial => 'form_list', :locals => {:user => user}
+  end
+
   # GET /roles
   def index
     @roles = Role.find(:all)

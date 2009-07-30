@@ -1,50 +1,19 @@
 -content_for :title do
-  = @user.login.capitalize
+  Account
 
-.two_col
-  #user_show
-    .two_col
-      = image_tag @user.avatar.url :thumb
-    .two_col
-      .attribute
-        .name Email
-        .value= @user.email
-      .attribute
-        .name Tasks
-        .value= @user.tasks.count
-      .attribute
-        .name Events
-        .value= @user.events.count
-    .clear
-
-  #update_user{:style => 'display:none;'}
-    = render :partial => 'form', :locals => {:user => @user }
-
-  %p
-    = link_to_function 'Edit', :href => edit_user_path(@user), :id => "edit_user_link" do |page|
-      - page[:user_show].visual_effect :blind_up, :duration => 0.5
-      - page[:update_user].visual_effect :blind_down, :duration => 0.5
-      - page[:edit_user_link].hide
-      - page[:cancel_edit_user_link].visual_effect :appear
-
-    = link_to_function 'Cancel', :href => nil, :id => 'cancel_edit_user_link', :style => "display:none;" do |page|
-      - page[:user_show].visual_effect :blind_down, :duration => 0.5
-      - page[:update_user].visual_effect :blind_up, :duration => 0.5
-      - page[:cancel_edit_user_link].hide
-      - page[:edit_user_link].visual_effect :appear
-
-.two_col
+%div{:style => 'float:right;'}
+  = link_to_remote 'Edit', :url => edit_user_path(@user), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   - if admin?
-    %h2 Roles
-
-    - form_for @user do |f|
-      - Role.all.each do |role|
-        %span
-          = check_box_tag 'user[role_ids][]', role.id, @user.has_role?(role.name), :onchange => 'this.form.submit();',:style => 'vertical-align:middle;'
-          = role.name
-        %br
+    |
+    = link_to_remote 'Roles', :url => {:controller => :roles, :action => :user_roles, :id => @user}, :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 .clear
 
+
+#interactive_window.ui-widget-content.widget
+  .close_interactive_window
+    = link_to_function 'x' do |page|
+      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+  #interactive_content
+
 - unless @user.stories.empty?
-  %h3 News feed
   = render :partial => 'stories/list', :locals => {:stories => @user.stories}

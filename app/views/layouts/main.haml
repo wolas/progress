@@ -21,7 +21,7 @@
       - if logged_in?
         %div{:class=>"corner userbox"}
           .box
-            .avatar= image_tag current_user.avatar.url(:thumb), :width => '40px'
+            .avatar= image_tag current_user.avatar.url(:medium)
             .top
               .name= link_to current_user.name, current_user
               .links
@@ -40,11 +40,13 @@
                   |
                   = link_to_unless_current 'Projects', projects_url
                   - if admin?
-                    %br
+                    |
                     = link_to_unless_current 'Roles', roles_url
 
               .inbox
-                %span Foo
+                %span
+                  - count = current_user.users_stories.count :conditions => {:seen => false}
+                  = link_to "#{image_tag('message.png')} #{count}", account_path
 
     #flash
       - if notice = flash[:notice]

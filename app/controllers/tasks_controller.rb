@@ -45,7 +45,7 @@ class TasksController < ApplicationController
     @task.attributes = params[:task]
 
     @task.changes.each_pair do |attribute, values|
-      @task.stories.create :body => "<div class='changed_data'>#{attribute.to_s.humanize}</div> changed from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user
+      @task.stories.create :body => "changed <div class='changed_data'>#{attribute.to_s.humanize}</div> from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user
     end
 
     if @task.save
@@ -66,7 +66,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
     user = User.find params[:user]
     task.send(params[:type].to_sym) << user
-    task.stories.create :body => "#{user.name} has been assigned as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
+    task.stories.create :body => "has <div class='changed_data'>#{user.name}</div> assigned as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
     render(:partial => 'users', :locals => {:object => task})
   end
 
@@ -74,6 +74,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
     user = User.find params[:user]
     task.send(params[:type]).delete user
+    task.stories.create :body => "has removed <div class='changed_data'>#{user.name}</div> as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
     render(:partial => 'users', :locals => {:object => task})
   end
 

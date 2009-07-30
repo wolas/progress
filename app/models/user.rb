@@ -5,15 +5,16 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :tasks, :order => 'end_date ASC'
   has_and_belongs_to_many :events, :order => 'date DESC'
   has_and_belongs_to_many :roles
-  has_and_belongs_to_many :stories, :order => 'created_at DESC'
 
+  has_many :users_stories
+  has_many :stories, :through => :users_stories, :order => 'created_at DESC'
   has_many :created_stories, :class_name => 'Story', :order => 'created_at DESC', :foreign_key => :creator_id
 
   belongs_to :team
 
   validates_uniqueness_of :login, :email
 
-  has_attached_file :avatar, :styles => { :thumb => "100x100>" }, :default_url => 'default_face.png'
+  has_attached_file :avatar, :styles => { :small=> "30x30>", :medium => "50x50>", :thumb => "100x100>" }, :default_url => 'default_face.png'
 
   def projects_involved options = {}
     prjs = (tasks.map { |task| task.project } + events.map { |event| event.project }).uniq

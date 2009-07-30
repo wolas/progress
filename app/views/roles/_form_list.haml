@@ -1,0 +1,6 @@
+- form_for user do |f|
+  - Role.all.each do |role|
+    %span
+      = check_box_tag 'user[role_ids][]', role.id, user.has_role?(role.name), :onchange => 'this.form.submit();',:style => 'vertical-align:middle;'
+      = role.name
+    %br

@@ -6,29 +6,9 @@ class UsersController < ApplicationController
     render( users.empty? ? {:text => "No Users found!"} : {:partial => 'manage', :locals => {:users => users, :object => object}})
   end
 
-  def remove_user
-    object = Kernel.eval( params[:object_class] ).find params[:object_id]
-    user = User.find params[:user]
-    object.users.delete user
-    render :partial => 'users/manage', :locals => {:object => object }
-  end
-
-  def add_user
-    object = Kernel.eval( params[:object_class] ).find params[:object_id]
-    user = User.find params[:user]
-    object.users << user
-    render :partial => 'users/manage', :locals => {:object => object }
-  end
-
   def index
     @users = User.all
     render(:partial => 'list', :locals => {:users => @users}) if request.xhr?
-  end
-
-  def manage
-    @users = User.all
-    @object = Kernel.eval( params[:object_class] ).find params[:object_id]
-    render(:partial => 'manage', :locals => {:object => @object, :users => @users}) if request.xhr?
   end
 
   def new
@@ -47,10 +27,12 @@ class UsersController < ApplicationController
 
   def show
     @user = @current_user
+    @user.users_stories.each {|story| story.mark_seen }
   end
 
   def edit
     @user = @current_user
+    render :partial => 'form', :locals => {:user => @user} if request.xhr?
   end
 
   def update

@@ -1,0 +1,31 @@
+%h1 Listing users_stories
+
+= link_to_function 'New users_stories', :href => new_users_stories_path, :id => 'new_users_stories_link' do |page|
+  - page[:create_users_stories].visual_effect :blind_down, :duration => 0.5
+  - page[:new_users_stories_link].hide
+  - page[:cancel_new_users_stories_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_users_stories_path, :id => 'cancel_new_users_stories_link', :style => "display:none;" do |page|
+  - page[:create_users_stories].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_users_stories_link].hide
+  - page[:new_users_stories_link].visual_effect :appear
+
+#create_users_stories{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:users_stories => UsersStories.new }
+
+%table{:width => "100%"}
+  %tr
+    %th User
+    %th Story
+    %th Seen
+
+  -for users_stories in @users_stories
+    %tr
+      %td= h users_stories.user_id
+      %td= h users_stories.story_id
+      %td= h users_stories.seen
+
+    
+      %td= link_to 'Show', users_story_path(users_story)
+      %td= link_to 'Edit', edit_users_story_path(users_story)
+      %td= link_to 'Destroy', users_story_path(users_story), :method => :delete

@@ -8,6 +8,6 @@
       .story
         .story_data= widget_for story.creator, 20
 
-        .story_body= story.body
+        .story_body= story.body.gsub("#{current_user.name} has", "You have").gsub("true", "yes").gsub("false", "no")
 
         .clear
