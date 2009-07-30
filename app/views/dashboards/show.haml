@@ -14,7 +14,7 @@
       %h3 Events
       = render :partial => 'events/list_full', :locals => {:events => @user.events.in_future}
 
-    = render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks.completed}
+    = render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks_with_state(:completed)}
 
 
   %p= render :partial => 'task_list', :locals => {:tasks => @user.tasks}

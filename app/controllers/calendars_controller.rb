@@ -69,8 +69,8 @@ class CalendarsController < ApplicationController
   def get_timeline
 
     data = "<data>"
-    @object.tasks.all.each {|task| data += task.to_xml }
-    @object.events.all.each {|event| data += event.to_xml }
+    @object.tasks.each {|task| data += task.to_xml }
+    @object.events.each {|event| data += event.to_xml }
     data += "</data>"
 
     respond_to do |format|
