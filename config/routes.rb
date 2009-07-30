@@ -1,9 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :users_stories
-
-  map.resources :stories
-
   # resources
+  map.resources :stories
   map.resources :roles
   map.resources :teams
   map.resources :events
@@ -16,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user_session
   map.resource :calendar, :collection => {:get_timeline => :get}, :member => {:timeline => :post, :day => :post, :week => :post, :month => :post}
   map.resource :dashboard, :member => {:month => :get, :week => :get, :day => :post, :timeline => :get}
-  map.resource :account, :controller => "users"
+  map.resource :profile, :controller => "users"
 
   # named routes
   map.timeline 'timeline', :controller => 'calendars', :action => 'timeline'

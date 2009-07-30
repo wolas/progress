@@ -27,7 +27,7 @@
               .links
                 = link_to 'Logout', logout_url
                 |
-                = link_to 'Account', account_url
+                = link_to 'Profile', profile_url
                 |
                 = link_to_unless_current 'Dashboard', dashboard_url
 
@@ -40,13 +40,13 @@
                   |
                   = link_to_unless_current 'Projects', projects_url
                   - if admin?
-                    |
+                    %br
                     = link_to_unless_current 'Roles', roles_url
 
               .inbox
                 %span
                   - count = current_user.users_stories.count :conditions => {:seen => false}
-                  = link_to "#{image_tag('message.png')} #{count}", account_path
+                  = link_to "#{image_tag('message.png')} #{count}", stories_path
 
     #flash
       - if notice = flash[:notice]

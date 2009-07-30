@@ -5,7 +5,10 @@
     %div{:class => "event_list_header header_completed"}= date.to_s(:long)
 
     - stories.each do |story|
-      .story
+      .story{:id => "story_#{story.id}"}
+        .story_delete{:style => 'float: right;'}
+          = link_to_remote 'x', :url => {:controller => "stories", :action => "destroy", :method => :delete, :id => story.id}, :complete => "$('story_#{story.id}').fade();"
+
         .story_data{:style => 'font-size: .9em;'}
           = widget_for story.creator
           .story_time{:style => 'font-size: .7em;'}= story.created_at.to_time.strftime "%l:%M %p"

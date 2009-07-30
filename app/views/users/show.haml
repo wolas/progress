@@ -2,18 +2,36 @@
   Account
 
 %div{:style => 'float:right;'}
-  = link_to_remote 'Edit', :url => edit_user_path(@user), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote 'Edit', :url => edit_user_path(@user), :method => :get, :update => 'interactive_content', :loading => "$('#user_show').fade()", :complete => "$('#interactive_window').show()"
+  |
+  = link_to_remote 'Edit password', :url => edit_user_path(@user, :password => true), :method => :get, :update => 'interactive_content', :loading => "$('#user_show').fade()", :complete => "$('#interactive_window').show()"
   - if admin?
     |
     = link_to_remote 'Roles', :url => {:controller => :roles, :action => :user_roles, :id => @user}, :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 .clear
 
-
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
     = link_to_function 'x' do |page|
       - page[:interactive_window].visual_effect :fade, :duration => 0.5
+      - page[:user_show].visual_effect :appear, :duration => 0.5
   #interactive_content
 
-- unless @user.stories.empty?
-  = render :partial => 'stories/list', :locals => {:stories => @user.stories}
+
+#user_show
+  .two_col{:style => 'width: 300px;'}
+    = image_tag @user.avatar.url, :width => '200px'
+  .two_col
+    .attribute
+      .name Name
+      .value= @user.name
+    .attribute
+      .name Email
+      .value= @user.email
+    .attribute
+      .name Tasks
+      .value= @user.tasks.count
+    .attribute
+      .name Events
+      .value= @user.events.count
+  .clear

@@ -1,8 +1,10 @@
 class StoriesController < ApplicationController
-  
+
   # GET /stories
   def index
-    @stories = Story.find(:all)
+    @user = params[:id] ? User.find(params[:id]) : @current_user
+    @stories = @user.stories
+    @user.users_stories.each {|story| story.mark_seen }
   end
 
   # GET /stories/1

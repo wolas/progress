@@ -11,10 +11,4 @@
     .name Avatar
     .value= f.file_field :avatar
 
-  .attribute
-    .name= f.label :password
-    .value= f.password_field :password
-  .attribute
-    .name= f.label :password_confirmation, "Confirm password"
-    .value= f.password_field :password_confirmation
   = f.submit user.new_record? ? "Register" : "Save"

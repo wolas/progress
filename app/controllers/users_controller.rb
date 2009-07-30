@@ -27,12 +27,12 @@ class UsersController < ApplicationController
 
   def show
     @user = @current_user
-    @user.users_stories.each {|story| story.mark_seen }
   end
 
   def edit
-    @user = @current_user
-    render :partial => 'form', :locals => {:user => @user} if request.xhr?
+    @user = User.find params[:id]
+    render and return unless request.xhr?
+    render :partial => params[:password] ? 'password' : 'form', :locals => {:user => @user}
   end
 
   def update
@@ -42,8 +42,9 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
-      redirect_to account_url
+      redirect_to profile_url
     else
+      @show_password = params[:show_pass]
       render :action => :edit
     end
   end

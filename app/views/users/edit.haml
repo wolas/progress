@@ -1,6 +1,7 @@
-%h1 Edit My Account
+- content_for :title do
+  Edit your Account
 
-= render :partial => "form", :locals => {:user => @user}
+= render :partial => @show_password ? 'password' : 'form', :locals => {:user => @user}
 
 %br
-= link_to "Cancel", account_path
+= link_to "Cancel", profile_path
