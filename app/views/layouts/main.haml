@@ -27,18 +27,20 @@
               .links
                 = link_to 'Logout', logout_url
                 |
-                = link_to 'Profile', profile_url
+                = link_to_unless_current 'Profile', profile_url
                 |
                 = link_to_unless_current 'Dashboard', dashboard_url
 
             .bottom
               .select
                 .site_links
-                  = link_to_unless_current 'Users', users_url
+                  = link_to_unless_current 'Projects', projects_url
                   |
                   = link_to_unless_current 'Clients', clients_url
                   |
-                  = link_to_unless_current 'Projects', projects_url
+                  = link_to_unless_current 'Brands', brands_url
+                  |
+                  = link_to_unless_current 'Users', users_url
                   - if admin?
                     %br
                     = link_to_unless_current 'Roles', roles_url

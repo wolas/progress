@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :brands
+
+  map.resources :brands
+
+  map.resources :brands
+
   # resources
   map.resources :stories
   map.resources :roles

@@ -1,0 +1,27 @@
+%h1 Listing brands
+
+= link_to_function 'New brand', :href => new_brand_path, :id => 'new_brand_link' do |page|
+  - page[:create_brand].visual_effect :blind_down, :duration => 0.5
+  - page[:new_brand_link].hide
+  - page[:cancel_new_brand_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_brand_path, :id => 'cancel_new_brand_link', :style => "display:none;" do |page|
+  - page[:create_brand].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_brand_link].hide
+  - page[:new_brand_link].visual_effect :appear
+
+#create_brand{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:brand => Brand.new }
+
+%table{:width => "100%"}
+  %tr
+    %th Name
+
+  -for brand in @brands
+    %tr
+      %td= h brand.name
+
+    
+      %td= link_to 'Show', brand_path(brand)
+      %td= link_to 'Edit', edit_brand_path(brand)
+      %td= link_to 'Destroy', brand_path(brand), :method => :delete

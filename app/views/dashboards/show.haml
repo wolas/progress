@@ -1,22 +1,23 @@
 - content_for :title do
   Dashboard
 
+- content_for(:right) do
+  - unless @user.events.in_future.empty?
+    %h3 Events
+    = render :partial => 'events/list_full', :locals => {:events => @user.events.in_future}
+  - unless @user.tasks.empty?
+    = render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks_with_state(:completed)}
+  - unless @user.stories.empty?
+    %h3 Updates
+    = render :partial => 'stories/mini_list', :locals => {:stories => @user.stories}
+
 - if @user.tasks.empty?
   You have no tasks assigned to you.
   %ul
     %li Go see your boss now!
     %li= link_to 'Create a new project', new_project_path
     %li= link_to 'See all projects', projects_path
-
 - else
-  - content_for(:right) do
-    - unless @user.events.in_future.empty?
-      %h3 Events
-      = render :partial => 'events/list_full', :locals => {:events => @user.events.in_future}
-
-    = render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks_with_state(:completed)}
-
-
   %p= render :partial => 'task_list', :locals => {:tasks => @user.tasks}
 
   %p= render :partial => 'calendars/tabs'

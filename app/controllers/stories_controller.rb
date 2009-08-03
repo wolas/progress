@@ -48,7 +48,15 @@ class StoriesController < ApplicationController
 
   # DELETE /stories/1
   def destroy
-    Story.find(params[:id]).destroy
-    redirect_to(stories_url)
+    story = Story.find(params[:id])
+    parent = story.parent
+
+    if params[:user_id]
+      user = User.find params[:user_id]
+      user.stories.delete story
+    else
+      story.destroy
+    end
+    request.xhr? ? render(:partial => 'list', :locals => {:stories => user.stories}) : redirect_to(stories_url)
   end
 end

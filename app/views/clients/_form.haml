@@ -3,6 +3,10 @@
     = f.error_messages
 
     .attribute
+      .name= f.label :brand
+      .value= f.select :brand_id, Brand.all.collect {|p| [ p.name, p.id ] }, {:include_blank => 'None'}
+
+    .attribute
       .name= f.label :name
       .value= f.text_field :name
 

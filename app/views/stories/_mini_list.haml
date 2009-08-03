@@ -8,6 +8,9 @@
       .story
         .story_data= widget_for story.creator, 20
 
-        .story_body= story.body.gsub("#{current_user.name} has", "You have").gsub("true", "yes").gsub("false", "no")
+        .story_body
+          = story.parent_type.downcase
+          = link_to story.parent.name, story.parent
+          = story.body.gsub("#{current_user.name} has", "You have").gsub("true", "yes").gsub("false", "no")
 
         .clear

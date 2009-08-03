@@ -18,9 +18,12 @@
   %tr
     %th Client
     %th Number of Projects
+    %th Brand
 
   -for client in @clients
     %tr
       %td= link_to h(client.name), client
       %td= client.projects.count
+      %td= client.brand.name if client.brand
+
       %td= link_to 'Destroy', client_path(client), :method => :delete

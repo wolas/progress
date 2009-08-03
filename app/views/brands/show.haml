@@ -1,0 +1,22 @@
+#brand_show
+  .attribute
+    .name Name:
+    .value=h @brand.name 
+
+#update_brand{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:brand => @brand }
+
+= link_to_function 'Edit', :href => edit_brand_path(@brand), :id => "edit_brand_link" do |page|
+  - page[:brand_show].visual_effect :blind_up, :duration => 0.5
+  - page[:update_brand].visual_effect :blind_down, :duration => 0.5
+  - page[:edit_brand_link].hide
+  - page[:cancel_edit_brand_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => edit_brand_path(@brand), :id => 'cancel_edit_brand_link', :style => "display:none;" do |page|
+  - page[:brand_show].visual_effect :blind_down, :duration => 0.5
+  - page[:update_brand].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_edit_brand_link].hide
+  - page[:edit_brand_link].visual_effect :appear
+
+|
+= link_to 'Back', brands_path
