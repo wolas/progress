@@ -53,12 +53,12 @@ class CalendarsController < ApplicationController
   end
 
   def task_details
-    @task = @current_user.tasks.find(params[:id])
+    @task = Task.find(params[:id])
     render :partial => 'task', :locals => {:task => @task}
   end
 
   def event_details
-    @event = @current_user.events.find(params[:id])
+    @event = Event.find(params[:id])
     render :partial => 'event', :locals => {:event => @event}
   end
 

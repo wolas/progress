@@ -2,7 +2,19 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @user = User.find(params[:user_id])
+    @tasks = Task.all :order => 'end_date DESC'
+  end
+
+  def manage_users
+    params[:user_ids] ||= []
+    users = User.find params[:user_ids]
+    tasks = users.map{|u| u.tasks }.flatten.uniq.sort_by(&:end_date).reverse
+    if tasks.empty?
+      text = users.empty? ? "Select users from the right to see their tasks." : "No tasks for #{users.map(&:name).join(', ')}."
+      render :text => text
+    else
+      render :partial => 'list', :locals => {:list => tasks}
+    end
   end
 
   # GET /tasks/1

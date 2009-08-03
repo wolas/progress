@@ -1,35 +1,36 @@
-- project = @task.project
+.draggable
+  - project = @task.project
 
-#task_body
-  #controls
-    = link_to_function 'X' do |page|
-      - page[:task].hide
-  .clear
-
-
-  %h3
-    - if client = project.client
-      == (#{link_to client.name, client})
-    = link_to project.name, project
-    \-
-    = link_to task.name, task
+  #task_body
+    #controls
+      = link_to_function 'X' do |page|
+        - page[:task].hide
+    .clear
 
 
+    %h3
+      - if client = project.client
+        == (#{link_to client.name, client})
+      = link_to project.name, project
+      \-
+      = link_to task.name, task
 
-  .attribute
-    .name Start
-    .value= task.start_date
 
-  .attribute
-    .name End
-    .value= task.end_date
 
-  - if task.description?
     .attribute
-      .name Description
-      .value= task.description
+      .name Start
+      .value= task.start_date
 
-  - if task.users.empty?
-    %p No users assigned to this task
-  - else
-    %p= render :partial => 'users/list', :locals => {:users => task.users, :groups => 3}
+    .attribute
+      .name End
+      .value= task.end_date
+
+    - if task.description?
+      .attribute
+        .name Description
+        .value= task.description
+
+    - if task.users.empty?
+      %p No users assigned to this task
+    - else
+      %p= render :partial => 'users/list', :locals => {:users => task.users, :groups => 3}

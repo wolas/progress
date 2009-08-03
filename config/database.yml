@@ -11,16 +11,10 @@ test:
   timeout: 5000
 
 production:
-  adapter: postgres
-  database: progress_prd
-  pool: 5
-  timeout: 5000
-
-production:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: progress_production
+  database: addressbook_production
   pool: 5
   username: root
   password:

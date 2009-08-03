@@ -1,32 +1,33 @@
-- project = @event.project
+.draggable
+  - project = @event.project
 
-#event_body
-  #controls
-    = link_to_function 'X' do |page|
-      - page[:event].hide
-  .clear
-
-
-  %h3
-    = link_to project.name, project
-    - if client = project.client
-      == (#{link_to client.name, client})
-    \-
-    = link_to event.name, event
+  #event_body
+    #controls
+      = link_to_function 'X' do |page|
+        - page[:event].hide
+    .clear
 
 
-
-  .attribute
-    .name Date
-    .value= event.date
-
-  .attribute
-    .name Time
-    .value= event.time
-
-  .attribute
-    .name Description
-    .value= event.description
+    %h3
+      = link_to project.name, project
+      - if client = project.client
+        == (#{link_to client.name, client})
+      \-
+      = link_to event.name, event
 
 
-  %p= render :partial => 'users/list', :locals => {:users => event.users, :groups => 3}
+
+    .attribute
+      .name Date
+      .value= event.date
+
+    .attribute
+      .name Time
+      .value= event.time
+
+    .attribute
+      .name Description
+      .value= event.description
+
+
+    %p= render :partial => 'users/list', :locals => {:users => event.users, :groups => 5}
