@@ -33,6 +33,12 @@
     .name Project:
     .value=h @task.project.name
   .attribute
+    .name State:
+    .value=h @task.state.to_s.humanize
+  .attribute
+    .name Priority:
+    .value=h @task.priority.to_s.humanize
+  .attribute
     .name Completed:
     .value= @task.completed? ? "yes" : "no"
 
