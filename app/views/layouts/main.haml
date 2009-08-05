@@ -23,7 +23,7 @@
       - if logged_in?
         %div{:class=>"corner userbox"}
           .box
-            .avatar= image_tag current_user.avatar.url(:medium)
+            .avatar= image_tag current_user.face.url(:medium)
             .top
               .name= link_to current_user.name, current_user
               .links

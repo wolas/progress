@@ -19,5 +19,5 @@
           - if person
             %span.draggable
               = link_to_remote image_tag('cross.png', :width => 10), :url => {:controller => 'projects', :action => 'remove_user', :id => object, :type => type, :user => person}, :update => 'users'
-              = image_tag person.avatar.url(:thumb), :style => "vertical-align: middle;width:30px"
+              = image_tag person.face.url(:thumb), :style => "vertical-align: middle;width:30px"
               = person.name

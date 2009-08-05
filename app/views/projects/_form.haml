@@ -25,11 +25,11 @@
       .name= f.label :name
       .value= f.text_field :name
     .attribute
-      .name= f.label :state
-      .value= f.text_field :state
-    .attribute
       .name= f.label :end_date
       .value= f.text_field :end_date
+    .attribute
+      .name= f.label :state
+      .value= f.select :state, Project::STATES.map{|state| [state.to_s.humanize, state] }
     .attribute
       .name= f.label :priority
       .value= f.select :priority, Project::PRIORITIES

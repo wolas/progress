@@ -24,6 +24,6 @@
     %tr
       %td= link_to h(client.name), client
       %td= client.projects.count
-      %td= client.brand.name if client.brand
+      %td= client.company.name if client.company
 
       %td= link_to 'Destroy', client_path(client), :method => :delete

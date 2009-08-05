@@ -22,6 +22,6 @@
         - people.each do |user|
           %td{:width => '40px', :valign => 'bottom'}
             %span
-              = image_tag user.avatar.url(:thumb), :style => 'width:30px;vertical-align: middle;', :alt => 'avatar'
+              = image_tag user.face.url(:thumb), :style => 'width:30px;vertical-align: middle;', :alt => 'avatar'
               %br
               = link_to h(user.login), user

@@ -1,5 +1,5 @@
 - size ||= 30
 
 %span
-  = image_tag user.avatar.url(:thumb), :style => "vertical-align: middle;width:#{size}px"
+  = image_tag user.face.url(:thumb), :style => "vertical-align: middle;width:#{size}px"
   = link_to h(user.login), user

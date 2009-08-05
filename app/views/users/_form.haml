@@ -3,10 +3,10 @@
   = error_messages_for :user
 
   .attribute
-    .name= f.label :name
-    .value= f.file_field :avatar
+    .name= f.label :face
+    .value= f.file_field :face
   .attribute
-    .name= f.label :name
+    .name= f.label :company
     .value= f.collection_select :company_id, Company.all, :id, :name
   .attribute
     .name= f.label :name

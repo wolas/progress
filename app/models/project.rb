@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   PEOPLE = [:manager]
+  STATES = [:new, :in_progress, :waiting_for_feedback]
   PRIORITIES = [:low, :medium, :high, :urgent]
 
   belongs_to :client

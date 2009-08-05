@@ -3,8 +3,8 @@
     = f.error_messages
 
     .attribute
-      .name= f.label :brand
-      .value= f.select :brand_id, Brand.all.collect {|p| [ p.name, p.id ] }, {:include_blank => 'None'}
+      .name= f.label :company
+      .value= f.collection_select :company_id, Company.all, :id, :name, :include_blank => 'None'
 
     .attribute
       .name= f.label :name
