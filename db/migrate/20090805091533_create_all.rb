@@ -1,8 +1,5 @@
 class CreateAll < ActiveRecord::Migration
   def self.up
-    create_table "brands", :force => true do |t|
-      t.string "name"
-    end
 
     create_table "clients", :force => true do |t|
       t.string  "name"
@@ -115,18 +112,6 @@ class CreateAll < ActiveRecord::Migration
       t.string "name"
     end
 
-    create_table "users", :force => true do |t|
-      t.string  "login"
-      t.string  "crypted_password"
-      t.string  "password_salt"
-      t.string  "persistence_token"
-      t.string  "email"
-      t.integer "team_id"
-      t.string  "avatar_file_name"
-      t.string  "avatar_content_type"
-      t.integer "avatar_file_size"
-    end
-
     create_table "users_stories", :force => true do |t|
       t.integer "user_id"
       t.integer "story_id"
@@ -135,7 +120,6 @@ class CreateAll < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :brands
     drop_table :clients
     drop_table :comments
     drop_table :events
