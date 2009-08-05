@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 
   belongs_to :client
 
-  has_many :tasks, :order => 'end_date ASC', :dependent => :destroy
+  has_many :tasks, :order => 'end_date DESC', :dependent => :destroy
   has_many :events, :order => 'date DESC', :dependent => :destroy
   has_many :stories, :as => :parent, :order => 'created_at DESC', :dependent => :destroy
 
