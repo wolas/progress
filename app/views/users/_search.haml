@@ -1,8 +1,8 @@
-- object ||= nil
+#search_form
+  - form_tag '', :id => :search, :onsubmit => "return false;"  do
+    .attribute
+      .name Search
+      .value= text_field_tag :name
 
-.attribute
-  .value
-    = text_field_tag :name, nil, :id => :search
-
-
-= observe_field :search, :url => { :controller => 'users', :action => :search, :object_id => object.id, :object_class => object.class }, :frequency => 0.25, :update => :search_results, :with => 'name'
+  = observe_form :search, :url => { :controller => :users, :action => :search }, :frequency => 0.25, :update => :drag_drop_users
+  %br

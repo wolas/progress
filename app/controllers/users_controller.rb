@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
 
   def search
-    object = Kernel.eval( params[:object_class] ).find params[:object_id]
-    users = User.all(:conditions => ["login LIKE ?", "%#{params[:name]}%"]) - object.users
-    render( users.empty? ? {:text => "No Users found!"} : {:partial => 'manage', :locals => {:users => users, :object => object}})
+    users = User.all :order => 'surname ASC', :conditions => ["name LIKE ? OR surname LIKE ?", "%#{params[:name]}%", "%#{params[:name]}%"]
+    render( users.empty? ? {:text => "No Users found!"} : {:partial => 'drag_list', :locals => {:users => users}})
   end
 
   def index
