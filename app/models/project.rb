@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  PEOPLE = [:manager]
+  PEOPLE = [:manager, :account]
   STATES = [:new, :in_progress, :waiting_for_feedback]
   PRIORITIES = [:low, :medium, :high, :urgent]
 
@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
   has_many :stories, :as => :parent, :order => 'created_at DESC', :dependent => :destroy
 
   belongs_to :manager, :class_name => 'User'
+  belongs_to :account, :class_name => 'User'
 
   validates_presence_of :end_date, :name, :colour
   validate_on_create :date_in_future
@@ -26,8 +27,8 @@ class Project < ActiveRecord::Base
 
   def full_name
     str = ""
-    str += "(#{client.name})" if client
-    str += " #{name}"
+    str += "(#{client.name}) " if client
+    str += "#{name}"
   end
 
   def people_involved conditions = {}
