@@ -1,14 +1,54 @@
-- form_for user, :html => { :multipart => true } do |f|
+- form_for user, :url => user, :html => {:multipart => true} do |f|
 
   = error_messages_for :user
+
   .attribute
-    .name= f.label :login, 'Name'
-    .value= f.text_field :login
+    .name= f.label :name
+    .value= f.file_field :avatar
+  .attribute
+    .name= f.label :name
+    .value= f.collection_select :company_id, Company.all, :id, :name
+  .attribute
+    .name= f.label :name
+    .value= f.text_field :name
+  .attribute
+    .name= f.label :surname
+    .value= f.text_field :surname
   .attribute
     .name= f.label :email
     .value= f.text_field :email
   .attribute
-    .name Avatar
-    .value= f.file_field :avatar
+    .name= f.label :skype
+    .value= f.text_field :skype
+  .attribute
+    .name= f.label :phone
+    .value= f.text_field :phone
+  .attribute
+    .name= f.label :mobile
+    .value= f.text_field :mobile
+  .attribute
+    .name= f.label :fax
+    .value= f.text_field :fax
+  .attribute
+    .name= f.label :website
+    .value= f.text_field :website
 
-  = f.submit user.new_record? ? "Register" : "Save"
+  - if user.new_record?
+    .attribute
+      .name= f.label :password
+      .value= f.password_field :password
+    .attribute
+      .name= f.label :password_confirmation, 'Confirm Password'
+      .value= f.password_field :password_confirmation
+
+  .attribute
+    .name
+      = f.label :more_information
+      .small
+        You can use
+        = link_to 'textile', 'http://textism.com/tools/textile/', :target => '_blank'
+        here
+
+    .value= f.text_area :more_information, :cols => 50, :rows => 7
+
+  = f.submit user.new_record? ? "save" : "update"

@@ -1,0 +1,27 @@
+%h1 Listing companies
+
+= link_to_function 'New company', :href => new_company_path, :id => 'new_company_link' do |page|
+  - page[:create_company].visual_effect :blind_down, :duration => 0.5
+  - page[:new_company_link].hide
+  - page[:cancel_new_company_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => new_company_path, :id => 'cancel_new_company_link', :style => "display:none;" do |page|
+  - page[:create_company].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_new_company_link].hide
+  - page[:new_company_link].visual_effect :appear
+
+#create_company{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:company => Company.new }
+
+%table{:width => "100%"}
+  %tr
+    %th Name
+
+  -for company in @companies
+    %tr
+      %td= h company.name
+
+    
+      %td= link_to 'Show', company_path(company)
+      %td= link_to 'Edit', edit_company_path(company)
+      %td= link_to 'Destroy', company_path(company), :method => :delete

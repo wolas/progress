@@ -51,8 +51,8 @@ class User < ActiveRecord::Base
       else tasks
     end
   end
-
-  def name
-    login
+  
+  def full_name
+    "#{name} #{surname}"
   end
 end

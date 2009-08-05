@@ -1,0 +1,22 @@
+#company_show
+  .attribute
+    .name Name:
+    .value=h @company.name 
+
+#update_company{:style => 'display:none;'}
+  = render :partial => 'form', :locals => {:company => @company }
+
+= link_to_function 'Edit', :href => edit_company_path(@company), :id => "edit_company_link" do |page|
+  - page[:company_show].visual_effect :blind_up, :duration => 0.5
+  - page[:update_company].visual_effect :blind_down, :duration => 0.5
+  - page[:edit_company_link].hide
+  - page[:cancel_edit_company_link].visual_effect :appear
+
+= link_to_function 'Cancel', :href => edit_company_path(@company), :id => 'cancel_edit_company_link', :style => "display:none;" do |page|
+  - page[:company_show].visual_effect :blind_down, :duration => 0.5
+  - page[:update_company].visual_effect :blind_up, :duration => 0.5
+  - page[:cancel_edit_company_link].hide
+  - page[:edit_company_link].visual_effect :appear
+
+|
+= link_to 'Back', companies_path

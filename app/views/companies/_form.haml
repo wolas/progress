@@ -1,9 +1,9 @@
-.brand_form
-  -form_for brand do |f|
+.company_form
+  -form_for company do |f|
     = f.error_messages
     
     .attribute
       .name= f.label :name
       .value= f.text_field :name 
     
-    .brand_submit_button= f.submit "Save"
+    .company_submit_button= f.submit "Save"

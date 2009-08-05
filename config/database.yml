@@ -1,8 +1,12 @@
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: addressbook_dev
   pool: 5
-  timeout: 5000
+  username: root
+  password: password
+  socket: /opt/local/var/run/mysql5/mysqld.sock
 
 test:
   adapter: sqlite3
@@ -17,5 +21,5 @@ production:
   database: addressbook_production
   pool: 5
   username: root
-  password:
+  password: password
   socket: /var/run/mysqld/mysqld.sock
