@@ -27,6 +27,10 @@ class Task < ActiveRecord::Base
     PEOPLE.map{|user| eval user.to_s }.flatten.uniq
   end
   alias people_involved users
+  
+  def urgent?
+    priority.eql? 'urgent'
+  end
 
   def late?
     return unless end_date

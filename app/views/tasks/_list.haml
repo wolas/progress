@@ -30,7 +30,7 @@
               - form_for task do |f|
                 = f.check_box :completed
                 = link_to task.name, project_task_path(task.project, task), :style => 'color: #000;'
-
+                %span{:style => "font-size: .6em; color:red;"}= '(Urgent)' if task.urgent?
               = observe_form "edit_task_#{task.id}", :frequency => 0.25, :url => {:controller => 'tasks', :action => 'update', :id => task}, :update => "task_list", :complete => update_page {|p| p[:"task_item_#{task.id}"].visual_effect :highlight }
 
       %br
