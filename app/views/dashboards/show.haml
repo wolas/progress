@@ -18,6 +18,6 @@
     %li= link_to 'Create a new project', new_project_path
     %li= link_to 'See all projects', projects_path
 - else
-  %p= render :partial => 'task_list', :locals => {:tasks => @user.tasks}
+  %p= render :partial => 'tasks/list', :locals => {:tasks => @user.tasks, :exclude_completed => true}
 
   %p= render :partial => 'calendars/tabs'

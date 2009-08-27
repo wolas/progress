@@ -9,7 +9,7 @@ class DashboardsController < ApplicationController
     @task = Task.find(params[:id])
     @task.update_attributes(params[:task])
 
-    render(:partial => 'task_list', :locals => {:tasks => current_user.tasks})
+    render(:partial => 'tasks/list', :locals => {:tasks => current_user.tasks, :exclude_completed => true})
   end
 
 end

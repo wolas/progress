@@ -19,7 +19,7 @@
   
   .attribute
     .name= f.label :state
-    .value= f.select :state, Task::STATES.map{|state| [state.to_s.humanize, state] }
+    .value= f.select :state, Task::STATES.map{|state| [state.humanize, state] }
   .attribute
     .name= f.label :priority
     .value= f.select :priority, Task::PRIORITIES

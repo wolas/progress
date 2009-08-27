@@ -2,7 +2,7 @@ class ClientsController < ApplicationController
 
   # GET /clients
   def index
-    @clients = Client.find(:all)
+    @clients = Client.all :order => 'name ASC'
   end
 
   # GET /clients/1

@@ -13,4 +13,4 @@
           = user.full_name
   = observe_form :tasks_users_form, :frequency => 1, :url => {:controller => :tasks, :action => :manage_users}, :update => 'all_tasks', :loading => 'var so = new SWFObject("flash/loading.swf", "home", "50", "50", "9", "#ffffff");so.write("all_tasks");'
 
-#all_tasks= render :partial => 'tasks/list', :locals => {:list => @tasks}
+#all_tasks= render :partial => 'tasks/list', :locals => {:tasks => @tasks, :exclude_completed => true}

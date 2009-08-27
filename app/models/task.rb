@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   PEOPLE = [:digital_refs, :art_directors, :art_operatives, :flash_operatives, :front_end_developers, :back_end_developers]
-  STATES = [:waiting_for_brief, :waiting_for_feedback, :waiting_for_materials, :in_progress, :on_support, :periodical, :standby, :testing]
-  PRIORITIES = [:low, :medium, :high, :urgent]
+  STATES = %w( waiting_for_brief waiting_for_feedback waiting_for_materials in_progress on_support periodical standby testing )
+  PRIORITIES = %w( low medium high urgent)
   
   belongs_to :project
 

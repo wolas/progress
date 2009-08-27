@@ -61,7 +61,7 @@ class TasksController < ApplicationController
     end
 
     if @task.save
-      request.xhr? ? render(:partial => 'tasks/list', :locals => {:list => @task.project.tasks}) : redirect_to(@task)
+      request.xhr? ? render(:partial => 'tasks/list', :locals => {:tasks => Task.find(params[:tasks]), :exclude_completed => params[:exclude_completed]}) : redirect_to(@task)
     else
       @project = @task.project
       @client = @project.client

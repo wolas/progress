@@ -40,7 +40,7 @@
 
 
 
-%p= render :partial => 'tasks/list', :locals => {:list => @project.tasks}
+%p= render :partial => 'tasks/list', :locals => {:tasks => @project.tasks}
 
 - content_for(:right) do
   - unless @project.events.in_future.empty?
