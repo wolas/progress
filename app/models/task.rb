@@ -52,6 +52,15 @@ class Task < ActiveRecord::Base
   def days_remaining
     (end_date.to_date - Date.today).to_i + 1
   end
+  
+  def priority_colour
+    case priority
+      when 'low' then '50b848'
+      when 'medium' then 'f6ba18'
+      when 'high' then 'f67618'
+      when 'urgent' then 'f61818'
+    end
+  end
 
   def style
     result = 'text-decoration: blink;' if late?
