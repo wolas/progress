@@ -12,14 +12,11 @@
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
-    = link_to_function 'x' do |page|
-      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+    = link_to_remote 'x', :url => {:controller => :tasks, :action => :close_interactive_window, :id => @task}
   #interactive_content
 
-- unless @task.stories.empty?
-  - content_for :right do
-    %h3 Updates
-    = render :partial => 'stories/mini_list', :locals => {:stories => @task.stories}
+- content_for :right do
+  = render(:partial => 'stories/mini_list', :locals => {:stories => @task.stories}) unless @task.stories.empty?
 
 
 #task_show

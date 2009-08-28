@@ -89,6 +89,10 @@ class TasksController < ApplicationController
     task.stories.create :body => "has removed <div class='changed_data'>#{user.name}</div> as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
     render(:partial => 'users', :locals => {:object => task})
   end
+  
+  def close_interactive_window
+    @task = Task.find params[:id]
+  end
 
   # DELETE /tasks/1
   def destroy

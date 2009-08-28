@@ -46,10 +46,8 @@
   - unless @project.events.in_future.empty?
     %h3 Events
     = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future}
-
-  - unless @project.stories.empty?
-    %h3 Updates
-    = render :partial => 'stories/mini_list', :locals => {:stories => @project.stories}
+  
+  = render :partial => 'stories/mini_list', :locals => {:stories => @project.stories} unless @project.stories.empty?
 
 
 

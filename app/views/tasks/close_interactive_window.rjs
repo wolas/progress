@@ -1,0 +1,2 @@
+page[:interactive_window].visual_effect :fade, :duration => 0.5
+page.replace_html 'right', :partial => 'stories/mini_list', :locals => {:stories => @task.stories}
