@@ -16,7 +16,8 @@
       - page[:interactive_window].visual_effect :fade, :duration => 0.5
   #interactive_content
 
-
+- content_for :right do
+  = render(:partial => 'stories/mini_list', :locals => {:stories => @event.stories}) unless @event.stories.empty?
 
 #event_show
   .attribute

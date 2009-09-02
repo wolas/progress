@@ -88,6 +88,10 @@ class ProjectsController < ApplicationController
     project.update_attributes params[:type] => nil
     render(:partial => 'users', :locals => {:object => project})
   end
+  
+  def close_interactive_window
+    @project = Project.find params[:id]
+  end
 
   # DELETE /projects/1
   def destroy

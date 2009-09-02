@@ -1,15 +1,18 @@
 class Event < ActiveRecord::Base
   belongs_to :project
   has_and_belongs_to_many :users
+  
   has_many :comments, :as => :owner, :order => 'created_at DESC', :dependent => :destroy
-
+  has_many :stories, :as => :parent, :order => 'created_at DESC', :dependent => :destroy
+  
   validates_presence_of :time, :date, :name, :project
   validate_on_create :date_in_future
 
   named_scope :in_future, :conditions => ['date > ?', Date.today]
   named_scope :for_date, lambda { |*args| {:conditions => {:date => args.first.to_date }} }
 
-
+  alias people_involved users
+  
   def time
     return unless date
     date.strftime '%H:%M'

@@ -1,3 +1,5 @@
+%h3 Events
+
 - tday = Date.today
 - past, future = events.partition {|event| event.date < tday }
 - today, upcoming = future.partition {|event| event.date.to_date.eql? tday }

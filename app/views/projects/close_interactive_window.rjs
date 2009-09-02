@@ -1,0 +1,3 @@
+page[:interactive_window].visual_effect :fade, :duration => 0.5
+page.replace_html 'right', :partial => 'events/list_full', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
+page.insert_html :bottom, 'right', :partial => 'stories/mini_list', :locals => {:stories => @project.stories} unless @project.stories.empty?

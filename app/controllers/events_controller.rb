@@ -52,10 +52,14 @@ class EventsController < ApplicationController
   # PUT /events/1
   def update
     @event = Event.find(params[:id])
+    @event.attributes = params[:event]
 
-    if @event.update_attributes(params[:event])
-      flash[:notice] = 'Event was successfully updated.'
-      redirect_to(@event)
+    @event.changes.each_pair do |attribute, values|
+      @event.stories.create :body => "changed <div class='changed_data'>#{attribute.to_s.humanize}</div> from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user
+    end
+
+    if @event.save
+      request.xhr? ? render(:partial => 'list', :locals => {:tasks => Task.find(params[:tasks]), :exclude_completed => params[:exclude_completed]}) : redirect_to(@event)
     else
       @project = @event.project
       @client = @project.client

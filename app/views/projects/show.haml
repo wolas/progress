@@ -32,8 +32,7 @@
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
-    = link_to_function 'x' do |page|
-      - page[:interactive_window].visual_effect :fade, :duration => 0.5
+    = link_to_remote 'x', :url => {:controller => :projects, :action => :close_interactive_window, :id => @project}
   #interactive_content
 
 #description{:style => "display:none;"}= @project.description
@@ -42,11 +41,8 @@
 
 %p= render :partial => 'tasks/list', :locals => {:tasks => @project.tasks}
 
-- content_for(:right) do
-  - unless @project.events.in_future.empty?
-    %h3 Events
-    = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future}
-  
+- content_for(:right) do  
+  = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
   = render :partial => 'stories/mini_list', :locals => {:stories => @project.stories} unless @project.stories.empty?
 
 
