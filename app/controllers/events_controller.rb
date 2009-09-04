@@ -82,7 +82,8 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
-    Event.find(params[:id]).destroy
-    redirect_to(events_url)
+    @event = Event.find(params[:id])
+    @event.destroy
+    redirect_to(@event.project)
   end
 end

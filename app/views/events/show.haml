@@ -5,7 +5,9 @@
   = link_to_remote 'Edit', :url => edit_event_path(@event), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'Users', :url => {:controller => 'users', :action => 'manage', :object_id => @event, :object_class => @event.class}, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
-
+  |
+  = link_to 'Destroy', task_path(@event), :method => :delete, :confirm => "Are you sure you want to delete task #{@event.name}"
+  
 = collection_widget_for @event.users
 
 .clear
