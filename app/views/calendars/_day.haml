@@ -1,5 +1,6 @@
 - events = object.events.select {|event| event.happens_in(date) }
-- tasks = object.tasks.open.select { |task| task.happens_in date }
+- tasks = object.tasks.select { |task| not task.completed? }
+- tasks = object.tasks.select { |task| task.happens_in(date) }
 
 
 %h2

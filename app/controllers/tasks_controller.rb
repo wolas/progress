@@ -96,7 +96,8 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1
   def destroy
-    Task.find(params[:id]).destroy
-    redirect_to(tasks_url)
+    @task = Task.find(params[:id])
+    @task.destroy
+    redirect_to(@task.project)
   end
 end

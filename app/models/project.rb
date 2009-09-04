@@ -10,10 +10,16 @@ class Project < ActiveRecord::Base
   belongs_to :manager, :class_name => 'User'
   belongs_to :account, :class_name => 'User'
 
-  validates_presence_of :end_date, :name, :colour
+  validates_presence_of :end_date, :name
   validate_on_create :date_in_future
 
   named_scope :open, :conditions => {:closed => false}
+
+  before_create :random_colour
+  
+  def random_colour
+    self.colour = "323232"
+  end
 
   def people
     PEOPLE.map{|person| eval person.to_s }.compact
