@@ -1,3 +1,7 @@
+set :stages, %w(nokia production)
+set :default_stage, "production"
+require 'capistrano/ext/multistage'
+
 default_run_options[:pty] = true
 set :spinner_user, nil
 set :runner, :yruser
@@ -5,7 +9,6 @@ set :application, "progress"
 set :repository,  "git@github.com:wolas/progress.git"
 set :user, :yruser
 set :passphrase, 'yrpassword'
-set :deploy_to, "/home/yruser/apps/#{application}"
 set :branch, "master"
 set :use_sudo, true
 

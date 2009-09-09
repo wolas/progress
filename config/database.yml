@@ -23,3 +23,13 @@ production:
   username: root
   password: 
   socket: /var/run/mysqld/mysqld.sock
+
+nokia:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: nokia_progress
+  pool: 5
+  username: root
+  password: 
+  socket: /var/run/mysqld/mysqld.sock
