@@ -9,6 +9,7 @@ set :repository,  "git@github.com:wolas/progress.git"
 set :user, :yruser
 set :branch, "master"
 set :use_sudo, true
+set :deploy_via, :remote_cache
 
 set :scm, :git
 set :scm_username, "wolas"
