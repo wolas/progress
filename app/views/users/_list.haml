@@ -1,27 +1,17 @@
-- groups ||= 3
-- object ||= object
-- hide_users ||= object && object.users.count > groups
-
-- if hide_users
-  - type = "#{object.class}_#{object.id}"
-
-  = link_to_function "#{object.users.count} users", :href => nil, :id => "show_#{type}_link" do |page|
-    - page[:"#{type}"].visual_effect :appear, :duration => 0.5
-    - page[:"show_#{type}_link"].hide
-    - page[:"hide_#{type}_link"].show
-
-  = link_to_function "hide", :href => nil, :id => "hide_#{type}_link", :style => "display:none;" do |page|
-    - page[:"#{type}"].visual_effect :fade, :duration => 0.5
-    - page[:"hide_#{type}_link"].hide
-    - page[:"show_#{type}_link"].show
-
-%div{:id => "#{type}", :style => hide_users ? 'display:none;' : ''}
-  %table
-    - users.in_groups_of(groups, false).each do |people|
-      %tr
-        - people.each do |user|
-          %td{:width => '40px', :valign => 'bottom'}
-            %span
-              = image_tag user.face.url(:thumb), :style => 'width:30px;vertical-align: middle;', :alt => 'avatar'
-              %br
-              = link_to h(user.login), user
+%table{:width => "100%"}
+  %th &nbsp;
+  %th Open Projects
+  %th Open Tasks
+  %th Company
+  
+  - users.each do |user|
+    %tr
+      %td
+        = image_tag user.face.url(:thumb), :width => "30px"
+        = link_to user.full_name, user
+      
+      %td= user.projects.open.count
+      
+      %td= user.tasks_with_state(:open).size
+      
+      %td= link_to user.company.name, user.company

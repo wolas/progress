@@ -14,7 +14,7 @@
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
-    = link_to_remote 'x', :url => {:controller => :tasks, :action => :close_interactive_window, :id => @task}
+    = link_to_remote image_tag('cross.png'), :url => {:controller => :tasks, :action => :close_interactive_window, :id => @task}
   #interactive_content
 
 - content_for :right do

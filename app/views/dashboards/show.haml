@@ -2,9 +2,7 @@
   Dashboard
 
 - content_for(:right) do
-  - unless @user.events.in_future.empty?
-    %h3 Events
-    = render :partial => 'events/list_full', :locals => {:events => @user.events.in_future}
+  = render :partial => 'events/list_full', :locals => {:events => @user.events.in_future} unless @user.events.in_future.empty?
   
   = render(:partial => 'task_list_complete', :locals => {:tasks => @user.tasks_with_state(:completed) } ) unless @user.tasks_with_state(:completed).empty?
   
@@ -17,6 +15,4 @@
     %li= link_to 'Create a new project', new_project_path
     %li= link_to 'See all projects', projects_path
 - else
-  %p= render :partial => 'tasks/list', :locals => {:tasks => @user.tasks, :exclude_completed => true}
-
-  %p= render :partial => 'calendars/tabs'
+  %p= render :partial => 'calendars/tabs', :locals => {:hide_completed_tasks => true, :object => @current_user}

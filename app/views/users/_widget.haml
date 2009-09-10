@@ -2,4 +2,5 @@
 
 %span
   = image_tag user.face.url(:thumb), :style => "vertical-align: middle;width:#{size}px"
-  = link_to h("#{user.name} #{user.surname}" ), user
+  %br
+  = link_to h("#{user.name.first}. #{user.surname}" ), user

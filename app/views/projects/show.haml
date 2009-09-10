@@ -15,13 +15,13 @@
     |
   = link_to_remote 'Edit', :url => edit_project_path(@project), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
-  = link_to 'Destroy', project_path(@project), :method => :delete, :confirm => "Are you sure?"
+  = link_to_remote 'Users', :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'New task', :url => new_task_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'New event', :url => new_event_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
-  = link_to_remote 'Users', :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :complete => "$('#interactive_window').show()"
+  = link_to 'Destroy', project_path(@project), :method => :delete, :confirm => "Are you sure?"
   |
   - if @project.closed?
     = link_to 'Reopen', reopen_project_path(@project)
@@ -37,13 +37,9 @@
 
 #description{:style => "display:none;"}= @project.description
 
-
-
-%p= render :partial => 'tasks/list', :locals => {:tasks => @project.tasks}
-
 - content_for(:right) do  
   = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
-  = render :partial => 'stories/mini_list', :locals => {:stories => @project.stories} unless @project.stories.empty?
+  = render :partial => 'stories/mini_list', :locals => {:stories => @project.all_stories} unless @project.all_stories.empty?
 
 
 

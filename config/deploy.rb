@@ -5,10 +5,8 @@ require 'capistrano/ext/multistage'
 default_run_options[:pty] = true
 set :spinner_user, nil
 set :runner, :yruser
-set :application, "progress"
 set :repository,  "git@github.com:wolas/progress.git"
 set :user, :yruser
-set :passphrase, 'yrpassword'
 set :branch, "master"
 set :use_sudo, true
 

@@ -17,6 +17,10 @@ class Project < ActiveRecord::Base
 
   before_create :random_colour
   
+  def all_stories
+    stories + tasks.map(&:stories).flatten.compact
+  end
+  
   def random_colour
     self.colour = "323232"
   end

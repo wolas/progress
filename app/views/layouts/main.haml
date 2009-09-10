@@ -60,6 +60,7 @@
           .close_interactive_window
             = link_to_function 'x' do |page|
               - page[:flash].visual_effect :fade, :duration => 0.5
+            
           %p
             %span{:class => "ui-icon ui-icon-info", :style => "float: left; margin-right: 0.3em;"}
             = notice

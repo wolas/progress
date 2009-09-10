@@ -15,19 +15,15 @@
       \-
       = link_to event.name, event
 
-
-
     .attribute
       .name Date
       .value= event.date
-
     .attribute
       .name Time
       .value= event.time
-
     .attribute
       .name Description
       .value= event.description
-
-
-    %p= render :partial => 'users/list', :locals => {:users => event.users, :groups => 5}
+    .attribute
+      .name Users
+      .value= event.users.map{|u| link_to u.full_name, u}.join ", "

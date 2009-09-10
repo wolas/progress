@@ -1,4 +1,4 @@
-%h3 Events
+.right_title Events
 
 - tday = Date.today
 - past, future = events.partition {|event| event.date < tday }
@@ -9,7 +9,7 @@
 - today = today.group_by { |event| event.date.to_date }.to_a.sort.reverse
 - all = [[:upcoming, upcoming], [:today, today], [:completed, past]]
 
-.event_list.ui-widget-content.widget
+.right_body
   - if today.empty? and upcoming.empty?
     No events at the moment
   - else

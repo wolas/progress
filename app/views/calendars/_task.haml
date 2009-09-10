@@ -29,8 +29,11 @@
       .attribute
         .name Description
         .value= task.description
-
-    - if task.users.empty?
-      %p No users assigned to this task
-    - else
-      %p= render :partial => 'users/list', :locals => {:users => task.users, :groups => 3}
+    
+    - Task::PEOPLE.each do |type|
+      - people = task.send(type)
+      - next if people.empty?
+      
+      .attribute
+        .name= type.to_s.humanize.capitalize
+        .value= people.map{|u| link_to u.full_name, u}.join ", "

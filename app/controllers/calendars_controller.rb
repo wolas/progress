@@ -2,6 +2,12 @@ class CalendarsController < ApplicationController
 
   before_filter :init_object, :except => [:event_details, :task_details]
 
+  def all_tasks
+    tasks = @object.tasks
+    tasks =  tasks.select{|task| task.open? } if params[:hide_completed_tasks]
+    render :partial => 'tasks/list', :locals => {:tasks => tasks}
+  end
+  
   def day
     date = params[:date] ? params[:date].to_date : Date.today
     render :partial => 'calendars/day', :locals => {:date => date, :object => @object}

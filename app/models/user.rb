@@ -19,10 +19,11 @@ class User < ActiveRecord::Base
   has_many :created_stories, :class_name => 'Story', :order => 'created_at DESC', :foreign_key => :creator_id
 
   belongs_to :team
+  belongs_to :company
 
   validates_uniqueness_of :login, :email
 
-  has_attached_file :face, :styles => { :small=> "30x30>", :medium => "50x50>", :thumb => "100x100>" }, :default_url => 'default_face.png'
+  has_attached_file :face, :styles => { :small=> "30x30>", :medium => "50x50>", :thumb => "100x100>" }, :default_url => 'face.png'
   
   def tasks
     TASKS.map {|tasks_as| self.send tasks_as.to_s }.flatten.uniq

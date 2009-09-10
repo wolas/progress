@@ -1,10 +1,12 @@
-.event_list.widget
-  - completed = tasks.select {|task| task.completed? }.slice(1, 10) || []
+- completed = tasks.select {|task| task.completed? }.slice(0, 10) || []
 
-  %div{:class => "event_list_header header_completed"} Last 10 Completed Tasks
-  
+.right_title Last 10 Completed Tasks
+
+.right_body
   - completed.reverse.each do |task|
     .story
       - project = task.project
-      %span{:style =>"font-size: 0.7em; "}== (#{link_to project.name, project} #{"for #{project.client.name}" if project.client})
-      %span{:style =>"font-size: 0.8em; "}= link_to task.name, project_task_path(task.project, task)
+      %span{:style =>"vertical-align: middle;"}
+        = image_tag 'accept.png', :style =>"vertical-align: middle;"
+        == (#{link_to project.name, project} #{"for #{project.client.name}" if project.client})
+        = link_to task.name, project_task_path(task.project, task)

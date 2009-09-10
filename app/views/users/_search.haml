@@ -1,8 +1,10 @@
 #search_form
   - form_tag '', :id => :search, :onsubmit => "return false;"  do
     .attribute
-      .name Search
-      .value= text_field_tag :name
+      .name= text_field_tag :name, nil, :size => 15
+      .name @
+      .name= select_tag :company, options_for_select( [["all", nil]] + Company.all.map {|c| [c.name, c.id]})
+      
 
-  = observe_form :search, :url => { :controller => :users, :action => :search }, :frequency => 0.25, :update => :drag_drop_users
+  = observe_form :search, :url => { :controller => :users, :action => :search, :partial => partial }, :frequency => 0.25, :update => update, :loading => "var so = new SWFObject(\"/flash/loading.swf\", \"home\", \"50\", \"50\", \"9\", \"#ffffff\");so.write(\"#{update}\");"
   %br

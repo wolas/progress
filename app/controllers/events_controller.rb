@@ -1,5 +1,26 @@
 class EventsController < ApplicationController
 
+  def users
+    @users = User.all
+    @object = Kernel.eval( params[:object_class] ).find params[:object_id]
+  end
+  
+  def add_user
+    event = Event.find params[:id]
+    user = User.find params[:user]
+    event.users << user
+    event.stories.create :body => "has <div class='changed_data'>#{user.name}</div> assigned to it</div>", :creator => current_user
+    render(:partial => 'users', :locals => {:object => event})
+  end
+
+  def remove_user
+    event = Event.find params[:id]
+    user = User.find params[:user]
+    event.users.delete user
+    event.stories.create :body => "has removed <div class='changed_data'>#{user.name}</did> from its users</div>", :creator => current_user
+    render(:partial => 'users', :locals => {:object => event})
+  end
+
   # GET /events
   def index
     @user = User.find(params[:user_id])
@@ -52,6 +73,12 @@ class EventsController < ApplicationController
   # PUT /events/1
   def update
     @event = Event.find(params[:id])
+    p_event = params[:event]
+    date = p_event[:date].to_date
+    p_event[:'date(1i)'] = date.year.to_s
+    p_event[:'date(2i)'] = date.month.to_s
+    p_event[:'date(3i)'] = date.day.to_s
+    p_event.delete(:date)
     @event.attributes = params[:event]
 
     @event.changes.each_pair do |attribute, values|
@@ -78,6 +105,10 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @event.update_attributes :completed => false
     redirect_to :back
+  end
+  
+  def close_interactive_window
+    @event = Event.find params[:id]
   end
 
   # DELETE /events/1

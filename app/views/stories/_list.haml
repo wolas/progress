@@ -7,14 +7,16 @@
 
       - stories.each do |story|
         .story{:id => "story_#{story.id}"}
-          .story_delete{:style => 'float: right;'}
-            = link_to_remote 'x', :url => story_url(story, :user_id => current_user), :method => :delete, :update => 'all_stories'
-
+          
           .story_data{:style => 'font-size: .9em;'}
+            
             = widget_for story.creator
             .story_time{:style => 'font-size: .7em;'}= story.created_at.to_time.strftime "%l:%M %p"
 
           .story_body
+            .story_delete{:style => 'float: right;'}
+              = link_to_remote 'x', :url => story_url(story, :user_id => current_user), :method => :delete, :update => 'all_stories'
+            
             = story.parent_type.downcase
             = link_to story.parent.name, story.parent
             = story.body.gsub("#{current_user.name} has", "You have").gsub("true", "yes").gsub("false", "no")

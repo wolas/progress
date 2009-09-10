@@ -1,17 +1,18 @@
 class UsersController < ApplicationController
 
   def search
-    users = User.all :order => 'surname ASC', :conditions => ["name LIKE ? OR surname LIKE ?", "%#{params[:name]}%", "%#{params[:name]}%"]
-    render( users.empty? ? {:text => "No Users found!"} : {:partial => 'drag_list', :locals => {:users => users}})
+    query = {:order => 'surname ASC', :conditions => ["name LIKE ? OR surname LIKE ?", "%#{params[:name]}%", "%#{params[:name]}%"]}
+    users = params[:company].to_i != 0 ? Company.find(params[:company]).users.all(query) : User.all(query)
+    render( users.empty? ? {:text => "No Users found!"} : {:partial => params[:partial], :locals => {:users => users}})
   end
 
   def index
     @users = User.all
-    render(:partial => 'list', :locals => {:users => @users}) if request.xhr?
   end
 
   def new
     @user = User.new
+    render :partial => 'form', :locals => {:user => @user} if request.xhr?
   end
 
   def create

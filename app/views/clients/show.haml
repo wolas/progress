@@ -1,34 +1,19 @@
-%h1=h @client.name
+- content_for :title do
+  =h @client.name
 
-#update_client{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:client => @client }
-
-%p
-  = link_to_function 'Edit', :href => edit_client_path(@client), :id => "edit_client_link" do |page|
-    - page[:update_client].visual_effect :blind_down, :duration => 0.5
-    - page[:edit_client_link].hide
-    - page[:cancel_edit_client_link].visual_effect :appear
-
-  = link_to_function 'Cancel', :href => edit_client_path(@client), :id => 'cancel_edit_client_link', :style => "display:none;" do |page|
-    - page[:update_client].visual_effect :blind_up, :duration => 0.5
-    - page[:cancel_edit_client_link].hide
-    - page[:edit_client_link].visual_effect :appear
-
+%div{:style => 'float:right'}
+  = link_to_remote 'Edit', :url => edit_client_path(@client), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
-
-  = link_to_function 'New Project', :href => new_client_project_path(@client), :id => "new_project_link" do |page|
-    - page[:new_project].visual_effect :blind_down, :duration => 0.5
-    - page[:new_project_link].hide
-    - page[:cancel_new_project_link].visual_effect :appear
-
-  = link_to_function 'Cancel', :href => new_client_project_path(@client), :id => 'cancel_new_project_link', :style => "display:none;" do |page|
-    - page[:new_project].visual_effect :blind_up, :duration => 0.5
-    - page[:cancel_new_project_link].hide
-    - page[:new_project_link].visual_effect :appear
+  = link_to 'Destroy', client_path(@client), :method => :delete, :confirm => "Are you sure you want to delete task #{@client.name}"
 
 
-#new_project{:style => 'display:none;'}
-  = render :partial => 'projects/form', :locals => {:project => Project.new(:client=>@client) }
+
+#interactive_window.ui-widget-content.widget
+  .close_interactive_window
+    = link_to_remote image_tag('cross.png'), :url => {:controller => :tasks, :action => :close_interactive_window, :id => @task}
+  #interactive_content
+
+
 
 - completed, in_progress = @client.projects.partition{|project| project.closed?}
 
