@@ -4,6 +4,7 @@ class CreateUsersIfNotPresent < ActiveRecord::Migration
       t.string   "surname"
       t.string   "phone"
       t.string   "mobile"
+      t.string   "login"
       t.string   "fax"
       t.string   "email"
       t.datetime "created_at"
