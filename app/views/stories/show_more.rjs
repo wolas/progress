@@ -1,0 +1,2 @@
+page.insert_html :bottom, "stories_content", :partial => 'list_content', :locals => {:stories => @stories, :mini => @mini}
+page[:more_stories_link].replace_html @stories.size.eql?(10) ? link_to_remote("more", :url => url_for(:controller => "stories", :action => "show_more", :id => @stories.last, :object_class => @object.class, :object_id => @object, :mini => @mini)) : ""

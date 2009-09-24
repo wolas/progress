@@ -1,10 +1,19 @@
 class StoriesController < ApplicationController
 
+  def show_more
+    @object = Kernel.eval(params[:object_class]).find(params[:object_id])
+    @mini = params[:mini]
+    story = Story.find(params[:id])
+    all_stories = @object.is_a?(Project) ? @object.all_stories : @object.stories
+    index = all_stories.index story
+    @stories = all_stories.slice(index + 1, 10)
+  end
+
   # GET /stories
   def index
     @user = params[:id] ? User.find(params[:id]) : @current_user
-    @stories = @user.stories
-    @user.users_stories.each {|story| story.mark_seen }
+    @stories = @user.stories.slice(0, 10)
+    @user.users_stories.slice(0, 10).each {|story| story.mark_seen }
   end
 
   # GET /stories/1

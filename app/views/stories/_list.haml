@@ -1,24 +1,8 @@
+- mini ||= false
+
 #all_stories
-  - stories = stories.group_by {|story| story.created_at.to_date }
-
-  .event_list.widget
-    - stories.each do |date, stories|
-      %div{:class => "event_list_header header_completed"}= date.to_s(:long)
-
-      - stories.each do |story|
-        .story{:id => "story_#{story.id}"}
-          
-          .story_data{:style => 'font-size: .9em;'}
-            
-            = widget_for story.creator
-            .story_time{:style => 'font-size: .7em;'}= story.created_at.to_time.strftime "%l:%M %p"
-
-          .story_body
-            .story_delete{:style => 'float: right;'}
-              = link_to_remote 'x', :url => story_url(story, :user_id => current_user), :method => :delete, :update => 'all_stories'
-            
-            = story.parent_type.downcase
-            = link_to story.parent.name, story.parent
-            = story.body.gsub("#{current_user.name} has", "You have").gsub("true", "yes").gsub("false", "no")
-
-          .clear
+  #stories_content
+    = render :partial => "stories/list_content", :locals => {:stories => stories, :mini => mini}
+        
+  #more_stories_link
+    = link_to_remote "more", :url => url_for(:controller => "stories", :action => "show_more", :id => stories.last, :mini => mini, :object_class => object.class, :object_id => object.id)

@@ -13,7 +13,7 @@ class TasksController < ApplicationController
       text = users.empty? ? "Select users from the right to see their tasks." : "No tasks for #{users.map(&:name).join(', ')}."
       render :text => text
     else
-      render :partial => 'list', :locals => {:list => tasks}
+      render :partial => 'list', :locals => {:tasks => tasks}
     end
   end
 
@@ -57,7 +57,13 @@ class TasksController < ApplicationController
     @task.attributes = params[:task]
 
     @task.changes.each_pair do |attribute, values|
-      @task.stories.create :body => "changed <div class='changed_data'>#{attribute.to_s.humanize}</div> from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user
+      changed_data = "<div class='changed_data'>#{attribute.to_s.humanize}</div>"
+      from = "<div class='changed_data'>#{values.first.to_s.humanize}</div>"
+      to = "<div class='changed_data'>#{values.last.to_s}</div>"
+      
+      body = values.first.empty? ? "has #{to} as #{changed_data}" : "changed #{changed_data} from #{from} to #{to}"
+      
+      @task.stories.create :body => body, :creator => current_user
     end
 
     if @task.save
@@ -91,7 +97,7 @@ class TasksController < ApplicationController
   end
   
   def close_interactive_window
-    @task = Task.find params[:id]
+    @stories = Task.find(params[:id]).stories
   end
 
   # DELETE /tasks/1

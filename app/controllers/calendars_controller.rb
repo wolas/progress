@@ -5,7 +5,7 @@ class CalendarsController < ApplicationController
   def all_tasks
     tasks = @object.tasks
     tasks =  tasks.select{|task| task.open? } if params[:hide_completed_tasks]
-    render :partial => 'tasks/list', :locals => {:tasks => tasks}
+    tasks.empty? ? render(:text => "No tasks for #{@object.class} #{@object.name}") : render(:partial => 'tasks/list', :locals => {:tasks => tasks})
   end
   
   def day

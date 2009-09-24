@@ -32,14 +32,14 @@
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
-    = link_to_remote 'x', :url => {:controller => :projects, :action => :close_interactive_window, :id => @project}
+    = link_to_remote image_tag("cross.png"), :url => {:controller => :projects, :action => :close_interactive_window, :id => @project}
   #interactive_content
 
 #description{:style => "display:none;"}= @project.description
 
 - content_for(:right) do  
   = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
-  = render :partial => 'stories/mini_list', :locals => {:stories => @project.all_stories} unless @project.all_stories.empty?
+  = render :partial => 'stories/list', :locals => {:stories => @project.all_stories.slice(1,10), :mini => true, :object => @project} unless @project.all_stories.empty?
 
 
 

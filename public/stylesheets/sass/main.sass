@@ -50,7 +50,7 @@ body
     :border 1px solid #ddd
     :float right
     :margin
-      :top 1.2em
+      :top 1em
       :right 4em
     :width 28em
     :color #aac
@@ -329,32 +329,45 @@ h4
     :bottom 3px
     :left 5px
 
-.task_list_item
-  :border-left
-    :width 1px
-    :style solid
-  :border-bottom 1px solid #eee
+.task_list_item:hover
+  :background-color #bfdff4
 
 .task_list
-  :border-left
-    :width 1px
-    :style solid
-
   .task_list_item
+    :min-height 100px
+    
     :padding
       :left 5px
       :top 10px
       :bottom 10px
+    
+    .task_list_menu
+      :width 10%
+      :border-bottom 1px solid #ccc
+    
+    .task_list_priority
+      :width 5%
+      :border-bottom 1px solid #ccc
+    
+    .task_list_body
+      :width 60% 
+      :border-left
+        :width 3px 
+        :style solid
+      :height 60px
+      :padding-left 20px
+      :border-bottom 1px solid #ccc
+    
+      .task_name
+        :font
+          :size 1.2em
+          :weight bold
+        :margin-top 3px
 
-    .task_name
-      :font
-        :size 1.2em
-        :weight bold
-
-    .task_users
-      :color #000
-      :display inline
-      :font-size 0.8em
+      .task_users
+        :color #000
+        :display inline
+        :font-size 0.8em
 
 .event_list
   :width 100%
@@ -364,6 +377,7 @@ h4
   :font-weight bold
 
   :color #fff
+  :margin-top 10px
   :padding
     :top 3px
     :bottom 3px
@@ -482,7 +496,7 @@ h4
   :margin 0
 
 .story
-  :padding-top 10px
+  :padding-top 2px
 
   .story_body
     +round_borders
@@ -491,7 +505,7 @@ h4
     :padding
       :top 5px
       :bottom 5px
-    :min-height 50px
+    :min-height 30px
     :padding-left 2%
     :float left
     :width 85%
@@ -506,7 +520,13 @@ h4
     :float left
     :width 10%
     :padding-left 1%
-    :font-size .7em
+    :font-size .9em
+    
+    .story_time
+      :font-size .7em
+    
+  .story_delete
+    :float right
     
 .mini_story
   :padding
@@ -541,7 +561,6 @@ h4
   :background-image url(/images/quotes.png)
   :background-position left
   :background-repeat no-repeat
-
 
 
 //==========================================

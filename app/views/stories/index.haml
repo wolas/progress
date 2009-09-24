@@ -4,4 +4,4 @@
 - if @stories.empty?
   No news feeds to show. You should really wonder why...
 - else
-  = render :partial => 'stories/list', :locals => {:stories => @stories}
+  = render :partial => 'list', :locals => {:stories => @stories, :object => @current_user}

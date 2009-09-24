@@ -3,15 +3,9 @@
 
 
 - content_for :right do
-  %h3 Users
-  - form_for '/tasks/manage', :html => {:id => 'tasks_users_form'} do
-    - User.all.each do |user|
-      .attribute
-        .value
-          = check_box_tag 'user_ids[]', user.id
-        .value
-          = user.full_name
-  = observe_form :tasks_users_form, :frequency => 1, :url => {:controller => :tasks, :action => :manage_users}, :update => 'all_tasks', :loading => 'var so = new SWFObject("flash/loading.swf", "home", "50", "50", "9", "#ffffff");so.write("all_tasks");'
-
+  = render :partial => "users/search", :locals => {:partial => 'tasks/user_manage', :update => 'user_manage'}
+  #user_manage
+    = render :partial => "user_manage", :locals => {:users => User.all}
+  
 #all_tasks
   Select users from the right to see their tasks
