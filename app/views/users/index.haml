@@ -1,7 +1,7 @@
 - content_for :title do
   All users
 
-%div{:style => 'float:right'}
+#menu
   = link_to_remote 'New', :url => new_user_path, :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
 = render :partial => "search", :locals => {:partial => "list", :update => 'all_users'}

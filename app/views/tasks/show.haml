@@ -2,13 +2,13 @@
   = render :partial => 'projects/header', :locals => {:task => @task}
 
 
-%div{:style => 'float:right:padding: 4px;'}
+#menu
   = link_to_remote 'Edit', :url => edit_task_path(@task), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'Users', :url => {:controller => 'tasks', :action => 'users', :object_id => @task, :object_class => @task.class}, :complete => "$('#interactive_window').show()"
   |
   = link_to 'Destroy', task_path(@task), :method => :delete, :confirm => "Are you sure you want to delete task #{@task.name}"
-.clear
+  
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
@@ -16,7 +16,7 @@
   #interactive_content
 
 - content_for :right do
-  = render(:partial => 'stories/list', :locals => {:stories => @task.stories.slice(1, 10), :mini => true, :object => @task}) unless @task.stories.empty?
+  = render(:partial => 'stories/list', :locals => {:stories => @task.stories.all(:limit => 10), :mini => true, :object => @task}) unless @task.stories.empty?
 
 #task_show
   .attribute

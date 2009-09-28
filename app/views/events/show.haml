@@ -1,13 +1,13 @@
 - content_for :title do
   = render :partial => 'projects/header', :locals => {:task => @event}
 
-%div{:style => 'float:right'}
+#menu
   = link_to_remote 'Edit', :url => edit_event_path(@event), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
   |
   = link_to_remote 'Users', :url => {:controller => 'events', :action => 'users', :object_id => @event, :object_class => @event.class}, :complete => "$('#interactive_window').show()"
   |
   = link_to 'Destroy', task_path(@event), :method => :delete, :confirm => "Are you sure you want to delete task #{@event.name}"
-.clear
+
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
@@ -15,7 +15,7 @@
   #interactive_content
 
 - content_for :right do
-  = render(:partial => 'stories/list', :locals => {:stories => @event.stories.slice(1, 10), :mini => true, :object => @event}) unless @event.stories.empty?
+  = render(:partial => 'stories/list', :locals => {:stories => @event.stories.all(:limit => 10), :mini => true, :object => @event}) unless @event.stories.empty?
 
 #event_show
   .attribute

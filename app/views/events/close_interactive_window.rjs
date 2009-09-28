@@ -1,3 +1,3 @@
 page[:interactive_window].visual_effect :fade, :duration => 0.5
 page.replace_html 'right', :text => ""
-page.replace_html 'right', :partial => 'stories/mini_list', :locals => {:stories => @event.stories} unless @event.stories.empty?
+page.replace_html 'right', :partial => 'stories/list', :locals => {:stories => @event.stories, :mini => true, :object => @event} unless @event.stories.empty?

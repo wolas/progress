@@ -1,6 +1,9 @@
 - stories = stories.group_by {|story| story.created_at.to_date }
 - mini ||= false
 
+- if mini
+  .right_title News
+
 - stories.each do |date, stories|
 
   %div{:class => "event_list_header header_completed"}= date.to_s(:long)

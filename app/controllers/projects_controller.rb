@@ -91,6 +91,7 @@ class ProjectsController < ApplicationController
   
   def close_interactive_window
     @project = Project.find params[:id]
+    @stories = @project.all_stories.slice(1, 10)
   end
 
   # DELETE /projects/1

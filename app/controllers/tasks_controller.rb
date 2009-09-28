@@ -97,7 +97,8 @@ class TasksController < ApplicationController
   end
   
   def close_interactive_window
-    @stories = Task.find(params[:id]).stories
+    @task = Task.find(params[:id])
+    @stories = @task.stories.all :limit => 10
   end
 
   # DELETE /tasks/1

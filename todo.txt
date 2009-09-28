@@ -1,0 +1,3 @@
+ * recurrence of tasks
+ * automatic allocation of tasks according to workload
+  - add types of workers for users (art, programmer, flash, account)

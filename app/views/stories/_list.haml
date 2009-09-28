@@ -5,4 +5,4 @@
     = render :partial => "stories/list_content", :locals => {:stories => stories, :mini => mini}
         
   #more_stories_link
-    = link_to_remote "more", :url => url_for(:controller => "stories", :action => "show_more", :id => stories.last, :mini => mini, :object_class => object.class, :object_id => object.id)
+    = link_to_remote("more", :url => url_for(:controller => "stories", :action => "show_more", :id => stories.last, :mini => mini, :object_class => object.class, :object_id => object.id)) unless stories.size < 10

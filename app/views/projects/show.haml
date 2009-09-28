@@ -1,7 +1,7 @@
 - content_for :title do
   = render :partial => 'header', :locals => {:project => @project}
 
-%div{:style => 'float:right;'}
+#menu
   - if @project.description?
     = link_to_function 'Description', :href => nil, :id => 'show_description_link' do |page|
       - page[:description].visual_effect :blind_down, :duration => 0.5
@@ -27,7 +27,7 @@
     = link_to 'Reopen', reopen_project_path(@project)
   - else
     = link_to 'Close', close_project_path(@project)
-
+  
 .clear
 
 #interactive_window.ui-widget-content.widget
@@ -38,7 +38,7 @@
 #description{:style => "display:none;"}= @project.description
 
 - content_for(:right) do  
-  = render :partial => 'events/list_full', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
+  = render :partial => 'events/list', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
   = render :partial => 'stories/list', :locals => {:stories => @project.all_stories.slice(1,10), :mini => true, :object => @project} unless @project.all_stories.empty?
 
 

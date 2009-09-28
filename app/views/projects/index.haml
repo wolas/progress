@@ -5,7 +5,7 @@
   - else
     All Projects
 
-%div{:style => 'float:right'}
+#menu
   = link_to_remote 'New', :url => new_project_path, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
 #interactive_window.ui-widget-content.widget

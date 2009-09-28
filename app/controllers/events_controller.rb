@@ -109,6 +109,7 @@ class EventsController < ApplicationController
   
   def close_interactive_window
     @event = Event.find params[:id]
+    @stories = @event.stories.all :limit => 10
   end
 
   # DELETE /events/1

@@ -19,6 +19,7 @@ class ClientsController < ApplicationController
   # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
+    render :partial => "form", :locals => {:client => @client} if request.xhr?
   end
 
   # POST /clients

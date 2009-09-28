@@ -1,7 +1,7 @@
 -content_for :title do
   Clients
 
-%div{:style => 'float:right'}
+#menu
   = link_to_remote 'New', :url => new_client_path, :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
 #interactive_window.ui-widget-content.widget

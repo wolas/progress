@@ -16,4 +16,4 @@
 #task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
 
 #calendar
-  = render :partial => 'calendars/day', :locals => {:object => object, :date => Date.today}
+  = render :partial => 'tasks/list', :locals => {:tasks => object.tasks}
