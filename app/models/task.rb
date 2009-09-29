@@ -23,6 +23,12 @@ class Task < ActiveRecord::Base
   named_scope :completed, :conditions => {:completed => true}
   named_scope :closed, :conditions => {:completed => true}
 
+  before_update :report_updates
+  
+  def report_updates
+    changes.each { |att, values| stories.create :from => values.first, :to => values.last, :changed_data => att, :creator => UserSession.find.user }
+  end
+
   def users
     PEOPLE.map{|user| eval user.to_s }.flatten.uniq
   end

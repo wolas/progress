@@ -28,13 +28,13 @@ class TasksController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @task = @project.tasks.new
-    render(:partial => 'form', :locals => {:task => @task}) and return if request.xhr?
+    render(:partial => 'form', :locals => {:task => @task}) if request.xhr?
   end
 
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
-    render(:partial => 'form', :locals => {:task => @task}) and return if request.xhr?
+    render(:partial => 'form', :locals => {:task => @task}) if request.xhr?
   end
 
   # POST /tasks
@@ -54,19 +54,8 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   def update
     @task = Task.find(params[:id])
-    @task.attributes = params[:task]
 
-    @task.changes.each_pair do |attribute, values|
-      changed_data = "<div class='changed_data'>#{attribute.to_s.humanize}</div>"
-      from = "<div class='changed_data'>#{values.first.to_s.humanize}</div>"
-      to = "<div class='changed_data'>#{values.last.to_s}</div>"
-      
-      body = values.first.empty? ? "has #{to} as #{changed_data}" : "changed #{changed_data} from #{from} to #{to}"
-      
-      @task.stories.create :body => body, :creator => current_user
-    end
-
-    if @task.save
+    if @task.update_attributes params[:task]
       request.xhr? ? render(:partial => 'tasks/list', :locals => {:tasks => Task.find(params[:tasks]), :exclude_completed => params[:exclude_completed]}) : redirect_to(@task)
     else
       @project = @task.project
