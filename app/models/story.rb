@@ -25,8 +25,8 @@ class Story < ActiveRecord::Base
     
     return "was marked as #{cd}" if to.eql?("1")
     return "was marked as not #{cd}" if to.eql?("0")
-    return "added #{t} as #{cd}" if from.empty?
-    return "removed #{cd}" if to.empty?
+    return "added #{t} as #{cd}" if from.nil? or from.empty?
+    return "removed #{cd}" if to.nil? or to.empty?
     return "changed #{cd} from #{f} to #{t}"
   end
   

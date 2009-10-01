@@ -10,19 +10,24 @@ class Project < ActiveRecord::Base
   belongs_to :manager, :class_name => 'User'
   belongs_to :account, :class_name => 'User'
 
-  validates_presence_of :end_date, :name
+  validates_presence_of :name
   validate_on_create :date_in_future
 
   named_scope :open, :conditions => {:closed => false}
 
   before_create :random_colour
+  before_update :report_updates
+  
+  def report_updates
+    changes.each { |att, values| stories.create :from => values.first, :to => values.last, :changed_data => att, :creator => UserSession.find.user }
+  end
   
   def all_stories
     stories + tasks.map(&:stories).flatten.compact
   end
   
   def random_colour
-    self.colour = "323232"
+    self.colour = "323232" if colour.nil? or colour.empty?
   end
 
   def people
@@ -42,8 +47,15 @@ class Project < ActiveRecord::Base
   def people_involved conditions = {}
     (tasks.all(conditions).map { |task| task.users } + events.all(conditions).map { |event| event.users }).flatten.uniq
   end
+  
+  def end_date
+    ed = read_attribute :end_date
+    return if tasks.empty? and ed.nil?
+    ed ? ed : tasks.last.end_date
+  end
 
   def late?
+    return unless end_date
     end_date < Date.today
   end
 
@@ -52,6 +64,7 @@ class Project < ActiveRecord::Base
   end
 
   def days_remaining
+    return unless end_date
     (end_date.to_date - Date.today).to_i + 1
   end
 

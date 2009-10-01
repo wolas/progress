@@ -73,7 +73,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
     user = User.find params[:user]
     task.send(params[:type].to_sym) << user
-    task.stories.create :body => "has <div class='changed_data'>#{user.name}</div> assigned as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
+    task.stories.create :creator => current_user, :changed_data => params[:type].singularize, :to => user.name
     render(:partial => 'users', :locals => {:object => task})
   end
 
@@ -81,7 +81,7 @@ class TasksController < ApplicationController
     task = Task.find params[:id]
     user = User.find params[:user]
     task.send(params[:type]).delete user
-    task.stories.create :body => "has removed <div class='changed_data'>#{user.name}</div> as <div class='changed_data'>#{params[:type].humanize.downcase.singularize}</div>", :creator => current_user
+    task.stories.create :creator => current_user, :changed_data => params[:type].singularize, :from => user.name
     render(:partial => 'users', :locals => {:object => task})
   end
   

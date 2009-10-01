@@ -2,7 +2,9 @@
   - projects.each do |project|
     %tr
       %td.project_row{:style => 'width: 2%;'}
-        %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour}"}
+        
+        %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour};margin-right:5px;"}
+          = image_tag "sphere.png", :width => "20px"
 
       %td.project_row{:style => project.style + 'width: 25%;'}
         = link_to project.full_name, project
@@ -21,9 +23,10 @@
               = project.percentage_complete
               \%
 
-          %div{:style => 'position: absolute; padding-left: 190px;padding-top: 5px;'}
-            = project.end_date
-            == (#{project.days_remaining})
+          - if project.end_date
+            %div{:style => 'position: absolute; padding-left: 190px;padding-top: 5px;'}
+              = project.end_date
+              == (#{project.days_remaining})
 
           %div{:style => 'position: absolute; padding-left: 330px;padding-top: 5px;'}
             = link_to 'new event', new_project_event_path(project)

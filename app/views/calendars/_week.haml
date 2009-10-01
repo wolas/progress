@@ -2,9 +2,9 @@
 - events = something.events
 
 %h2
-  = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_week", :current_day => date, :object => {:id => something.id, :type => something.class} }, :update => 'calendar'
+  = link_to_remote image_tag("left-arrow.png"), :url => { :controller => 'calendars', :action => "previous_week", :current_day => date, :object => {:id => something.id, :type => something.class} }, :update => 'calendar'
   &nbsp;
-  = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_week", :current_day => date, :object => {:id => something.id, :type => something.class} }, :update => 'calendar'
+  = link_to_remote image_tag("right-arrow.png"), :url => { :controller => 'calendars', :action => "next_week", :current_day => date, :object => {:id => something.id, :type => something.class} }, :update => 'calendar'
   &nbsp;
   starting
   = date.strftime('%a, %d')

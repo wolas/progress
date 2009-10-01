@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
       @user = User.find(params[:user_id])
       @projects = @user.projects
     else
-      @projects = Project.all(:order => 'end_date ASC')
+      @projects = Project.all
     end
   end
 
@@ -14,8 +14,6 @@ class ProjectsController < ApplicationController
   def show
     @show_timeline = true
     @project = Project.find(params[:id])
-    @object = @project
-    @client = @project.client
   end
 
   # GET /projects/new
@@ -46,10 +44,8 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   def update
     @project = Project.find(params[:id])
-    @project.attributes = params[:project]
-    @project.changes.each_pair { |attribute, values| @project.stories.create :body => "changed <div class='changed_data'>#{attribute.to_s.humanize}</div> from <div class='changed_data'>#{values.first.to_s}</div> to <div class='changed_data'>#{values.last.to_s}</div>", :creator => current_user}
-
-    if @project.save
+    
+    if @project.update_attributes params[:project]
       flash[:notice] = 'Project was successfully updated.'
       redirect_to(@project)
     else
@@ -91,7 +87,7 @@ class ProjectsController < ApplicationController
   
   def close_interactive_window
     @project = Project.find params[:id]
-    @stories = @project.all_stories.slice(1, 10)
+    @stories = @project.all_stories.slice(0, 10)
   end
 
   # DELETE /projects/1

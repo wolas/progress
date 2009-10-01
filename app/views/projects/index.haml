@@ -22,4 +22,11 @@
 
 - unless completed.empty?
   %h3 Completed
-  = render :partial => 'list', :locals => {:projects => completed}
+  %table
+    - completed.map do |project| 
+      %tr
+        %td
+          %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour};margin-right:5px;"}
+            = image_tag "sphere.png", :width => "20px"
+        
+        %td= link_to project.name, project

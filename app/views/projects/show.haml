@@ -39,8 +39,12 @@
 
 - content_for(:right) do  
   = render :partial => 'events/list', :locals => {:events => @project.events.in_future} unless @project.events.in_future.empty?  
-  = render :partial => 'stories/list', :locals => {:stories => @project.all_stories.slice(1,10), :mini => true, :object => @project} unless @project.all_stories.empty?
+  = render :partial => 'stories/list', :locals => {:stories => @project.all_stories.slice(0,10), :mini => true, :object => @project} unless @project.all_stories.empty?
 
 
-
-%p= render :partial => 'calendars/tabs', :locals => {:object => @project}
+%p
+  - if @project.tasks.empty?
+    %p This project has no tasks, you want to create one?
+    = render :partial => "tasks/form", :locals => {:task => Task.new(:project => @project)}
+  - else
+    = render :partial => 'calendars/tabs', :locals => {:object => @project}

@@ -4,9 +4,9 @@
 
 
 %h2
-  = link_to_remote "<<", :url => { :controller => 'calendars', :action => "previous_day", :current_day => date, :object => {:id => object.id, :type => object.class}}, :update => 'calendar'
+  = link_to_remote image_tag("left-arrow.png"), :url => { :controller => 'calendars', :action => "previous_day", :current_day => date, :object => {:id => object.id, :type => object.class}}, :update => 'calendar'
   &nbsp;
-  = link_to_remote ">>", :url => { :controller => 'calendars', :action => "next_day", :current_day => date, :object => {:id => object.id, :type => object.class}}, :update => 'calendar'
+  = link_to_remote image_tag("right-arrow.png"), :url => { :controller => 'calendars', :action => "next_day", :current_day => date, :object => {:id => object.id, :type => object.class}}, :update => 'calendar'
   &nbsp;
   = date.strftime '%a, %d'
   of

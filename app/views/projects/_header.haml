@@ -1,14 +1,15 @@
 - task ||= nil
 - project = task.project if task
 
-%span{:style => "color:##{project.colour}"}
+%span
   - if project.client
     = link_to h(project.client.name), project.client
-    >
+    = image_tag "arrow.png"
 
   - if task
     =link_to project.name, project
-    >
+    = image_tag "arrow.png"
     %span{:style => task.style}=h task.name
+  
   - else
     %span{:style => project.style}=h project.name

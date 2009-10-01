@@ -24,6 +24,7 @@
 
           - events.each do |event|
             .event_list_item
+              = image_tag "pin.png"
               = event.time
               \-
               = link_to event.name, project_event_path(event.project, event)

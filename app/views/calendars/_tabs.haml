@@ -1,9 +1,8 @@
 - params = {:object => {:id => object.id, :type => object.class}}
 - hide_completed_tasks ||= false
-
+- loading = "var so = new SWFObject(\"/flash/loading.swf\", \"home\", \"50\", \"50\", \"9\", \"#ffffff\");so.write(\"calendar\");"
 
 #tab_nav.ui-widget-header.ui-corner-all
-  - loading = "var so = new SWFObject(\"/flash/loading.swf\", \"home\", \"50\", \"50\", \"9\", \"#ffffff\");so.write(\"calendar\");"
   = link_to_remote 'Tasks', :url => all_tasks_calendar_path(params.merge(:hide_completed_tasks => hide_completed_tasks)), :update => 'calendar', :loading => loading
   = link_to_remote 'Timeline', :url => timeline_calendar_path(params), :update => 'calendar', :complete => 'onLoad()', :loading => loading
   = link_to_remote 'Month', :url => month_calendar_path(params), :update => 'calendar', :loading => loading
@@ -16,4 +15,4 @@
 #task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
 
 #calendar
-  = render :partial => 'tasks/list', :locals => {:tasks => object.tasks}
+  = render :partial => 'tasks/list', :locals => {:tasks => object.tasks.select{|task| task.open? }}

@@ -1,6 +1,6 @@
 %script{:type => "text/javascript"}
-  == $(function() {$("#task_end_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
-  == $(function() {$("#task_start_date").datepicker({minDate: 0, maxDate: #{task.project.days_remaining}, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
+  == $(function() {$("#task_end_date").datepicker({minDate: 0, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
+  == $(function() {$("#task_start_date").datepicker({minDate: 0, numberOfMonths: 2, showButtonPanel: true, showOn: 'button', buttonImage: '/images/jquery/calendar.gif', buttonImageOnly: true});});
 
 -form_for task do |f|
   = f.error_messages
