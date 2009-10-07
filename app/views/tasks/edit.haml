@@ -1,4 +1,5 @@
-= render :partial => 'projects/header', :locals => {:task => @task}
+- content_for :title do
+  = render :partial => 'projects/header', :locals => {:task => @task}
 
 = render :partial => 'form', :locals => {:task => @task }
 

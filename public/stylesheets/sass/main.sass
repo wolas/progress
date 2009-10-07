@@ -327,6 +327,10 @@ h4
 .task_list_item:hover
   :background-color #bfdff4
 
+  td
+    .task_list_menu div
+      :visibility visible
+
 .task_list
   .task_list_item
     :min-height 100px
@@ -336,13 +340,16 @@ h4
       :top 10px
       :bottom 10px
     
-    .task_list_menu
-      :width 10%
+    td
       :border-bottom 1px solid #ccc
+    
+    .task_list_menu
+      :visibility hidden
+      :width 10%
+      
     
     .task_list_priority
       :width 5%
-      :border-bottom 1px solid #ccc
     
     .task_list_body
       :width 60% 
@@ -351,7 +358,6 @@ h4
         :style solid
       :height 60px
       :padding-left 20px
-      :border-bottom 1px solid #ccc
     
       .task_name
         :font

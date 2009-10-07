@@ -22,6 +22,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @project = @task.project
     @client = @project.client
+    render :partial => "show", :locals => {:task => @task, :exclude_completed => params[:exclude_completed], :tasks => Task.find(params[:tasks])} if request.xhr?
   end
 
   # GET /tasks/new
@@ -34,7 +35,7 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
-    render(:partial => 'form', :locals => {:task => @task}) if request.xhr?
+    render(:partial => 'form', :locals => {:task => @task, :return_to => params[:return_to]}) if request.xhr?
   end
 
   # POST /tasks
@@ -56,7 +57,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update_attributes params[:task]
-      request.xhr? ? render(:partial => 'tasks/list', :locals => {:tasks => Task.find(params[:tasks]), :exclude_completed => params[:exclude_completed]}) : redirect_to(@task)
+      redirect_to params[:return_to] and return if params[:return_to]
+      tasks = Task.find(params[:tasks])
+      request.xhr? ? render(:partial => 'tasks/list', :locals => {:tasks => tasks, :exclude_completed => params[:exclude_completed]}) : redirect_to(@task)
     else
       @project = @task.project
       @client = @project.client

@@ -49,7 +49,7 @@ class Project < ActiveRecord::Base
   end
   
   def end_date
-    ed = read_attribute :end_date
+    ed = read_attribute(:end_date)
     return if tasks.empty? and ed.nil?
     ed ? ed : tasks.last.end_date
   end

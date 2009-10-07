@@ -15,4 +15,6 @@
 #task.draggable.ui-widget-content.widget{:style => 'display: none;z-index: 99999;'}
 
 #calendar
-  = render :partial => 'tasks/list', :locals => {:tasks => object.tasks.select{|task| task.open? }}
+  - tasks = object.tasks
+  - tasks = object.tasks.select{|task| task.open?} if hide_completed_tasks
+  = render :partial => 'tasks/list', :locals => {:tasks => tasks, :exclude_completed => hide_completed_tasks}

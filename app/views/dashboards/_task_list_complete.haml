@@ -3,11 +3,18 @@
 .right_title Last 10 Completed Tasks
 
 .right_body
-  - completed.reverse.each do |task|
-    .story
-      - project = task.project
-      %span{:style =>"vertical-align: middle"}
-        = image_tag 'accept.png', :width => "15px", :style =>"vertical-align: middle;"
-        = link_to project.name, project
-        \-
-        = link_to task.name, project_task_path(task.project, task)
+  %table{:width => "100%"}
+    - completed.reverse.each do |task|
+      %tr.story{:style => "font-size:0.8em;"}
+        %td
+          - project = task.project
+          %span{:style =>"vertical-align: middle"}
+            = image_tag 'accept.png', :width => "15px", :style =>"vertical-align: middle;"
+            = link_to project.name, project
+            \-
+            = link_to task.name, project_task_path(task.project, task)
+        %td
+          - form_for task do |f|
+            = hidden_field_tag "task[completed]", false
+            = hidden_field_tag "return_to", url_for(request.parameters)
+            = f.submit 'reopen'
