@@ -67,22 +67,18 @@ class ProjectsController < ApplicationController
   end
 
   def users
-    @users = User.all
     @object = Kernel.eval( params[:object_class] ).find params[:object_id]
   end
 
   def add_user
-    project = Project.find params[:id]
-    user = User.find params[:user]
-    project.update_attributes params[:type].to_sym => user
-    render(:partial => 'users', :locals => {:object => project})
+    @object = Project.find params[:id]
+    @object.update_attributes params[:type].to_sym => User.find(params[:user])
   end
 
   def remove_user
-    project = Project.find params[:id]
-    user = User.find params[:user]
-    project.update_attributes params[:type] => nil
-    render(:partial => 'users', :locals => {:object => project})
+    @object = Project.find params[:id]
+    @object.update_attributes params[:type] => nil
+    render :partial => 'users', :locals => {:object => @object}
   end
   
   def close_interactive_window

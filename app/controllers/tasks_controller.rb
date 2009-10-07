@@ -73,19 +73,18 @@ class TasksController < ApplicationController
   end
 
   def add_user
-    task = Task.find params[:id]
+    @object = Task.find params[:id]
     user = User.find params[:user]
-    task.send(params[:type].to_sym) << user
-    task.stories.create :creator => current_user, :changed_data => params[:type].singularize, :to => user.name
-    render(:partial => 'users', :locals => {:object => task})
+    @object.send(params[:type].to_sym) << user
+    @object.stories.create :creator => current_user, :changed_data => params[:type].singularize, :to => user.name
   end
 
   def remove_user
-    task = Task.find params[:id]
+    @object = Task.find params[:id]
     user = User.find params[:user]
-    task.send(params[:type]).delete user
-    task.stories.create :creator => current_user, :changed_data => params[:type].singularize, :from => user.name
-    render(:partial => 'users', :locals => {:object => task})
+    @object.send(params[:type]).delete user
+    @object.stories.create :creator => current_user, :changed_data => params[:type].singularize, :from => user.name
+    render :partial => 'users', :locals => {:object => @object}
   end
   
   def close_interactive_window

@@ -38,7 +38,7 @@
     .name Completed:
     .value= @task.completed? ? "yes" : "no"
   .attribute
-    .name Resources
+    .name Resources:
     .value= @task.users.map{|user| link_to user.name, user }.join ', '
   
   - if @task.description
