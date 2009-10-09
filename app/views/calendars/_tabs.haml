@@ -1,13 +1,12 @@
 - params = {:object => {:id => object.id, :type => object.class}}
 - hide_completed_tasks ||= false
-- loading = "var so = new SWFObject(\"/flash/loading.swf\", \"home\", \"50\", \"50\", \"9\", \"#ffffff\");so.write(\"calendar\");"
 
 #tab_nav.ui-widget-header.ui-corner-all
-  = link_to_remote 'Tasks', :url => all_tasks_calendar_path(params.merge(:hide_completed_tasks => hide_completed_tasks)), :update => 'calendar', :loading => loading
-  = link_to_remote 'Timeline', :url => timeline_calendar_path(params), :update => 'calendar', :complete => 'onLoad()', :loading => loading
-  = link_to_remote 'Month', :url => month_calendar_path(params), :update => 'calendar', :loading => loading
-  = link_to_remote 'Day', :url => day_calendar_path(params), :update => 'calendar', :loading => loading
-  = link_to_remote 'Week', :url => week_calendar_path(params), :update => 'calendar', :loading => loading
+  = link_to_remote 'Tasks', :url => all_tasks_calendar_path(params.merge(:hide_completed_tasks => hide_completed_tasks)), :update => 'calendar', :loading => flash_loader(:calendar)
+  = link_to_remote 'Timeline', :url => timeline_calendar_path(params), :update => 'calendar', :complete => 'onLoad()', :loading => flash_loader(:calendar)
+  = link_to_remote 'Month', :url => month_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
+  = link_to_remote 'Day', :url => day_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
+  = link_to_remote 'Week', :url => week_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
 
   .clear
 

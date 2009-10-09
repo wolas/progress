@@ -10,7 +10,7 @@
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
-    = link_to_function 'x' do |page|
+    = link_to_function image_tag("cross.png") do |page|
       - page[:interactive_window].visual_effect :fade, :duration => 0.5
   #interactive_content
 

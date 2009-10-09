@@ -6,5 +6,5 @@
       .name= select_tag :company, options_for_select( [["all", nil]] + Company.all.map {|c| [c.name, c.id]})
       
 
-  = observe_form :search, :url => { :controller => :users, :action => :search, :partial => partial }, :frequency => 0.25, :update => update, :loading => "var so = new SWFObject(\"/flash/loading.swf\", \"home\", \"50\", \"50\", \"9\", \"#ffffff\");so.write(\"#{update}\");"
+  = observe_form :search, :url => { :controller => :users, :action => :search, :partial => partial }, :frequency => 0.25, :update => update, :loading => flash_loader(update)
   %br

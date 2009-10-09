@@ -11,7 +11,13 @@ class Event < ActiveRecord::Base
   named_scope :in_future, :conditions => ['date > ?', Date.today]
   named_scope :for_date, lambda { |*args| {:conditions => {:date => args.first.to_date }} }
 
+  before_update :report_updates
+
   alias people_involved users
+  
+  def report_updates
+    changes.each { |att, values| stories.create :from => values.first, :to => values.last, :changed_data => att, :creator => UserSession.find.user }
+  end
   
   def time
     return unless date
@@ -33,6 +39,7 @@ class Event < ActiveRecord::Base
   end
 
   def happens_in day
+    return false unless date
     date.to_date == day.to_date
   end
 

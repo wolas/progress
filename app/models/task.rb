@@ -25,6 +25,10 @@ class Task < ActiveRecord::Base
 
   before_update :report_updates
   
+  def start_date
+    read_attribute(:start_date) or Date.today
+  end
+  
   def report_updates
     changes.each { |att, values| stories.create :from => values.first, :to => values.last, :changed_data => att, :creator => UserSession.find.user }
   end

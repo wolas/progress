@@ -7,6 +7,7 @@ class StoriesController < ApplicationController
     all_stories = @object.is_a?(Project) ? @object.all_stories : @object.stories
     index = all_stories.index story
     @stories = all_stories.slice(index + 1, 10)
+    @object.users_stories.find_all_by_story_id(@stories.map(&:id)).each {|story| story.mark_seen } if @object.is_a?(User)
   end
 
   # GET /stories

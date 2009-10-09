@@ -1,5 +1,6 @@
 - task ||= nil
-- project = task.project if task
+- project ||= task.project if task
+- action ||= ""
 
 %span
   - if project.client
@@ -13,3 +14,7 @@
   
   - else
     %span{:style => project.style}=h project.name
+  
+  - unless action.empty?
+    = image_tag "arrow.png"
+    %span=h action

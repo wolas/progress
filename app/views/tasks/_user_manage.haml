@@ -7,4 +7,4 @@
         = check_box_tag 'user_ids[]', user.id
       .value
         = user.full_name
-= observe_form :tasks_users_form, :frequency => 1, :url => {:controller => :tasks, :action => :manage_users}, :update => 'all_tasks', :loading => 'var so = new SWFObject("flash/loading.swf", "home", "50", "50", "9", "#ffffff");so.write("all_tasks");'
+= observe_form :tasks_users_form, :frequency => 1, :url => {:controller => :tasks, :action => :manage_users}, :update => 'all_tasks', :loading => flash_loader("all_tasks")

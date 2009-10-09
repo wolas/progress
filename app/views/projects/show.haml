@@ -13,13 +13,13 @@
       - page[:hide_description_link].hide
       - page[:show_description_link].visual_effect :appear
     |
-  = link_to_remote 'Edit', :url => edit_project_path(@project), :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote 'Edit', :url => edit_project_path(@project), :method => :get, :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
   |
-  = link_to_remote 'Users', :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :complete => "$('#interactive_window').show()"
+  = link_to_remote 'Users', :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
   |
-  = link_to_remote 'New task', :url => new_task_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote 'New task', :url => new_task_path(:project_id => @project), :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
   |
-  = link_to_remote 'New event', :url => new_event_path(:project_id => @project), :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote 'New event', :url => new_event_path(:project_id => @project), :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
   |
   = link_to 'Destroy', project_path(@project), :method => :delete, :confirm => "Are you sure?"
   |
@@ -32,7 +32,7 @@
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
-    = link_to_remote image_tag("cross.png"), :url => {:controller => :projects, :action => :close_interactive_window, :id => @project}
+    = link_to_remote image_tag("cross.png"), :url => {:controller => :projects, :action => :close_interactive_window, :id => @project}, :loading => flash_loader(:right)
   #interactive_content
 
 #description{:style => "display:none;"}= @project.description
