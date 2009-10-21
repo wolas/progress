@@ -85,7 +85,7 @@ class Task < ActiveRecord::Base
   end
 
   def to_xml
-    "<event textColor='#000' color='##{project.colour}' caption='#{h(project.name)}' title='#{h(name)}' link='/tasks/#{id}' start='#{start_date.to_s(:timeline)}' end='#{end_date.to_s(:timeline)}' isDuration='true'>#{h(description)}</event>"
+    "<event textColor=\"#000\" color=\"##{project.colour}\" caption=\"#{h(project.name)}\" title=\"#{h(name)}\" link=\"/tasks/#{id}\" start=\"#{start_date.to_s(:timeline)}\" end=\"#{end_date.to_s(:timeline)}\" isDuration=\"true\">#{h(description)}</event>"
   end
 
 end

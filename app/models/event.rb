@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include ERB::Util
+  
   belongs_to :project
   has_and_belongs_to_many :users
   
@@ -50,6 +52,6 @@ class Event < ActiveRecord::Base
   end
 
   def to_xml
-    "<event textColor='#000' color='##{project.colour}' caption='#{project.name}' title='#{time} - #{name}' link='/projects/#{project.id}/events/#{id}' start='#{date.strftime("%a, %d %b %Y %T %Z")}'>#{description}</event>"
+    "<event textColor=\"#000\" color=\"##{project.colour}\" caption=\"#{h(project.name)}\" title=\"#{time} - #{h(name)}\" link=\"/projects/#{project.id}/events/#{id}\" start=\"#{date.strftime("%a, %d %b %Y %T %Z")}\">#{h(description)}</event>"
   end
 end
