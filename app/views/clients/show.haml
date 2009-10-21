@@ -24,6 +24,8 @@
   %h3 In progress
   = render :partial => 'projects/list', :locals => {:projects => in_progress}
 
+%p= render :partial => "calendars/tabs", :locals => {:object => @client}
+
 - unless completed.empty?
   %h3 Completed
   = render :partial => 'projects/list', :locals => {:projects => completed}

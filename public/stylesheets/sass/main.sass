@@ -1,610 +1,108 @@
-!light_blue = #bde3fe
-!dark_blue = #23567a
-!light_green = #86ae91
-
-=round_borders
-  :-moz-border-radius 6px
-  :-webkit-border-radius 6px
-
-
-=error
-  :border 1px solid #cd0a0a
-  :background #b81900 url(/images/jquery/ui-bg_diagonals-thick_40_b81900_40x40.png) 50% 50% repeat
-  :color #ffffff
+html
+  :font
+    :family Helvetica
+    :weight bold
+    :style oblique
+    :size 0.9em
+  :color #E2007A
+  :background-color #323234
 
 body
-  :background-color #dfdfdf
   :margin 0
   :padding 0
-  :font
-    :family verdana, arial, helvetica, sans-serif
-    :size 0.8em
 
-#header
-  :background #fcfcfc url(/images/header_bg.png) 0 100% repeat-x
-  :height 6.82em
-  :min-width 75em
-  :border-bottom 5px solid #dddddd
-  :margin-bottom 1em
-
-  #logo
-    :float left
-    :margin
-      :top 0.5em
-      :left 2.5em
-
-  #title
-    :float left
-    :width 50%
-    :padding
-      :left 20px
-      :top 30px
-    :font
-      :weight bold
-      :size 2em
-      :text-transform uppercase
-
-  .userbox
-    +round_borders
-    :background #EAF2F5
-    :border 1px solid #ddd
-    :float right
-    :margin
-      :top 1em
-      :right 4em
-    :width 28em
-    :color #aac
-
-    .box
-      :margin .25em .5em .25em .5em
-
-    .avatar
-      :float left
-      :padding .2em
-
-      img
-        :border 1px solid #d0d0d0
-        :padding 2px
-        :height 50px
-        :background-color white
-        :margin-right .7em
-
-    .top
-      :overflow hidden
-
-      .name
-        :float left
-        :overflow hidden
-        :font-weight bold
-        :width 5em
-
-        a
-          :color #000
-
-      .links
-        :font-size 85%
-        :margin-top .2em
-        :float right
-        :text-align right
-
-        a
-          :color #4183c4
-        a:hover
-          :text-decoration underline
-
-    a
-      :color #4183c4
-
-    .bottom
-      :overflow hidden
-
-      .select
-        :float right
-        :margin-top .5em
-
-    .inbox
-      :float left
-      :margin-top .7em
-      a
-        :padding-left 20px
-        :display block
-
-#content
-  :padding
-    :left 2.5em
-  :margin
-    :top 20px
-
-  #center
-    :float left
-    :padding
-      :left 2%
-      :right 1%
-      :bottom 20px
-      :top 15px
-    :width 70%
-    :background-color #fff
-    :border-right 3px solid #bfbfbf
-    :border-bottom 3px solid #bfbfbf
-
-  #right
-    :float left
-    :padding
-      :left 2%
-      :right 1%
-      :bottom 20px
-    :width 23%
-    
-    .right_title
-      +round_borders
-      :font-size 1.1em
-      :color #999
-      :padding 5px
-      :background-color #fff
-      :border-right 3px solid #bfbfbf
-      :border-bottom 3px solid #bfbfbf
-    
-    .right_body
-      +round_borders
-      :padding
-        :left 20px
-      :margin-bottom 15px
-
+.col
+  :float left
 
 a
-  :color orange
+  :color #E2007A
   :text-decoration none
 
-  img
-    :border none
-
 a:hover
-  :text-decoration underline
+  :color #E2007A
+
+a:visited
+  :color #E2007A
+
+img
+  :border none
+
+#menu
+  :position absolute
+  :top 40px
+  :left 30px
+  :color #ffffff
+  :width 10%
+
+  a
+    :color #E2007A
+
+#about
+  :margin 10em auto
+  :width 800px
+
+#frase_wapa
+  :margin 10em auto
+  :width 450px
+  :font-weight bold
 
 th
   :text-align left
 
-h1
-  :font-size 1.9em
-  :color #333
-
-h2
-  :font-size 1.4em
-  :color #666
-
-h3
-  :color #999
-  :font-size 1.1em
-
-h4
-  :color #999
-  :font-size 1em
-
-
-.clear
-  :height 1px
-  :clear both
-
-.two_col
-  :width 48%
-  :float left
-
-.small
-  :font-size 0.7em
-
-#user_badge
-  :float right
-  :width 320px
-
-#user_menu
-  :text-align center
-  :z-index 9999
-
-#menu
-  :float right
-  :padding 4px
-
-.widget
-  :padding
-    :left 10px
-    :right 10px
-    :top 5px
-    :bottom 5px
-
-  :margin-bottom 10px
-  +round_borders
-
-.middle
-  :vertical-align middle
-
-.attribute
-  :display table-row
-
-  .name
-    :display table-cell
-    :font-weight bold
-    :padding
-      :right 10px
-      :bottom 2px
-      :top 5px
-  .value
-    :display table-cell
-
-.wall
-  +round_borders
-  :width 550px
-  :background-color #e4f9ea
-  :border 1px solid #86ae91
-  :padding 10px
-
-  .comment
-    :display table-row
-    :margin-bottom 20px
-
-    div
-      :margin-bottom 15px
-      :vertical-align middle
-
-      .face
-        :width 150px
-        :display table-cell
-
-      .comment_body
-        :display table-cell
-        :width 400px
-        :border-bottom 1px solid #333
-
-      .date
-        :border 1px solid #333
-        :padding 1px
-        :float right
-        :text-align center
-        :font
-          :size 0.7em
-          :weight bold
-
-
-.progressbar
-  :width 300px
-
-#flash
-  :padding
-    :left 4em
-    :right 4em
-
-#interactive_window
-  :display none
-  :margin-top 20px
-
-.close_interactive_window
-  :float right
-  :padding
-    :right 15px
-    :top 5px
-
-#task, #event
-  :position absolute
-  :top 100px
-  :left 150px
-
-.late
-  :color #cf0000
-  :border-color #cf0000
-
-.today
-  :color #cf0000
-  :border-color #cf0000
-
-.upcoming
-  :color #ffcf00
-  :border-color #ffcf00
-
-.completed
-  :color #009f00
-  :border-color #009f00
-
-.header_late
-  :background-color #cf0000
-
-.header_upcoming
-  :background-color #ffcf00
-
-.header_completed
-  :background-color #009f00
-
-.header_today
-  :background-color #cf0000
-
-.task_list_header
-  :font-weight bold
-
-  :color #fff
-  :padding
-    :top 3px
-    :bottom 3px
-    :left 5px
-
-.project_list_item:hover
-  :background-color #bfdff4
-
-  td
-    .project_list_menu
-      :visibility visible
-
-.project_list_menu
-  :visibility hidden
-
-.task_list_item:hover
-  :background-color #bfdff4
-
-  td
-    .task_list_menu div
-      :visibility visible
-
-.task_list
-  .task_list_item
-    :min-height 100px
-    
-    :padding
-      :left 5px
-      :top 10px
-      :bottom 10px
-    
-    td
-      :border-bottom 1px solid #ccc
-    
-    .task_list_menu
-      :visibility hidden
-      :width 10%
-      
-    
-    .task_list_priority
-      :width 5%
-    
-    .task_list_body
-      :width 60% 
-      :border-left
-        :width 3px 
-        :style solid
-      :height 60px
-      :padding-left 20px
-    
-      .task_name
-        :font
-          :size 1.2em
-          :weight bold
-        :margin-top 3px
-
-      .task_users
-        :color #000
-        :display inline
-        :font-size 0.8em
-
-.event_list
+#content
   :width 100%
+  :padding-top 10%
+  :margin 1em auto
 
-.event_list_header
-  +round_borders
-  :font-weight bold
-
-  :color #fff
-  :margin-top 10px
-  :padding
-    :top 3px
-    :bottom 3px
-    :left 5px
-
-.event_list_item
-  :padding
-    :left 5px
-    :top 3px
-    :bottom 3px
-
-.list_item_date
-  :display inline
-  :font
-    :size .8em
-    :weight bold
-
-.task_list_complete
-
-  :border-left none
-
-  .task_list_item
-    :padding
-      :left 5px
-      :top 2px
-      :bottom 2px
-    :border-bottom none
-
-    .task_name
-      :font
-        :size .9em
-        :weight bold
-
-      :display inline
-
-    .task_users
-      :display inline
-
-  .list_item_date
-    :display block
-    :padding 5px
-    :border-left 1px solid #009f00
-    :background-color #fff
-    :border-top 1px solid #eee
-
-#task_body, #event_body
-  :padding 10px
-  :max-width 500px
-
-  #controls
-    :float right
-
-#tab_nav
-  a
-    :display block
-    :float left
-    :height 30px
-    :width 80px
-    :margin-right 2px
-    :text-align center
-    :padding-top 15px
-
-=calendar_day
-  +round_borders
-  :height 100px
-  :width 14%
-  :vertical-align top
-  :background-color #eee
-  :padding 3px
-
-#calendar
-  +round_borders
-  :position relative
-  :min-height 500px
-  :border 1px solid #999
-  :padding 5px
-
-
-  .normal_day
-    +calendar_day
-    :border-width 1px
-    :border-style solid
-    :border-color #ccc
-
-  .today
-    +calendar_day
-    :border 1px solid red
-
-
-.hour_of_day
-  :border-right 1px solid #333
-  :padding
-    :left 5px
-  :width 30px
-  :background-color lightgrey
-
-.hour_of_day_expanded
-  :border-bottom 1px dotted #666
-  :width 300px
-
-.this_week
-  +round_borders
-  :border 1px solid red
-
-.project_row
-  :padding
-    :bottom 10px
-    :top 5px
-
-
-.draggable
-  :cursor move
-
-.story_list
-  :width 100%
-  :padding 0px
-  :margin 0
-
-.story
-  :padding-top 2px
-
-  .story_body
-    +round_borders
-    :background-color #eeeeee
-    :border 1px solid #bfbfbf
-    :padding
-      :top 5px
-      :bottom 5px
-    :min-height 30px
-    :padding-left 2%
-    :float left
-    :width 85%
-    :font-size .9em
+#password
+  :padding-top 50px
+  :margin 0 auto
+  :width 1400px
     
-    .story_delete
-      :padding
-        :right 10px
-        :top 5px
-
-  .story_data
-    :float left
-    :width 10%
-    :padding-left 1%
-    :font-size .9em
-    
-    .story_time
-      :font-size .7em
-    
-  .story_delete
-    :float right
-    
-.mini_story
-  :padding
-    :top 5px
-    :bottom 5px
   
-  .story_body
-    :padding
-      :top 5px
-      :bottom 5px
-    :min-height 30px
-    :padding-left 2%
-    :width 75%
-    :font-size 80%
+#password_hola
+  :height 450px
+  :width 1400px
+  :background-color #323234
+  :color #E2007A
+  :border none
+  :font
+    :family Helvetica
+    :weight bold
+    :style oblique
+    :size 25em
+  :text
+    :transform uppercase
+    :align center
+  
+#password_adios
+  :height 450px
+  :width 1400px
+  :background-color #323234
+  :color #E2007A
+  :border none
+  :font
+    :family Helvetica
+    :weight bold
+    :style oblique
+    :size 25em
+  :text
+    :transform uppercase
+    :align center
 
-  .story_data
-    :width 20%
-    :padding-left 1%
-    :font-size .7em
+#print_show
+  :padding-top 20px
+  :text-align center
 
-.changed_data
-  :font-weight bold
-  :display inline
+#film_show
+  :padding-top 20px
+  :text-align center
 
-.quote
-  :font-style oblique
-  :margin-bottom 5px
-  :min-height 25px
-  :padding
-    :left 25px
-    :top 10px
-  :background-image url(/images/quotes.png)
-  :background-position left
-  :background-repeat no-repeat
-
-
-//==========================================
-
-.fieldWithErrors
-  :color red
-
-#errorExplanation
-  :font-weight bold
-  :padding 7px
-  :padding-bottom 12px
-  :margin-bottom 20px
-  +error
-  +round_borders
-
-  h2
-    :display none
-    :text-align left
-    :font-weight bold
-    :padding 5px 5px 5px 15px
-    :font-size 12px
-    :margin -7px
-    :background-color #c00
-    :color #fff
-
-  p
-    :color #333
-    :margin-bottom 0
-    :padding 5px
-
-
-  ul
-    li
-      :font-size 12px
-      :list-style square
+.contact_details
+  :width 400px
+  :text-align left
+  :margin 1em auto
+  :font
+    :weight 200
+    :size 1.2em
+  :padding-top 250px

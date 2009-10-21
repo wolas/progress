@@ -7,6 +7,7 @@ class ClientsController < ApplicationController
 
   # GET /clients/1
   def show
+    @show_timeline = true
     @client = Client.find(params[:id])
   end
 
