@@ -1,4 +1,6 @@
 class Task < ActiveRecord::Base
+  include ERB::Util
+  
   PEOPLE = [:digital_refs, :art_directors, :art_operatives, :flash_operatives, :front_end_developers, :back_end_developers]
   STATES = %w( waiting_for_brief waiting_for_feedback waiting_for_materials in_progress on_support periodical standby testing )
   PRIORITIES = %w( low medium high urgent)
@@ -83,7 +85,7 @@ class Task < ActiveRecord::Base
   end
 
   def to_xml
-    "<event textColor='#000' color='##{project.colour}' caption='#{project.name}' title='#{name}' link='/tasks/#{id}' start='#{start_date.to_s(:timeline)}' end='#{end_date.to_s(:timeline)}' isDuration='true'>#{description}</event>"
+    "<event textColor='#000' color='##{project.colour}' caption='#{h(project.name)}' title='#{h(name)}' link='/tasks/#{id}' start='#{start_date.to_s(:timeline)}' end='#{end_date.to_s(:timeline)}' isDuration='true'>#{h(description)}</event>"
   end
 
 end
