@@ -10,11 +10,15 @@ class TasksController < ApplicationController
     users = User.find params[:user_ids]
     tasks = users.map{|u| u.tasks }.flatten.uniq.sort_by(&:end_date).reverse
     if tasks.empty?
-      text = users.empty? ? "Select users from the right to see their tasks." : "No tasks for #{users.map(&:name).join(', ')}."
-      render :text => text
+      render :text => (users.empty? ? "Select users from the right to see their tasks." : "No tasks for #{users.map(&:name).join(', ')}.")
     else
       render :partial => 'list', :locals => {:tasks => tasks}
     end
+  end
+  
+  def send_email
+    @task = Task.find prams[:id]
+    
   end
 
   # GET /tasks/1

@@ -6,7 +6,7 @@
     All Projects
 
 #menu
-  = link_to_remote 'New', :url => new_project_path, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote new_project_icon, :url => new_project_path, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
@@ -30,3 +30,6 @@
             = image_tag "sphere.png", :width => "20px"
         
         %td= link_to project.name, project
+
+- content_for :right do
+  = link_to image_tag("icons/download.png", :width => 30, :alt => "Download All", :title => "Download All"), :controller => "projects", :action => "download"

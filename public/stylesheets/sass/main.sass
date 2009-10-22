@@ -26,88 +26,88 @@ body
   :min-width 75em
   :border-bottom 5px solid #dddddd
   :margin-bottom 1em
+  
+  span
+    :vertical-align middle
 
-  #logo
+#logo
+  :vertical-align middle
+  :margin
+    :top 0.5em
+    :left 2.5em
+    :right 2em
+
+#title
+  :display inline
+  :height 75px
+  :font
+    :weight bold
+    :size 2em
+    :text-transform uppercase
+
+.userbox
+  +round_borders
+  :background #EAF2F5
+  :border 1px solid #ddd
+  :margin
+    :top 1em
+    :right 4em
+  :width 28em
+  :color #aac
+
+  .box
+    :margin .25em .5em .25em .5em
+
+  .avatar
     :float left
-    :margin
-      :top 0.5em
-      :left 2.5em
+    :padding .2em
 
-  #title
-    :float left
-    :width 50%
-    :padding
-      :left 20px
-      :top 30px
-    :font
-      :weight bold
-      :size 2em
-      :text-transform uppercase
+    img
+      :border 1px solid #d0d0d0
+      :padding 2px
+      :height 50px
+      :background-color white
+      :margin-right .7em
 
-  .userbox
-    +round_borders
-    :background #EAF2F5
-    :border 1px solid #ddd
-    :float right
-    :margin
-      :top 1em
-      :right 4em
-    :width 28em
-    :color #aac
+  .top
+    :overflow hidden
 
-    .box
-      :margin .25em .5em .25em .5em
-
-    .avatar
+    .name
       :float left
-      :padding .2em
-
-      img
-        :border 1px solid #d0d0d0
-        :padding 2px
-        :height 50px
-        :background-color white
-        :margin-right .7em
-
-    .top
       :overflow hidden
+      :font-weight bold
+      :width 5em
 
-      .name
-        :float left
-        :overflow hidden
-        :font-weight bold
-        :width 5em
-
-        a
-          :color #000
-
-      .links
-        :font-size 85%
-        :margin-top .2em
-        :float right
-        :text-align right
-
-        a
-          :color #4183c4
-        a:hover
-          :text-decoration underline
-
-    a
-      :color #4183c4
-
-    .bottom
-      :overflow hidden
-
-      .select
-        :float right
-        :margin-top .5em
-
-    .inbox
-      :float left
-      :margin-top .7em
       a
-        :padding-left 20px
-        :display block
+        :color #000
+
+    .links
+      :font-size 85%
+      :margin-top .2em
+      :float right
+      :text-align right
+
+      a
+        :color #4183c4
+      a:hover
+        :text-decoration underline
+
+  a
+    :color #4183c4
+
+  .bottom
+    :overflow hidden
+
+    .select
+      :float right
+      :margin-top .5em
+
+  .inbox
+    :float left
+    :margin-top .7em
+    a
+      :padding-left 20px
+      :display block
 
 #content
   :padding
@@ -123,6 +123,7 @@ body
       :bottom 20px
       :top 15px
     :width 70%
+    :min-width 800px
     :background-color #fff
     :border-right 3px solid #bfbfbf
     :border-bottom 3px solid #bfbfbf
@@ -268,18 +269,15 @@ h4
   :width 300px
 
 #flash
-  :padding
-    :left 4em
-    :right 4em
 
 #interactive_window
   :display none
-  :margin-top 20px
+  :margin-top 40px
 
 .close_interactive_window
   :float right
   :padding
-    :right 15px
+    :right 5px
     :top 5px
 
 #task, #event
@@ -355,19 +353,24 @@ h4
     
     .task_list_menu
       :visibility hidden
-      :width 10%
+      :width 7%
       
     
     .task_list_priority
-      :width 5%
-    
-    .task_list_body
-      :width 60% 
+      :width 7%
       :border-left
         :width 3px 
         :style solid
+      :border-right
+        :width 1px 
+        :style solid
+        :color #cccccc
+      :padding-left 10px
+    
+    .task_list_body
+      :width 65% 
       :height 60px
-      :padding-left 20px
+      :padding-left 30px
     
       .task_name
         :font

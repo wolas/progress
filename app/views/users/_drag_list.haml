@@ -3,7 +3,10 @@
 - users ||= User.all
 
 #drag_drop_users
-  %h3 Users (Drag &amp; Drop)
+  %h3
+    %span{:style => "vertical-align: middle;"}
+      = users_icon :style => "vertical-align: middle;"
+      Users (Drag &amp; Drop)
   %table{:cellspacing => 0}
     - users.each do |user|
       %tr
@@ -11,5 +14,5 @@
           %span.draggable{:id => user.id}
             = image_tag 'drag.png', :style => "vertical-align: middle;"
             &nbsp;
-            = image_tag user.face.url(:thumb), :style => "vertical-align: middle;width:30px"
+            = image_tag user.face.url(:medium), :style => "vertical-align: middle;width:20px"
             = user.full_name

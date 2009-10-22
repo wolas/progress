@@ -2,7 +2,7 @@
   Clients
 
 #menu
-  = link_to_remote 'New', :url => new_client_path, :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
+  = link_to_remote new_client_icon, :url => new_client_path, :method => :get, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
@@ -10,16 +10,18 @@
       - page[:interactive_window].fade
   #interactive_content
 
-%table{:width => "100%"}
+%table{:width => "100%", :cellpadding => 0, :cellspacing => 0}
   %tr
     %th Client
     %th Number of Projects
     %th Brand
 
   -for client in @clients
-    %tr
-      %td= link_to h(client.name), client
-      %td= client.projects.count
-      %td= client.company.name if client.company
+    %tr.project_list_item
+      %td{:style => "padding-left: 10px;"}= link_to h(client.name), client
+      %td{:style => "padding-left: 10px;"}= client.projects.count
+      %td{:style => "padding-left: 10px;"}= client.company.name if client.company
 
-      %td= link_to 'Destroy', client_path(client), :method => :delete
+      %td{:style => "text-align: right; padding: 3px;"}
+        .project_list_menu
+          = link_to destroy_client_icon, client_path(client), :method => :delete, :confirm => "Deleting client #{client.name} is irreversible. Are you sure about this?"

@@ -2,6 +2,11 @@ class CalendarsController < ApplicationController
 
   before_filter :init_object, :except => [:event_details, :task_details]
 
+  def stories
+    stories = @object.stories
+    stories.empty? ? "No stories at the moment" : render(:partial => "stories/list", :locals => {:stories => stories, :object => @object})
+  end
+
   def all_tasks
     tasks = @object.tasks
     tasks = tasks.select{|task| task.open? } if params[:hide_completed_tasks]

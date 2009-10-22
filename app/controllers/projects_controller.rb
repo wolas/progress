@@ -1,5 +1,19 @@
 class ProjectsController < ApplicationController
+  require 'tempfile'
 
+  def download
+    projects = Project.all :conditions => {:closed => false}
+    file = Tempfile.new "all.txt"
+    
+    title =  "Progress on #{Date.today.to_s}\n"
+    file.write title + ("=" * title.length) + "\n\n"
+    
+    projects.each { |project| file.write project.to_s }
+    
+    file.close
+    send_file file.path
+  end
+  
   # GET /projects
   def index
     if params[:user_id]

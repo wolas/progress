@@ -5,12 +5,16 @@ class Client < ActiveRecord::Base
   
   validates_presence_of :name
   
+  def stories
+    projects.map(&:all_stories).flatten.sort_by(&:created_at).reverse
+  end
+  
   def events
-    projects.map{|project| project.events }.flatten
+    projects.map(&:events).flatten
   end
   
   def tasks
-    projects.map{|project| project.tasks }.flatten
+    projects.map(&:tasks).flatten
   end
   
   def tasks_with_state state = 'open'

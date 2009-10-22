@@ -7,6 +7,7 @@
   = link_to_remote 'Month', :url => month_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
   = link_to_remote 'Day', :url => day_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
   = link_to_remote 'Week', :url => week_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
+  = link_to_remote 'Stories', :url => stories_calendar_path(params), :update => 'calendar', :loading => flash_loader(:calendar)
 
   .clear
 

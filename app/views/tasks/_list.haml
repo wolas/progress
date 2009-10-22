@@ -13,18 +13,19 @@
       
       - list.reverse.each do |task|
         %tr{:class => "task_list_item #{type}", :id => "task_item_#{task.id}"}
-          
+          %td.task_list_priority
+            %span{:style => "color:##{task.priority_colour};"}= task.priority
+            
           %td.task_list_body{:id => "task_body_#{task.id}"}
             = render :partial => "tasks/show", :locals => {:task => task, :exclude_completed => exclude_completed, :tasks => tasks}
 
-          %td{:style => "width:10%;"}
+          %td{:style => "width:5%;"}
             .task_list_menu
               %div
                 %div{:id => "edit_link_#{task.id}"}
-                  = link_to_remote "edit", :url => {:controller => "tasks", :action => "edit", :id => task, :return_to => request.path}, :method => :get, :update => "task_body_#{task.id}", :complete => update_page {|page| page["edit_link_#{task.id}"].hide; page["cancel_edit_link_#{task.id}"].show}, :loading => flash_loader("task_body_#{task.id}")
+                  = link_to_remote edit_task_icon, :url => {:controller => "tasks", :action => "edit", :id => task, :return_to => request.path}, :method => :get, :update => "task_body_#{task.id}", :complete => update_page {|page| page["edit_link_#{task.id}"].hide; page["cancel_edit_link_#{task.id}"].show}, :loading => flash_loader("task_body_#{task.id}")
                 %div{:id => "cancel_edit_link_#{task.id}", :style => "display:none"}
-                  = link_to_remote "cancel", :url => {:controller => "tasks", :action => "show", :id => task, :tasks => tasks.map(&:id), :exclude_completed => exclude_completed}, :method => :get, :update => "task_body_#{task.id}", :complete => update_page {|page| page["edit_link_#{task.id}"].show; page["cancel_edit_link_#{task.id}"].hide}, :loading => flash_loader("task_body_#{task.id}")
+                  = link_to_remote cancel_icon, :url => {:controller => "tasks", :action => "show", :id => task, :tasks => tasks.map(&:id), :exclude_completed => exclude_completed}, :method => :get, :update => "task_body_#{task.id}", :complete => update_page {|page| page["edit_link_#{task.id}"].show; page["cancel_edit_link_#{task.id}"].hide}, :loading => flash_loader("task_body_#{task.id}")
           
-          %td.task_list_priority
-            %span{:style => "color:##{task.priority_colour};"}= task.priority
+          
       %br

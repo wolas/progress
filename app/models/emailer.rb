@@ -20,4 +20,13 @@ class Emailer < ActionMailer::Base
     @headers = {}
   end
 
+
+  def project_created recipients, project
+    @subject = "Project - #{project.name} created."
+    @recipients = Array.new(recipients).map(&:email)
+    @from = 'no-reply@yr.progress.com'
+    @sent_on = Time.now
+    @body['project'] = project
+    @headers = {}
+  end
 end

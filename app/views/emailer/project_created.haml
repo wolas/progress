@@ -1,0 +1,25 @@
+== A project has been created by #{@user.name}
+
+Details:
+%table
+  - if @project.client
+    %tr
+      %td Client:
+      %td= @project.client.name
+  %tr
+    %td Name
+    %td= @project.name
+  
+  - if @project.end_date
+    %tr
+      %td Date Due
+      %td= @project.end_date.to_s
+  
+  - if @project.description?
+    %tr
+      %td Name
+      %td= @project.name
+
+== click #{link_to "here", project, true} for full information
+
+

@@ -12,23 +12,17 @@
       - page[:description].visual_effect :blind_up, :duration => 0.5
       - page[:hide_description_link].hide
       - page[:show_description_link].visual_effect :appear
-    |
-  = link_to_remote 'Edit', :url => edit_project_path(@project), :method => :get, :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
-  |
-  = link_to_remote 'Users', :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
-  |
-  = link_to_remote 'New task', :url => new_task_path(:project_id => @project), :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
-  |
-  = link_to_remote 'New event', :url => new_event_path(:project_id => @project), :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
-  |
-  = link_to 'Destroy', project_path(@project), :method => :delete, :confirm => "Are you sure?"
-  |
-  - if @project.closed?
-    = link_to 'Reopen', reopen_project_path(@project)
-  - else
-    = link_to 'Close', close_project_path(@project)
+      
+  = link_to_remote users_icon, :url => {:controller => 'projects', :action => 'users', :object_id => @project, :object_class => @project.class}, :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
+  = link_to_remote new_task_icon, :url => new_task_path(:project_id => @project), :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
+  = link_to_remote new_event_icon, :url => new_event_path(:project_id => @project), :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
+  = link_to_remote edit_project_icon, :url => edit_project_path(@project), :method => :get, :update => 'interactive_content', :loading => "$('#interactive_window').show(); #{flash_loader(:interactive_content)}"
+  = link_to destroy_project_icon, project_path(@project), :method => :delete, :confirm => "Deleting project #{@project.name} is irreversible. Are you sure?"
   
-.clear
+  - if @project.closed?
+    = link_to open_icon, reopen_project_path(@project)
+  - else
+    = link_to close_icon, close_project_path(@project)
 
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
@@ -42,9 +36,9 @@
   = render :partial => 'stories/list', :locals => {:stories => @project.all_stories.slice(0,10), :mini => true, :object => @project} unless @project.all_stories.empty?
 
 
-%p
-  - if @project.tasks.empty?
-    %p This project has no tasks, you want to create one?
-    = render :partial => "tasks/form", :locals => {:task => Task.new(:project => @project)}
-  - else
-    = render :partial => 'calendars/tabs', :locals => {:object => @project}
+.clear
+- if @project.tasks.empty?
+  %p This project has no tasks, you want to create one?
+  = render :partial => "tasks/form", :locals => {:task => Task.new(:project => @project)}
+- else
+  = render :partial => 'calendars/tabs', :locals => {:object => @project}

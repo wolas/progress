@@ -90,4 +90,18 @@ class Project < ActiveRecord::Base
     result = 'text-decoration: line-through;' if closed?
     result or ''
   end
+  
+  def to_s
+    str = (client ? "#{client.name} - #{name}" : name) + "\n"
+    str_length = str.length
+    str << (" " * str_length) + "No tasks" if tasks.empty?
+    
+    tasks.each do |task| 
+      users = task.users.map(&:name).join(", ")
+      str << (" " * str_length) + task.name
+      str << (users.empty? ? "\n" : ": (#{users})\n")
+    end
+    
+    str << "\n\n"
+  end
 end
