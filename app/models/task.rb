@@ -40,6 +40,10 @@ class Task < ActiveRecord::Base
   end
   alias people_involved users
   
+  def standby?
+    state.eql? 'standby'
+  end
+  
   def urgent?
     priority.eql? 'urgent'
   end

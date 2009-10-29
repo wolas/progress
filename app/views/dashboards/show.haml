@@ -1,11 +1,6 @@
 - content_for :title do
   Dashboard
 
-- content_for(:right) do
-  = render :partial => 'events/list', :locals => {:events => @user.events.in_future} unless @user.events.in_future.empty?
-  #task_list_complete= render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks_with_state(:completed) } unless @user.tasks_with_state(:completed).empty?  
-  = render :partial => 'stories/list', :locals => {:stories => @user.stories, :mini => true, :object => @user} unless @user.stories.empty?
-
 - if @user.tasks.empty?
   You have no tasks assigned to you.
   %ul
@@ -15,3 +10,9 @@
     
 - else
   %p= render :partial => 'calendars/tabs', :locals => {:hide_completed_tasks => true, :object => @current_user}
+
+
+- content_for(:right) do
+  = render :partial => 'events/list', :locals => {:events => @user.events.in_future} unless @user.events.in_future.empty?
+  #task_list_complete= render :partial => 'task_list_complete', :locals => {:tasks => @user.tasks_with_state(:completed) } unless @user.tasks_with_state(:completed).empty?  
+  = render :partial => 'stories/list', :locals => {:stories => @user.stories, :mini => true, :object => @user} unless @user.stories.empty?

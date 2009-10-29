@@ -31,3 +31,4 @@
   
 - content_for :right do
   = render(:partial => "events/list", :locals => {:events => @client.events}) unless @client.events.empty?
+  = render :partial => 'stories/list', :locals => {:stories => @client.stories.slice(0,10), :mini => true, :object => @client} unless @client.stories.empty?
