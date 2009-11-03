@@ -27,6 +27,14 @@ class Task < ActiveRecord::Base
 
   before_update :report_updates
   
+  def priority
+    diff = days_remaining
+    return "urgent" if diff <= 0
+    return "high" if diff.between? 0, 2
+    return "medium" if diff.between? 3, 5
+    return "low"
+  end
+  
   def start_date
     read_attribute(:start_date) or Date.today
   end

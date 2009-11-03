@@ -9,7 +9,7 @@
         %th{:colspan => 3, :class => "task_list_header header_#{type}"}
           = type.to_s.capitalize
       
-      - list.reverse.each do |task|
+      - list.each do |task|
         %tr{:class => "task_list_item #{type}", :id => "task_item_#{task.id}"}
           %td.task_list_priority{:style => "border-right: #{task.open? ? '1px solid #cccccc' : 'none' }"}
             - if task.open?

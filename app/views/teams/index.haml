@@ -1,27 +1,19 @@
-%h1 Listing teams
-
-= link_to_function 'New team', :href => new_team_path, :id => 'new_team_link' do |page|
-  - page[:create_team].visual_effect :blind_down, :duration => 0.5
-  - page[:new_team_link].hide
-  - page[:cancel_new_team_link].visual_effect :appear
-
-= link_to_function 'Cancel', :href => new_team_path, :id => 'cancel_new_team_link', :style => "display:none;" do |page|
-  - page[:create_team].visual_effect :blind_up, :duration => 0.5
-  - page[:cancel_new_team_link].hide
-  - page[:new_team_link].visual_effect :appear
-
-#create_team{:style => 'display:none;'}
-  = render :partial => 'form', :locals => {:team => Team.new }
-
-%table{:width => "100%"}
-  %tr
-    %th Name
-
-  -for team in @teams
-    %tr
-      %td= h team.name
-
-    
-      %td= link_to 'Show', team_path(team)
-      %td= link_to 'Edit', edit_team_path(team)
-      %td= link_to 'Destroy', team_path(team), :method => :delete
+- content_for :title do
+  Teams &amp; users
+  
+.groups{:style => "border: 1px solid #aaaaaa; min-height: 500px; "}
+  .groups_header{:style => "height: 30px;background-color: #ededed; padding: 5px;"}
+    = link_to_remote "New group", :url => {:controller => "teams", :action => "new"}, :update => "#user_manager_interactive", :loading => flash_loader(:user_manager_interactive)
+  
+  %div{:style => "float: left; width: 32%; border: 1px solid red;min-height:400px;"}
+    %table{:style => "width:100%; padding: 5px;"}
+      - @teams.each do |team|
+        %tr
+          %td{:style => "width:80%;"}= team.name
+          %td{:style => "width:10%;text-align: right;color: #777777"}= team.users.count
+  
+  %div{:style => "float: left; width: 32%; border: 1px solid red;min-height:400px;"}
+    Bar
+  
+  %div{:style => "float: left; width: 32%; border: 1px solid red;min-height:400px;"}
+    #user_manager_interactive{:style => "padding: 5px;"}

@@ -13,6 +13,7 @@ class TeamsController < ApplicationController
   # GET /teams/new
   def new
     @team = Team.new
+    render(:partial => "form", :locals => {:team => @team}) and return if request.xhr?
   end
 
   # GET /teams/1/edit

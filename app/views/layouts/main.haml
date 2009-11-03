@@ -43,10 +43,11 @@
               .bottom
                 .select
                   .site_links
-                    = link_to_unless_current users_icon(:width => 20), users_url
-                    = link_to_unless_current client_icon(:width => 20), clients_url
-                    = link_to_unless_current project_icon(:width => 20), projects_url
-                    = link_to_unless_current task_icon(:width => 20), tasks_url
+                    = link_to "Teams", teams_path
+                    = link_to users_icon(:width => 20), users_url
+                    = link_to client_icon(:width => 20), clients_url
+                    = link_to project_icon(:width => 20), projects_url
+                    = link_to task_icon(:width => 20), tasks_url
                     
                     - if admin?
                       |
@@ -68,7 +69,7 @@
                         
             .ui-state-highlight.widget
               .close_interactive_window
-                = link_to_function 'x' do |page|
+                = link_to_function cancel_icon(:width => 10) do |page|
                   - page[:flash].visual_effect :fade, :duration => 0.5
 
               %p

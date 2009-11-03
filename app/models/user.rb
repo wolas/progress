@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   TASKS = [:tasks_as_digital_refs, :tasks_as_art_directors, :tasks_as_art_operatives, :tasks_as_flash_operatives, :tasks_as_front_end_developers, :tasks_as_back_end_developers]
 
   acts_as_authentic
-
+  
+  has_and_belongs_to_many :teams
   has_and_belongs_to_many :tasks_as_art_directors, :join_table => :tasks_art_director, :class_name => 'Task'
   has_and_belongs_to_many :tasks_as_art_operatives, :join_table => :tasks_art_operative, :class_name => 'Task'
   has_and_belongs_to_many :tasks_as_flash_operatives, :join_table => :tasks_flash_operative, :class_name => 'Task'
