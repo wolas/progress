@@ -85,8 +85,10 @@ class ProjectsController < ApplicationController
   end
 
   def add_user
+    user = User.find(params[:user])
     @object = Project.find params[:id]
-    @object.update_attributes params[:type].to_sym => User.find(params[:user])
+    @object.update_attributes params[:type].to_sym => user
+    Emailer.deliver_project_assigned user, @object, params[:type]
   end
 
   def remove_user

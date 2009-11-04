@@ -1,9 +1,21 @@
-Task
-%b= link_to @task.name, @task
-in project
-%b= link_to @task.project.name, @task.project
-has been assigned to you by
-%b= @user.login
-\.
+%table
+  %tr
+    %td Project
+    %td= @task.project.name
+  %tr
+    %td Name
+    %td= @task.name
 
-%p Progress Team
+  %tr
+    %td Date Due
+    %td= @task.end_date.to_s
+  
+  - if @task.description?
+    %tr
+      %td Description
+      %td= @task.description
+
+%br
+== click #{link_to "here", task_url(@task, :host => "152.146.39.15:4001")} for full information
+
+

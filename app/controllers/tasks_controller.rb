@@ -81,6 +81,7 @@ class TasksController < ApplicationController
     user = User.find params[:user]
     @object.send(params[:type].to_sym) << user
     @object.stories.create :creator => current_user, :changed_data => params[:type].singularize, :to => user.name
+    Emailer.deliver_task_assigned user, @object, params[:type]
   end
 
   def remove_user

@@ -10,23 +10,23 @@ class Emailer < ActionMailer::Base
     @headers = {}
   end
 
-  def task_assigned recipients, task, user
-    @subject = "Assigned - #{task.name}"
-    @recipients = Array.new(recipients).map(&:email)
-    @from = 'no-reply@it.yr.com'
+  def task_assigned recipient, task, role
+    @subject = "You are a #{role.humanize.singularize} for task \"#{task.name}\""
+    @recipients = recipient.email
+    @from = 'no-reply@progressonline'
     @sent_on = Time.now
     @body['task'] = task
-    @body['user'] = user
+    @body['role'] = role
     @headers = {}
   end
 
-
-  def project_created recipients, project
-    @subject = "Project - #{project.name} created."
-    @recipients = Array.new(recipients).map(&:email)
-    @from = 'no-reply@yr.progress.com'
+  def project_assigned recipient, project, role
+    @subject = "You are the new #{role.humanize.singularize} for project \"#{project.name}\""
+    @recipients = recipient.email
+    @from = 'no-reply@progressonline'
     @sent_on = Time.now
     @body['project'] = project
+    @body['role'] = role
     @headers = {}
   end
 end
