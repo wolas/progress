@@ -13,7 +13,7 @@ class Emailer < ActionMailer::Base
   def task_assigned recipient, task, role
     @subject = "You are a #{role.humanize.singularize} for task \"#{task.name}\""
     @recipients = recipient.email
-    @from = 'no-reply@progressonline'
+    @from = recipient.email
     @sent_on = Time.now
     @body['task'] = task
     @body['role'] = role
@@ -23,7 +23,7 @@ class Emailer < ActionMailer::Base
   def project_assigned recipient, project, role
     @subject = "You are the new #{role.humanize.singularize} for project \"#{project.name}\""
     @recipients = recipient.email
-    @from = 'no-reply@progressonline'
+    @from = recipient.email
     @sent_on = Time.now
     @body['project'] = project
     @body['role'] = role
