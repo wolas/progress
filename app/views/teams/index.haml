@@ -9,7 +9,8 @@
     %table{:style => "width:100%; padding: 5px;"}
       - @teams.each do |team|
         %tr
-          %td{:style => "width:80%;"}= team.name
+          %td{:style => "width:80%;"}
+            = team.name
           %td{:style => "width:10%;text-align: right;color: #777777"}= team.users.count
   
   %div{:style => "float: left; width: 32%; border: 1px solid red;min-height:400px;"}

@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
   has_many :users_stories
   has_many :stories, :through => :users_stories, :order => 'created_at DESC'
   has_many :created_stories, :class_name => 'Story', :order => 'created_at DESC', :foreign_key => :creator_id
-
-  belongs_to :team
+  has_many :created_teams, :class_name => 'Team', :foreign_key => :user_id
+  
   belongs_to :company
 
   validates_uniqueness_of :login, :email

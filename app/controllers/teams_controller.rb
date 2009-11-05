@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   
   # GET /teams
   def index
-    @teams = Team.find(:all)
+    @teams = current_user.created_teams
   end
 
   # GET /teams/1
@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/new
   def new
-    @team = Team.new 
+    @team = Team.new
     render(:partial => "form", :locals => {:team => @team}) and return if request.xhr?
   end
 
@@ -23,7 +23,7 @@ class TeamsController < ApplicationController
 
   # POST /teams
   def create
-    @team = Team.new(params[:team])
+    @team = Team.new(params[:team].merge(:user => current_user))
 
     if @team.save
       flash[:notice] = 'Team was successfully created.'
