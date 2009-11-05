@@ -14,6 +14,11 @@ class ProjectsController < ApplicationController
     send_file file.path
   end
   
+  def search
+    projects = Project.all :order => 'name ASC', :conditions => ["name LIKE ?", "%#{params[:name]}%"]
+    render( projects.empty? ? {:text => "No Projects with name #{params[:name]} found!"} : {:partial => "list_complete", :locals => {:projects => projects}})
+  end
+  
   # GET /projects
   def index
     if params[:user_id]

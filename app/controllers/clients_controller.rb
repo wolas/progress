@@ -1,4 +1,9 @@
 class ClientsController < ApplicationController
+  
+  def search
+    clients = Client.all :order => 'name ASC', :conditions => ["name LIKE ?", "%#{params[:name]}%"]
+    render( clients.empty? ? {:text => "No Clients with name #{params[:name]} found!"} : {:partial => "list", :locals => {:clients => clients}})
+  end
 
   # GET /clients
   def index

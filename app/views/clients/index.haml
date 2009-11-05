@@ -10,18 +10,7 @@
       - page[:interactive_window].fade
   #interactive_content
 
-%table{:width => "100%", :cellpadding => 0, :cellspacing => 0}
-  %tr
-    %th Client
-    %th Number of Projects
-    %th Brand
+#clients= render :partial => "list", :locals => {:clients => @clients}
 
-  -for client in @clients
-    %tr.project_list_item
-      %td{:style => "padding-left: 10px;"}= link_to h(client.name), client
-      %td{:style => "padding-left: 10px;"}= client.projects.count
-      %td{:style => "padding-left: 10px;"}= client.company.name if client.company
-
-      %td{:style => "text-align: right; padding: 3px;"}
-        .project_list_menu
-          = link_to destroy_client_icon, client_path(client), :method => :delete, :confirm => "Deleting client #{client.name} is irreversible. Are you sure about this?"
+- content_for :right do
+  = render :partial => "global/search", :locals => {:klass => :client}

@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include CalendarHelper
+  
   helper :all # include all helpers, all the time
   layout 'main'
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -10,8 +12,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :logged_in?, :admin?
 
   before_filter :require_user, :if => :secure?
-
-  include CalendarHelper
 
   private
   def secure?

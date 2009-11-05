@@ -1,0 +1,9 @@
+- search_by ||= :name
+- update ||= klass.to_s.pluralize
+
+- form_tag '', :id => :search, :onsubmit => "return false;"  do
+  .attribute
+    .name Search
+    .value= text_field_tag search_by, nil, :size => 15
+
+= observe_form :search, :url => { :controller => update, :action => :search }, :frequency => 0.25, :update => update, :loading => flash_loader(update)

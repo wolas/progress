@@ -7,29 +7,18 @@
 
 #menu
   = link_to_remote new_project_icon, :url => new_project_path, :update => 'interactive_content', :complete => "$('#interactive_window').show()"
-
+  
+  
+  
+  
 #interactive_window.ui-widget-content.widget
   .close_interactive_window
     = link_to_function image_tag("cross.png") do |page|
       - page[:interactive_window].visual_effect :fade, :duration => 0.5
   #interactive_content
 
-- completed, in_progress = @projects.partition{|project| project.closed?}
-
-- unless in_progress.empty?
-  %h3 In progress
-  = render :partial => 'list', :locals => {:projects => in_progress}
-
-- unless completed.empty?
-  %h3 Completed
-  %table
-    - completed.map do |project| 
-      %tr
-        %td
-          %div{:style => "height: 20px; width: 20px; background-color: ##{project.colour};margin-right:5px;"}
-            = image_tag "sphere.png", :width => "20px"
-        
-        %td= link_to project.name, project
+#projects= render :partial => "list_complete", :locals => {:projects => @projects}
 
 - content_for :right do
+  = render :partial => "global/search", :locals => {:klass => :project}
   = link_to image_tag("icons/download.png", :width => 30, :alt => "Download All", :title => "Download All"), :controller => "projects", :action => "download"
